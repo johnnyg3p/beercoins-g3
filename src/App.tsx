@@ -1,21 +1,49 @@
 import React from "react";
-import logo from "./logo.svg";
+import SignIn from "./screens/SignIn/SignIn";
 import "./App.css";
+import Routes from "./routes";
+import Statement from "./components/statement/statement";
+import IBankPosting, { BankPostType } from "./services/Interfaces/IBankPosting";
 import UserInfo from "./components/UserInfo";
+
+const bankPostingsMock: IBankPosting[] = [
+  {
+    id: "564656",
+    description: "salario",
+    value: 100000,
+    type: BankPostType.CREDIT,
+    date: 1,
+  },
+  {
+    id: "113654",
+    description: "mercado livre",
+    value: 5000,
+    type: BankPostType.DEBIT,
+    date: 6,
+  },
+  {
+    id: "413654",
+    description: "posto gasolina",
+    value: 2399,
+    type: BankPostType.DEBIT,
+    date: 3,
+  },
+  {
+    id: "213654",
+    description: "posto gasolina",
+    value: 4235,
+    type: BankPostType.DEBIT,
+    date: 2,
+  },
+];
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-          Learn React
-        </a>
-      </header>
+      <Routes />
+      <SignIn />
       <UserInfo />
+      <Statement bankPostings={bankPostingsMock} />
     </div>
   );
 }
