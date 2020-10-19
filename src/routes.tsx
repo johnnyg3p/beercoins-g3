@@ -7,7 +7,7 @@ import { History, Location } from 'history'
 import SignIn from './screens/SignIn/SignIn';
 
 const Routes = () => (
-  <h1>teste</h1>
+  <div>inserir as rotas</div>
   // <Router history={hashHistory}>    
   //     <Route path="/" component={SignIn} />    
   //     <Route path="/login" component={SignIn} />    
