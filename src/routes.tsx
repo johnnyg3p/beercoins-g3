@@ -1,18 +1,19 @@
 
 import React from 'react';
-import { Router } from 'react-router';
-import { Redirect, Route } from 'react-router-dom';
+import { Router, Redirect, Route, BrowserRouter } from 'react-router-dom';
 import { History, Location } from 'history'
 
 import SignIn from './screens/SignIn/SignIn';
+import Statement from './components/statement/statement';
 
 const Routes = () => (
-  <div>inserir as rotas</div>
-  // <Router history={hashHistory}>    
-  //     <Route path="/" component={SignIn} />    
-  //     <Route path="/login" component={SignIn} />    
-  //     <Redirect from='*' to='/'/>   
-  // </Router>
+  <div>
+    <BrowserRouter>   
+      <Route exact path="/login" component={SignIn} />
+      <Route exact path="/extrato" component={Statement} />
+      <Redirect from='/' to='/login' />
+    </BrowserRouter>
+  </div>
 );
 
 export default Routes;
