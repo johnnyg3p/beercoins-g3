@@ -1,16 +1,11 @@
 import React from 'react';
 import './App.css';
 import SideBar from './sideBar';
-import SignIn from './screens/SignIn/SignIn'
+import SignIn from './screens/SignIn'
 import './App.css';
 import Routes from './routes';
 import Statement from './components/statement/statement';
-import IBankPosting, { BankPostType } from './services/Interfaces/IBankPosting';
 import { BrowserRouter } from 'react-router-dom';
-
-
-
-
 
 function App() {
   return (

@@ -2,7 +2,7 @@
 import React from 'react';
 import { Redirect, Route, BrowserRouter } from 'react-router-dom';
 
-import SignIn from './screens/SignIn/SignIn';
+import SignIn from './screens/SignIn';
 import Statement from './components/statement/statement';
 
 const Routes = () => (

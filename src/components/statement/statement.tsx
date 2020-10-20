@@ -1,6 +1,4 @@
 import React from 'react';
-import IBankPosting from '../../services/Interfaces/IBankPosting';
-
 
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -9,10 +7,9 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import { BankPostType } from '../../services/Interfaces/IBankPosting';
+import { BankPostType } from '../../Interfaces/BankPostType';
 
-
-interface Iprops {
+interface IProps {
     bankPostings: IBankPosting[]
 }
 
