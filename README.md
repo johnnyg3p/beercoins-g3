@@ -4,6 +4,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 Documentação de Back-End
 [Swagger](https://beercoin-fusion-api.herokuapp.com/swagger-ui.html#/operation-controller/listSaldoContaUsingGET)
 
+PDF de REQUISITOS
+[PDF] (https://github.com/leoqbc/beertech-react/blob/master/Aula11_challenge/projetochallengebeer.pdf)
+
+
 
 ## Available Scripts
 

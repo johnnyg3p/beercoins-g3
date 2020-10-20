@@ -1,7 +1,6 @@
 
 import React from 'react';
-import { Router, Redirect, Route, BrowserRouter } from 'react-router-dom';
-import { History, Location } from 'history'
+import { Redirect, Route, BrowserRouter } from 'react-router-dom';
 
 import SignIn from './screens/SignIn/SignIn';
 import Statement from './components/statement/statement';
