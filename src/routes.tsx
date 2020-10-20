@@ -1,18 +1,16 @@
-
-import React from 'react';
-import { Redirect, Route, BrowserRouter } from 'react-router-dom';
-
-import SignIn from './screens/SignIn';
-import Statement from './components/statement/statement';
+import React from "react";
+import { Route, BrowserRouter } from "react-router-dom";
+import SignIn from "./screens/SignIn";
+import Home from "./screens/Home";
+import Operations from "./screens/Operations";
 
 const Routes = () => (
-  <div>
-    <BrowserRouter>   
-      <Route exact path="/login" component={SignIn} />
-      <Route exact path="/extrato" component={Statement} />
-      <Redirect from='/' to='/login' />
-    </BrowserRouter>
-  </div>
+  <BrowserRouter>
+    <Route exact path="/" component={Home} />
+    <Route exact path="/login" component={SignIn} />
+    <Route exact path="/signup" component={SignIn} />
+    <Route exact path="/operations" component={Operations} />
+  </BrowserRouter>
 );
 
 export default Routes;

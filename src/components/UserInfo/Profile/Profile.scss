@@ -1,0 +1,32 @@
+@import "../../../assets/scss/variables.scss";
+
+.user-profile {
+  align-items: center;
+  background: rgba($darkblue, 1);
+  background: -moz-linear-gradient(left, rgba($darkblue, 1) 0%, rgba($lightblue, 1) 100%);
+  background: -webkit-gradient(
+    left top,
+    right top,
+    color-stop(0%, rgba($darkblue, 1)),
+    color-stop(100%, rgba($lightblue, 1))
+  );
+  background: -webkit-linear-gradient(left, rgba($darkblue, 1) 0%, rgba($lightblue, 1) 100%);
+  background: -o-linear-gradient(left, rgba($darkblue, 1) 0%, rgba($lightblue, 1) 100%);
+  background: -ms-linear-gradient(left, rgba($darkblue, 1) 0%, rgba($lightblue, 1) 100%);
+  background: linear-gradient(to right, rgba($darkblue, 1) 0%, rgba($lightblue, 1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=$lightblue, endColorstr=$darkblue, GradientType=1 );
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  color: white;
+  &-name {
+    font-size: 1em;
+    margin: 8px auto;
+  }
+  &-position {
+    font-size: 0.8em;
+  }
+  &-company {
+    font-size: 0.8em;
+  }
+}
