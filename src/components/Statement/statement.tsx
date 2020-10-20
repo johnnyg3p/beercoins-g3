@@ -8,9 +8,9 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import IBankPosting from "../../Interfaces/IBankPosting";
+import { IBankPosting } from "../../interfaces/IBankPosting";
 
-interface Iprops {
+interface IProps {
   bankPostings: IBankPosting[];
 }
 
@@ -20,7 +20,7 @@ const useStyles = makeStyles({
   },
 });
 
-function Statement(props: Iprops) {
+function Statement(props: IProps) {
   let bankPostList = props.bankPostings
     .sort((a, b) => {
       if (a.date < b.date) return -1;

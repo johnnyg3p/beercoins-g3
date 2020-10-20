@@ -1,4 +1,4 @@
-import { ILogin, ILoginStatus } from "../Interfaces/ILogin";
+import { ILogin, ILoginStatus } from "../interfaces/ILogin";
 export default class Animals {
   fakeLogin: ILogin = {
     user: "johnny",
