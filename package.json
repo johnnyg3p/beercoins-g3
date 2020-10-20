@@ -15,11 +15,8 @@
     "@types/react-dom": "^16.9.8",
     "@types/react-router": "^5.1.8",
     "@types/react-router-dom": "^5.1.6",
-<<<<<<< HEAD
     "axios": "^0.20.0",
-=======
     "node-sass": "^4.14.1",
->>>>>>> 6137ca0f1ef746dc52fc6c2231d0049800fda760
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-router-dom": "^5.2.0",
