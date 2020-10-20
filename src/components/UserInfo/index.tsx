@@ -1,5 +1,5 @@
 import React from "react";
-import Statement from "./Statement";
+import Statement from "./Balance";
 import Profile from "./Profile";
 
 const UserInfo = () => {
