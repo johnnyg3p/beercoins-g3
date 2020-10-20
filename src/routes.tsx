@@ -1,18 +1,49 @@
+import React from "react";
+import { Route, BrowserRouter } from "react-router-dom";
 
-import React from 'react';
-import { Router } from 'react-router';
-import { Redirect, Route } from 'react-router-dom';
-import { History, Location } from 'history'
+import SignIn from "./screens/SignIn/SignIn";
+import Home from "./screens/Home";
+import IBankPosting, { BankPostType } from "./services/Interfaces/IBankPosting";
 
-import SignIn from './screens/SignIn/SignIn';
+const bankPostingsMock: IBankPosting[] = [
+  {
+    id: "564656",
+    description: "salario",
+    value: 100000,
+    type: BankPostType.CREDIT,
+    date: 1,
+  },
+  {
+    id: "113654",
+    description: "mercado livre",
+    value: 5000,
+    type: BankPostType.DEBIT,
+    date: 6,
+  },
+  {
+    id: "413654",
+    description: "posto gasolina",
+    value: 2399,
+    type: BankPostType.DEBIT,
+    date: 3,
+  },
+  {
+    id: "213654",
+    description: "posto gasolina",
+    value: 4235,
+    type: BankPostType.DEBIT,
+    date: 2,
+  },
+];
 
+{
+  /* <Statement bankPostings={bankPostingsMock} /> */
+}
 const Routes = () => (
-  <div>inserir as rotas</div>
-  // <Router history={hashHistory}>    
-  //     <Route path="/" component={SignIn} />    
-  //     <Route path="/login" component={SignIn} />    
-  //     <Redirect from='*' to='/'/>   
-  // </Router>
+  <BrowserRouter>
+    <Route exact path="/" component={Home} />
+    <Route exact path="/login" component={SignIn} />
+  </BrowserRouter>
 );
 
 export default Routes;
