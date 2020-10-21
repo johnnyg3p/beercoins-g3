@@ -13,7 +13,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
-import SignInService from "../../services/SignIn.service";
+import SignInService from "../../services/SignIn";
 const signInService = new SignInService();
 
 function Copyright() {
@@ -54,21 +54,21 @@ export default function SignIn() {
   const emailRef = useRef<IInputRef>(null);
   const passwordRef = useRef<IInputRef>(null);
 
-  const signInHandler = useCallback(
-    () => async (e: React.FormEvent) => {
-      e.preventDefault();
+  const signInHandler = useCallback(async (e: React.FormEvent) => {
+    e.preventDefault();
 
-      const username = emailRef?.current?.value;
-      const password = passwordRef?.current?.value;
+    const username = emailRef?.current?.value;
+    const password = passwordRef?.current?.value;
 
-      if (username && password) {
-        try {
-          await signInService.execute({ username, password });
-        } catch (e) {}
+    if (username && password) {
+      try {
+        const userData = await signInService.execute({ username, password });
+        console.log('userData :>> ', userData);
+      } catch (e) {
+        console.log('e :>> ', e);
       }
-    },
-    []
-  );
+    }
+  }, []);
 
   return (
     <Container component="main" maxWidth="xs">
