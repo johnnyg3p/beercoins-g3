@@ -8,12 +8,14 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import SimpleModal from './modal';
+import AccountsService from '../../services/Accounts/accounts.service';
 
 
 
 interface IProps {
   accounts: IAccount[];
 }
+const accountsService = new AccountsService();
 
 const useStyles = makeStyles({
   table: {

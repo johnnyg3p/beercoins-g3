@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import { FormControl, Input, InputLabel } from '@material-ui/core';
+import AccountsService from '../../services/Accounts/accounts.service';
 
 interface IProps {
     account: IAccount;
@@ -20,14 +20,14 @@ function getModalStyle() {
     };
 }
 
+const accountsService = new AccountsService();
+
 const useStyles = makeStyles((theme) => ({
     paper: {
         position: 'absolute',
         height: 350,
         width: 550,
-        backgroundColor: theme.palette.background.paper,
-        border: '2px solid #000',
-        boxShadow: theme.shadows[5],
+        backgroundColor: theme.palette.background.paper,   
     },
     root: {
         '& > *': {
@@ -51,6 +51,7 @@ export default function SimpleModal(props: IProps) {
     };
 
     const makeDeposit = () => {
+        accountsService.deposit(1);
         alert(JSON.stringify(values));
     }
 
