@@ -1,8 +1,8 @@
 import React from "react";
 import UserInfo from "../../components/UserInfo";
 import Statement from "../../components/Statement/statement";
-import { IBankPosting, BankPostType } from "../../interfaces/IBankPosting";
 import { Grid } from "@material-ui/core";
+import { BankPostType } from "../../interfaces/BankPostType";
 
 const bankPostingsMock: IBankPosting[] = [
   {
