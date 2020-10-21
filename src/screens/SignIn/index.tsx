@@ -54,22 +54,21 @@ export default function SignIn() {
   const emailRef = useRef<IInputRef>(null);
   const passwordRef = useRef<IInputRef>(null);
 
-  const signInHandler = useCallback(() => {
-    async (e: React.FormEvent) => {
+  const signInHandler = useCallback(
+    () => async (e: React.FormEvent) => {
       e.preventDefault();
-  
+
       const username = emailRef?.current?.value;
       const password = passwordRef?.current?.value;
-  
+
       if (username && password) {
         try {
-          await signInService.execute({ username, password })
-        } catch (e) {
-          
-        }
-      };
-    }
-  }, []);
+          await signInService.execute({ username, password });
+        } catch (e) {}
+      }
+    },
+    []
+  );
 
   return (
     <Container component="main" maxWidth="xs">
@@ -107,17 +106,8 @@ export default function SignIn() {
             autoComplete="current-password"
             inputRef={passwordRef}
           />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
+          <FormControlLabel control={<Checkbox value="remember" color="primary" />} label="Remember me" />
+          <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
             Sign In
           </Button>
           <Grid container>
