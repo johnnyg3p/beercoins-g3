@@ -38,7 +38,7 @@ const bankPostingsMock: IBankPosting[] = [
 const Home = () => {
   return (
     <>
-      <Grid container direction="row" justify="center" alignItems="center" spacing={0}>
+      <Grid container direction="row" justify="center" spacing={0}>
         <Grid item xs={12} sm={4}>
           <UserInfo />
         </Grid>
