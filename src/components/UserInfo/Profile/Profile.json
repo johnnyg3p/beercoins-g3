@@ -1,0 +1,11 @@
+{
+  "userInfo": {
+    "accessToken": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXJjZWxvIiwiaWF0IjoxNjAzMzIwMjc0LCJleHAiOjE2MDM0MDY2NzR9.lfcDl3z-uBQd_IGo1jW9FCN_jMLJNpF3VHSB8en1McrZvP2qu9WUhSYkkIKlKNqlfj6h9qM8QjnEXuOsrHgA7w",
+    "email": "teste.marcelo@teste.com",
+    "hash": "",
+    "id": 51,
+    "roles": [],
+    "tokenType": "Bearer",
+    "username": "Marcelo Nascimento"
+  }
+}

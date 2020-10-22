@@ -1,15 +1,20 @@
-import React from "react";
+import React, { memo } from "react";
 import "./CurrentBalance.scss";
+import { formatCurrency } from "../../../../utils/formaters/formaters";
 
-const CurrentBalance = () => {
+interface IBalanceProps {
+  balance: number;
+}
+
+const CurrentBalance = ({ balance }: IBalanceProps) => {
   return (
     <>
       <div className="current-balance">
         <span className="current-balance-text">Current Balance</span>
-        <span className="current-balance-currency">R$ 12.343,55</span>
+        <span className="current-balance-currency">{formatCurrency(balance)}</span>
       </div>
     </>
   );
 };
 
-export default CurrentBalance;
+export default memo(CurrentBalance);

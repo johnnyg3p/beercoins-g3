@@ -4,7 +4,7 @@ interface ISignIn {
 }
 
 interface ISignInStatus {
-  id: number;
+  id: number | null;
   username: string;
   email: string;
   roles: string[];
