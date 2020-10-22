@@ -160,7 +160,7 @@ const SideBar = ({ moderator }: { moderator: "MODERATOR" | "USER" }) => {
         })}
       >
         <Toolbar>
-          <Box display="flex" flexGrow={1}>
+          <Box display="flex" flexGrow={1} alignItems="center">
             <IconButton
               color="inherit"
               aria-label="open drawer"
