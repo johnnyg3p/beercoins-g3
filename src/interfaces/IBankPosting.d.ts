@@ -1,8 +1,7 @@
-
-interface IBankPosting {
-    id: string,
-    description: string,
-    value: number,
-    type: BankPostType,
-    date: number
+interface IStatement {
+  horarioOperacao: string;
+  tipoOperacao: number;
+  valorOperacao: number;
+  hash: string;
+  debitCredit: "C" | "D";
 }

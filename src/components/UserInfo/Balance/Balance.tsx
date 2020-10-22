@@ -1,10 +1,10 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useState } from "react";
 import IconButton from "@material-ui/core/IconButton";
 import AccountBalanceWallet from "@material-ui/icons/AccountBalanceWallet";
 import CurrentBalance from "./CurrentBalance";
 import { Avatar } from "@material-ui/core";
 import "./Balance.scss";
-import { GetBalance } from "../../../services/Balance/Balance";
+import { GetBalance } from "../../../services/User/User";
 import { useAuthContext } from "../../../context/Auth";
 
 const Balance = () => {
@@ -18,7 +18,7 @@ const Balance = () => {
       setBalance(saldo);
     }
     getDataFn();
-  }, [balance]);
+  }, [userInfo]);
 
   return (
     <div className="balance">

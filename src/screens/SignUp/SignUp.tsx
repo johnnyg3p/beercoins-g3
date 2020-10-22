@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, useState } from "react";
+import React, { useRef, useCallback } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -9,13 +9,8 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import FormLabel from "@material-ui/core/FormLabel";
-import FormControl from "@material-ui/core/FormControl";
-import FormGroup from "@material-ui/core/FormGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
 
-import {SignUpService} from '../../services/Auth.service'
+import { SignUpService } from "../../services/Auth.service";
 const signUpService = new SignUpService();
 
 const useStyles = makeStyles((theme) => ({
@@ -58,43 +53,52 @@ export default function SignUp() {
   const signUp = useCallback(async (signUp: ISignUp) => {
     const { cnpj, email, nome, password, role, username } = signUp;
 
-    await signUpService.execute({ cnpj, email, nome, password, role, username }).then(response => {
-      console.log('response :>> ', response);
-    }).catch(error => {
-      console.log('error :>> ', error);
-    })
+    await signUpService
+      .execute({ cnpj, email, nome, password, role, username })
+      .then((response) => {
+        console.log("response :>> ", response);
+      })
+      .catch((error) => {
+        console.log("error :>> ", error);
+      });
   }, []);
 
-  const signUpHandler = useCallback(async (e: React.FormEvent) => {
-    e.preventDefault();
+  const signUpHandler = useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault();
 
-    const cnpj = cnpjRef?.current?.value;
-    const email = emailRef?.current?.value;
-    const nome = nameRef?.current?.value;
-    const password = passwordRef?.current?.value;
-    const role = ['ROLE_USER'];
-    const username = usernameRef?.current?.value;
+      const cnpj = cnpjRef?.current?.value;
+      const email = emailRef?.current?.value;
+      const nome = nameRef?.current?.value;
+      const password = passwordRef?.current?.value;
+      const role = ["ROLE_USER"];
+      const username = usernameRef?.current?.value;
 
-    if (cnpj && email && nome && password && role && username) {
-      try {
-        const userData = await signUp({
-          cnpj,
-          email,
-          nome,
-          password,
-          role,
-          username,
-        });
-        console.log("userData :>> ", userData);
-      } catch (e) {
-        console.log("e :>> ", e);
+      if (cnpj && email && nome && password && role && username) {
+        try {
+          const userData = await signUp({
+            cnpj,
+            email,
+            nome,
+            password,
+            role,
+            username,
+          });
+          console.log("userData :>> ", userData);
+        } catch (e) {
+          console.log("e :>> ", e);
+        }
       }
-    }
-  }, [signUp]);
+    },
+    [signUp]
+  );
 
-  const handleChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
-  }, [state]);
+  const handleChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setState({ ...state, [event.target.name]: event.target.checked });
+    },
+    [state]
+  );
 
   const { ADMINISTRATOR, USER } = state;
 
@@ -203,13 +207,7 @@ export default function SignUp() {
             </FormGroup>
           </FormControl> */}
 
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
+          <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
             Register
           </Button>
           <Grid container>
