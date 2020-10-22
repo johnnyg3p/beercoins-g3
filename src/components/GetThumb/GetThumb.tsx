@@ -2,7 +2,8 @@ import React from "react";
 import { Avatar } from "@material-ui/core";
 import "./GetThumb.scss";
 
-const getFirstLetter = (text: string): string => {
+const getFirstLetter = (text?: string): string => {
+  if (!text) return "";
   var initials = "";
   var words = text.split(" ");
   for (let index = 0; index < 2; index++) {

@@ -1,16 +1,26 @@
-interface ILoginStatus {
-  id: number;
+interface ISignIn {
+  username: string;
+  password: string;
+}
+
+interface ISignInStatus {
+  id: number | null;
   username: string;
   email: string;
   roles: string[];
   accessToken: string;
   tokenType: string;
+  hash: string;
 }
 
-interface ILoginError {
+interface ISignInError {
   timestamp: string;
   status: number;
   error: string;
   message: string;
   path: string;
+}
+
+interface IInputRef {
+  value: string;
 }

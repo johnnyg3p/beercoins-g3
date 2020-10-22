@@ -1,10 +1,8 @@
 import React from "react";
-import "./App.css";
 import SideBar from "./sideBar";
-import "./App.css";
 import Routes from "./routes";
 import { makeStyles, createStyles } from "@material-ui/core";
-import { Theme, useTheme } from "@material-ui/core/styles";
+import { Theme } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -17,7 +15,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 function App() {
   const classes = useStyles();
-  const theme = useTheme();
+
   return (
     <div className="App">
       <header className="App-header">
