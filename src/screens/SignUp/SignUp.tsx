@@ -15,7 +15,8 @@ import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 
-import { useAuthContext } from "../../context/Auth";
+import {SignUpService} from '../../services/Auth.service'
+const signUpService = new SignUpService();
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -48,12 +49,21 @@ export default function SignUp() {
   const passwordRef = useRef<IInputRef>(null);
   const usernameRef = useRef<IInputRef>(null);
   const roleRef = useRef<ICheckBoxRef>(null);
-  const { signUp } = useAuthContext();
 
   const [state, setState] = React.useState({
     ADMINISTRATOR: false,
     USER: false,
   });
+
+  const signUp = useCallback(async (signUp: ISignUp) => {
+    const { cnpj, email, nome, password, role, username } = signUp;
+
+    await signUpService.execute({ cnpj, email, nome, password, role, username }).then(response => {
+      console.log('response :>> ', response);
+    }).catch(error => {
+      console.log('error :>> ', error);
+    })
+  }, []);
 
   const signUpHandler = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
@@ -62,7 +72,7 @@ export default function SignUp() {
     const email = emailRef?.current?.value;
     const nome = nameRef?.current?.value;
     const password = passwordRef?.current?.value;
-    const role = ['USER'];
+    const role = ['ROLE_USER'];
     const username = usernameRef?.current?.value;
 
     if (cnpj && email && nome && password && role && username) {

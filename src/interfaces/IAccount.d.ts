@@ -1,6 +1,6 @@
 interface IAccount {
-    id: string,
-    name: string,
     hash: string,
+    nome: string,
+    email: string,    
     cnpj: string   
 }

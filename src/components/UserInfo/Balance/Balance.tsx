@@ -13,7 +13,7 @@ const Balance = () => {
 
   useEffect(() => {
     async function getDataFn() {
-      const resultBalance = await GetBalance(userInfo.hash);
+      const resultBalance = await GetBalance(userInfo.hash || "");
       const { saldo } = resultBalance;
       setBalance(saldo);
     }
