@@ -3,6 +3,7 @@ import SideBar from "./sideBar";
 import Routes from "./routes";
 import { makeStyles, createStyles } from "@material-ui/core";
 import { Theme } from "@material-ui/core/styles";
+import { AuthProvider } from "./context/Auth";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -17,14 +18,16 @@ function App() {
   const classes = useStyles();
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <SideBar moderator={'MODERATOR'} />
-      </header>
-      <main className={classes.content}>
-        <Routes />
-      </main>
-    </div>
+    <AuthProvider>
+      <div className="App">
+        <header className="App-header">
+          <SideBar moderator={'MODERATOR'} />
+        </header>
+        <main className={classes.content}>
+          <Routes />
+        </main>
+      </div>
+    </AuthProvider>
   );
 }
 
