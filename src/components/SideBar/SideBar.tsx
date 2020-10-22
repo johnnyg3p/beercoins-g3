@@ -4,12 +4,14 @@ import { createStyles, makeStyles, useTheme, Theme } from "@material-ui/core/sty
 import Drawer from "@material-ui/core/Drawer";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
+import Box from "@material-ui/core/Box";
 import List from "@material-ui/core/List";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ListItem from "@material-ui/core/ListItem";
@@ -20,6 +22,8 @@ import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import Cached from "@material-ui/icons/Cached";
 import EventNoteIcon from "@material-ui/icons/EventNote";
 import Link from "@material-ui/core/Link";
+
+import { useAuthContext } from "../../context/Auth";
 
 const drawerWidth = 280;
 
@@ -91,6 +95,8 @@ const SideBar = ({ moderator }: { moderator: 'MODERATOR' | 'USER' }) => {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const { signOut } = useAuthContext();
+
   const moderatorMenu = [
     {
       id: 1,
@@ -155,20 +161,30 @@ const SideBar = ({ moderator }: { moderator: 'MODERATOR' | 'USER' }) => {
         })}
         >
         <Toolbar>
+          <Box display="flex" flexGrow={1} alignItems="center">
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              edge="start"
+              className={clsx(classes.menuButton, {
+                [classes.hide]: open,
+              })}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" noWrap>
+              Beer Coin
+            </Typography>
+          </Box>
+
           <IconButton
             color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            className={clsx(classes.menuButton, {
-              [classes.hide]: open,
-            })}
-            >
-            <MenuIcon />
+            aria-label="exit app"
+            onClick={() => signOut()}
+          >
+            <ExitToAppIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
-            Beer Coin
-          </Typography>
         </Toolbar>
       </AppBar>
       <Drawer
