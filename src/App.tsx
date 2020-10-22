@@ -21,7 +21,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <SideBar moderator={true} />
+        <SideBar moderator={'MODERATOR'} />
       </header>
       <main className={classes.content}>
         <Routes />
