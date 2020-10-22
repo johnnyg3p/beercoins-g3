@@ -1,5 +1,5 @@
 import React from "react";
-import SideBar from "./sideBar";
+import SideBar from "./components/SideBar";
 import Routes from "./routes";
 import { makeStyles, createStyles } from "@material-ui/core";
 import { Theme } from "@material-ui/core/styles";
@@ -19,7 +19,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <SideBar moderator={'MODERATOR'} />
+        <SideBar moderator={'USER'} />
       </header>
       <main className={classes.content}>
         <Routes />
