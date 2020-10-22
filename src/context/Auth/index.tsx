@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState } from "react";
 import { SignUpService, SignInService } from "../../services/Auth.service";
-import { IAuthContextProps } from "../../Interfaces/IAuthContextProps";
+import { IAuthContextProps } from "../../interfaces/IAuthContextProps";
 
 const signUpService = new SignUpService();
 const signInService = new SignInService();

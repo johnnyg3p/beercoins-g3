@@ -1,37 +1,38 @@
 import React from "react";
 import Accounts from '../../components/Accounts/Accounts';
+import { Grid, Paper } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
 
-const accountsMock: IAccount[] = [
-  {
-    id: "564456",
-    name: "Johnny",
-    hash: "1234",
-    cnpj: "21.386.317/0001-88"
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
   },
-  {
-    id: "264656",
-    name: "João",
-    hash: "1234",
-    cnpj: "88.388.608/0001-86"
+  container: {
+    paddingTop: theme.spacing(4),
+    paddingBottom: theme.spacing(4),
   },
-  {
-    id: "564666",
-    name: "Maria",
-    hash: "1234",
-    cnpj: "26.909.879/0001-82"
-  },
-  {
-    id: "164656",
-    name: "Teste",
-    hash: "1234",
-    cnpj: "78.924.666/0001-23"
-  },
-];
+  paper: {
+    padding: theme.spacing(2),
+    display: 'flex',
+    overflow: 'auto',
+    flexDirection: 'column',
+  } 
+}));
+
 
 const Operations = () => {
+  const classes = useStyles();
   return (
     <div>
-      <Accounts accounts={accountsMock} />
+      <Container maxWidth="lg" className={classes.container}>     
+          <Grid item xs={12}>
+            <Paper className={classes.paper}>
+              <Accounts />
+            </Paper>
+          </Grid>        
+      </Container>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-export enum BankPostType{
+export enum OperationType{
     CREDIT = "credito",
     DEBIT = "débito"
 }
