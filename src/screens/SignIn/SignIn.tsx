@@ -12,6 +12,9 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useAuthContext } from "../../context/Auth";
+import {SignInService} from '../../services/Auth.service'
+import { useHistory } from "react-router-dom";
+const signInService = new SignInService();
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -37,7 +40,22 @@ export default function SignIn() {
   const classes = useStyles();
   const usernameRef = useRef<IInputRef>(null);
   const passwordRef = useRef<IInputRef>(null);
-  const { signIn, userInfo } = useAuthContext();
+  const { userInfo, setUserInfo } = useAuthContext();
+  let history = useHistory();
+  
+  const signIn = useCallback(async (login: ISignIn) => {
+    const { password, username } = login;
+
+    await signInService.execute({ password, username }).then(response => {
+      const userInformation = response.data;
+      
+      setUserInfo(userInformation);
+      sessionStorage.setItem('userInfo', JSON.stringify(response));
+      history.push('/');
+    }).catch(error => {
+      console.log('error :>> ', error);
+    })
+  }, [history, setUserInfo]);
   
   const signInHandler = useCallback(
     async (e: React.FormEvent) => {
