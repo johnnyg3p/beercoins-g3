@@ -1,0 +1,20 @@
+@import "../../../../assets/scss/variables.scss";
+
+.current-balance {
+  color: $lightergray;
+  border: 1px solid;
+  border-radius: 4px;
+  display: inline-flex;
+  flex-flow: column;
+  width: calc(100% - 10%);
+  align-items: center;
+  padding: 10px;
+  &-text {
+    color: $lightgray;
+  }
+  &-currency {
+    font-size: 2em;
+    font-weight: 800;
+    color: $darkblue;
+  }
+}
