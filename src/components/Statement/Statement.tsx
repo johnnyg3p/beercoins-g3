@@ -20,7 +20,7 @@ function Statement(props: IProps) {
 
   useEffect(() => {
     async function getDataFn() {
-      const resultStatement = await GetStatement(userInfo.hash || "");
+      const resultStatement = await GetStatement(userInfo?.hash || "");
       console.log("resultStatement", resultStatement);
       setStatement(resultStatement);
     }
