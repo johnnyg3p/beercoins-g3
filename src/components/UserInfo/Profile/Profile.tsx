@@ -5,7 +5,6 @@ import { useAuthContext } from "../../../context/Auth";
 
 const Profile = () => {
   const { userInfo } = useAuthContext();
-  console.log("userInf => ", userInfo);
   return (
     <div className="user-profile">
       <GetThumb src="./assets/user1.jpg" text={userInfo.username} size="large" />
