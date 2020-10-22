@@ -20,7 +20,6 @@ import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import Cached from "@material-ui/icons/Cached";
 import EventNoteIcon from "@material-ui/icons/EventNote";
 import Link from "@material-ui/core/Link";
-import sidebar from "./sidebar.json";
 
 const drawerWidth = 280;
 
