@@ -1,0 +1,44 @@
+[
+  {
+    "horarioOperacao": "21/10/2020 21:51",
+    "tipoOperacao": 1,
+    "valorOperacao": 100,
+    "hash": "c54caf29-184a-4706-9845-6672cbf0025d",
+    "debitCredit": "C"
+  },
+  {
+    "horarioOperacao": "21/10/2020 15:51",
+    "tipoOperacao": 2,
+    "valorOperacao": 16,
+    "hash": "c54caf29-184a-4706-9845-6672cbf0025d",
+    "debitCredit": "D"
+  },
+  {
+    "horarioOperacao": "20/10/2020 12:32",
+    "tipoOperacao": 1,
+    "valorOperacao": 1.54,
+    "hash": "c54caf29-184a-4706-9845-6672cbf0025d",
+    "debitCredit": "C"
+  },
+  {
+    "horarioOperacao": "20/09/2020 08:32",
+    "tipoOperacao": 2,
+    "valorOperacao": 101.98,
+    "hash": "c54caf29-184a-4706-9845-6672cbf0025d",
+    "debitCredit": "D"
+  },
+  {
+    "horarioOperacao": "15/09/2020 11:42",
+    "tipoOperacao": 1,
+    "valorOperacao": 20.74,
+    "hash": "c54caf29-184a-4706-9845-6672cbf0025d",
+    "debitCredit": "C"
+  },
+  {
+    "horarioOperacao": "12/09/2020 18:59",
+    "tipoOperacao": 2,
+    "valorOperacao": 0.54,
+    "hash": "c54caf29-184a-4706-9845-6672cbf0025d",
+    "debitCredit": "D"
+  }
+]

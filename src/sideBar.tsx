@@ -86,7 +86,9 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default function SideBar({ moderator }: { moderator: boolean }) {
+
+
+const SideBar = ({ moderator }: { moderator: 'MODERATOR' | 'USER' }) =>  {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -95,58 +97,54 @@ export default function SideBar({ moderator }: { moderator: boolean }) {
       id: 1,
       text: "Cadastrar usuários",
       icon: <AccountCircleIcon />,
-      link: "cadastro",
+      link: "/cadastro",
     },
     {
       id: 2,
-      text: "Extrato",
+      text: "Lista de contas",
       icon: <EventAvailableIcon />,
-      link: "cadastro",
+      link: "/Lista de contas",
     },
     {
       id: 3,
-      text: "Transferencia",
+      text: "Transferencias",
       icon: <Cached />,
-      link: "cadastro",
-    },
-    {
-      id: 4,
-      text: "Ultimas movimentações",
-      icon: <EventNoteIcon />,
-      link: "cadastro",
-    },
+      link: "/trandferencias",
+    }
   ];
-
+  
   const userMenu = [
     {
       id: 1,
       text: "Extrato",
       icon: <EventAvailableIcon />,
+      link: "/operations"
+
     },
     {
       id: 2,
-      text: "Transferencia",
+      text: "Transferencias",
       icon: <Cached />,
+      link: "/transferencias",
+
     },
     {
       id: 3,
       text: "Ultimas movimentações",
       icon: <EventNoteIcon />,
+      link: "/ultimoslancamentos",
+
     },
   ];
-
+  
   const handleDrawerOpen = () => {
     setOpen(true);
   };
-
+  
   const handleDrawerClose = () => {
     setOpen(false);
   };
-
-  const handleClick = () => {
-    setOpen(false);
-    console.log("yeahhhh");
-  };
+  
 
   return (
     <div className={classes.root}>
@@ -156,7 +154,7 @@ export default function SideBar({ moderator }: { moderator: boolean }) {
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
         })}
-      >
+        >
         <Toolbar>
           <IconButton
             color="inherit"
@@ -166,7 +164,7 @@ export default function SideBar({ moderator }: { moderator: boolean }) {
             className={clsx(classes.menuButton, {
               [classes.hide]: open,
             })}
-          >
+            >
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
@@ -186,7 +184,7 @@ export default function SideBar({ moderator }: { moderator: boolean }) {
             [classes.drawerClose]: !open,
           }),
         }}
-      >
+        >
         <div className={classes.toolbar}>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "rtl" ? <ChevronRightIcon /> : <ChevronLeftIcon />}
@@ -194,12 +192,12 @@ export default function SideBar({ moderator }: { moderator: boolean }) {
         </div>
         <Divider />
 
-        {moderator ? (
+        {moderator === 'MODERATOR'? (
           <List>
             {moderatorMenu.map((item, index) => {
-              const { text, id, icon } = item;
+              const { text, id, icon, link } = item;
               return (
-                <ListItem button key={id} onClick={handleClick}>
+                <ListItem button key={id} onClick={ () => alert(link)}>
                   <ListItemIcon> {icon}</ListItemIcon>
                   <ListItemText primary={text} />
                 </ListItem>
@@ -209,9 +207,9 @@ export default function SideBar({ moderator }: { moderator: boolean }) {
         ) : (
           <List>
             {userMenu.map((item, index) => {
-              const { text, id, icon } = item;
+              const { text, id, icon, link } = item;
               return (
-                <ListItem button key={id} onClick={handleClick}>
+                <ListItem button key={id} onClick={ () => alert(link)}>
                   <ListItemIcon> {icon}</ListItemIcon>
                   <ListItemText primary={text} />
                 </ListItem>
@@ -224,3 +222,4 @@ export default function SideBar({ moderator }: { moderator: boolean }) {
     </div>
   );
 }
+export default SideBar;

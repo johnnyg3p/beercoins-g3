@@ -43,20 +43,6 @@ export default function SignIn() {
   const { userInfo, setUserInfo } = useAuthContext();
   let history = useHistory();
   
-  const signIn = useCallback(async (login: ISignIn) => {
-    const { password, username } = login;
-
-    await signInService.execute({ password, username }).then(response => {
-      const userInformation = response.data;
-      
-      setUserInfo(userInformation);
-      sessionStorage.setItem('userInfo', JSON.stringify(response));
-      history.push('/');
-    }).catch(error => {
-      console.log('error :>> ', error);
-    })
-  }, [history, setUserInfo]);
-  
   const signInHandler = useCallback(
     async (e: React.FormEvent) => {
       e.preventDefault();
@@ -65,15 +51,18 @@ export default function SignIn() {
       const password = passwordRef?.current?.value;
 
       if (username && password) {
-        try {
-          const userData = await signIn({ username, password });
-          console.log("userData :>> ", userData);
-        } catch (e) {
-          console.log("e :>> ", e);
-        }
+        await signInService.mock({ password, username }).then(response => {
+          const userInformation = response;
+          
+          setUserInfo(userInformation);
+          sessionStorage.setItem('userInfo', JSON.stringify(userInformation));
+          history.push('/');
+        }).catch(error => {
+          console.log('error :>> ', error);
+        })
       }
     },
-    [signIn]
+    [history, setUserInfo]
   );
 
   return (
