@@ -1,6 +1,5 @@
 export interface IAuthContextProps {
-    signIn(login: ISignIn): Promise<void>;
-    signUp(signUp: ISignUp): Promise<void>;
+    userInfo: ISignInStatus | undefined;
     signOut(): void;
-    userInfo: ISignInStatus | undefined
+    setUserInfo: React.Dispatch<React.SetStateAction<ISignInStatus | undefined>>
 }
