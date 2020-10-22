@@ -7,7 +7,7 @@ export default class AccountsService {
     return new Promise<AxiosResponse<IAccount[]>>(
       (resolve, reject) => {
         axiosRequest
-          .get("auth/accounts")
+          .get("current-account/accountList")
           .then((response) => {
             return resolve(response);
           })
