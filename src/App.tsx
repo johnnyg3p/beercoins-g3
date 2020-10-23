@@ -1,9 +1,10 @@
 import React from "react";
-import SideBar from "./sideBar";
+import SideBar from "./components/SideBar";
 import Routes from "./routes";
 import { makeStyles, createStyles } from "@material-ui/core";
 import { Theme } from "@material-ui/core/styles";
 import { AuthProvider } from "./context/Auth";
+import { ToastProvider } from 'react-toast-notifications'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -19,14 +20,16 @@ function App() {
 
   return (
     <AuthProvider>
-      <div className="App">
-        <header className="App-header">
-          <SideBar moderator={'MODERATOR'} />
-        </header>
-        <main className={classes.content}>
-          <Routes />
-        </main>
-      </div>
+      <ToastProvider autoDismiss={true} placement="bottom-right">
+        <div className="App">
+          <header className="App-header">
+            <SideBar moderator={'MODERATOR'} />
+          </header>
+          <main className={classes.content}>
+            <Routes />
+          </main>
+        </div>
+      </ToastProvider>
     </AuthProvider>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from "react";
+import React, { useRef, useCallback, useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -9,11 +9,12 @@ import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import { makeStyles } from "@material-ui/core/styles";
+import { useToasts } from 'react-toast-notifications'
 import { useAuthContext } from "../../context/Auth";
-import {SignInService} from '../../services/Auth.service'
 import { useHistory } from "react-router-dom";
+import { SignInService } from "../../services/Auth.service";
 const signInService = new SignInService();
 
 const useStyles = makeStyles((theme) => ({
@@ -40,9 +41,13 @@ export default function SignIn() {
   const classes = useStyles();
   const usernameRef = useRef<IInputRef>(null);
   const passwordRef = useRef<IInputRef>(null);
-  const { userInfo, setUserInfo } = useAuthContext();
+  const [usernameInputError, setUsernameInputError] = useState(false);
+  const [passwordInputError, setPasswordInputError] = useState(false);
+  const { setUserInfo } = useAuthContext();
+  const { addToast } = useToasts()
+
   let history = useHistory();
-  
+
   const signInHandler = useCallback(
     async (e: React.FormEvent) => {
       e.preventDefault();
@@ -50,19 +55,34 @@ export default function SignIn() {
       const username = usernameRef?.current?.value;
       const password = passwordRef?.current?.value;
 
+      if (!username) {
+        setUsernameInputError(true);
+      }
+      
+      if (!password) {
+        setPasswordInputError(true);
+      }
+
       if (username && password) {
-        await signInService.mock({ password, username }).then(response => {
-          const userInformation = response;
-          
-          setUserInfo(userInformation);
-          sessionStorage.setItem('userInfo', JSON.stringify(userInformation));
-          history.push('/');
-        }).catch(error => {
-          console.log('error :>> ', error);
-        })
+        await signInService
+          .execute({ password, username })
+          .then((response) => {
+            const userInformation = response.data;
+
+            setUserInfo(userInformation);
+            sessionStorage.setItem("userInfo", JSON.stringify(userInformation));
+            addToast('Login efetuado com sucesso! Você será redirecionado', { appearance: "success"})
+            
+            setTimeout(() => {
+              history.push("/");
+            }, 2000)
+          })
+          .catch((error) => {
+            addToast('Credenciais inválidas. Por favor, tente novamente.', { appearance: 'error' })
+          });
       }
     },
-    [history, setUserInfo]
+    [addToast, history, setUserInfo]
   );
 
   return (
@@ -88,6 +108,8 @@ export default function SignIn() {
             autoComplete="username"
             autoFocus
             inputRef={usernameRef}
+            error={usernameInputError}
+            onFocus={() => setUsernameInputError(false)}
           />
           <TextField
             variant="outlined"
@@ -100,6 +122,8 @@ export default function SignIn() {
             id="password"
             autoComplete="current-password"
             inputRef={passwordRef}
+            error={passwordInputError}
+            onFocus={() => setPasswordInputError(false)}
           />
 
           <Button
@@ -111,7 +135,7 @@ export default function SignIn() {
           >
             Sign In
           </Button>
-          
+
           <Grid container>
             <Grid item>
               <Link href="/signup" variant="body2">
