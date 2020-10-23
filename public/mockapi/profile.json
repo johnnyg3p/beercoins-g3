@@ -1,11 +1,12 @@
 {
   "userInfo": {
-    "id": 91,
-    "username": "marcelonascimento",
-    "email": "marcelo.nascimento@teste.com",
-    "roles": [],
-    "hash": "053ec2ad-a086-451b-b435-59d1db2668d0",
-    "accessToken": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXJjZWxvbmFzY2ltZW50byIsImlhdCI6MTYwMzQwODU4NSwiZXhwIjoxNjAzNDk0OTg1fQ.dUd_e_ZVQUTgwxjvvQaYYnU47a4jIW7-zvzJ-rAXd5kh9RfHAspgWpiWtLrIlef17DvDqxCBgVPR_WEfI82d0w",
+    "id": 151,
+    "username": "marcelo1",
+    "email": "mmn@teste.com",
+    "roles": ["ROLE_MODERATOR"],
+    "hash": "50d00ac5-694a-4f91-8717-1645ac249674",
+    "name": "Marcelo Nascimento 1",
+    "accessToken": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXJjZWxvMSIsImlhdCI6MTYwMzQyMDUxNywiZXhwIjoxNjAzNTA2OTE3fQ.jo1C-jssRTpyTn18W0tymLy1cWvheMR7uQU0BOhF0ZujoL4kVUMPVYpg9Mlk5RrflBTBTo5wxz-GP4M1gg-HuA",
     "tokenType": "Bearer"
   }
 }

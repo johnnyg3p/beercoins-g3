@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import IconButton from "@material-ui/core/IconButton";
 import AccountBalanceWallet from "@material-ui/icons/AccountBalanceWallet";
 import CurrentBalance from "./CurrentBalance";
+import { Skeleton } from "@material-ui/lab";
 import { Avatar } from "@material-ui/core";
 import "./Balance.scss";
 import { GetBalance } from "../../../services/User/User";
@@ -13,7 +14,7 @@ const Balance = () => {
 
   useEffect(() => {
     async function getDataFn() {
-      const resultBalance = await GetBalance(userInfo?.hash || "");
+      const resultBalance = await GetBalance({ hash: userInfo.hash || "", token: userInfo.accessToken });
       const { saldo } = resultBalance;
       setBalance(saldo);
     }
@@ -28,7 +29,11 @@ const Balance = () => {
         </IconButton>
       </Avatar>
       <span className="balance-text">Tap on the walet to update</span>
-      {balance && <CurrentBalance balance={balance} />}
+      {balance === null ? (
+        <Skeleton variant="rect" width={"calc(100% - 10%)"} height={82} animation="wave" />
+      ) : (
+        <CurrentBalance balance={balance} />
+      )}
     </div>
   );
 };

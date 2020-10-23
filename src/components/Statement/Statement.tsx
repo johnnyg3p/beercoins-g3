@@ -8,7 +8,7 @@ import TableRow from "@material-ui/core/TableRow";
 import { useAuthContext } from "../../context/Auth";
 import { GetStatement } from "../../services/User/User";
 import "./Statement.scss";
-import { formatCurrency } from "../../utils/formaters/formaters";
+import { formatCurrency, formatBankPost } from "../../utils/formaters/formaters";
 
 interface IProps {}
 
@@ -20,8 +20,7 @@ function Statement(props: IProps) {
 
   useEffect(() => {
     async function getDataFn() {
-      const resultStatement = await GetStatement(userInfo?.hash || "");
-      console.log("resultStatement", resultStatement);
+      const resultStatement = await GetStatement({ hash: userInfo.hash || "", token: userInfo.accessToken });
       setStatement(resultStatement);
     }
     getDataFn();
@@ -35,7 +34,7 @@ function Statement(props: IProps) {
     })
     .map((bankPost, index) => (
       <TableRow key={index + bankPost.hash}>
-        <TableCell align="left">{bankPost.debitCredit}</TableCell>
+        <TableCell align="left">{formatBankPost(bankPost.debitCredit)}</TableCell>
         <TableCell align="center">{bankPost.horarioOperacao}</TableCell>
         <TableCell align="right">{formatCurrency(bankPost.valorOperacao)}</TableCell>
       </TableRow>
