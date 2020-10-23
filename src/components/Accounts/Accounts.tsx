@@ -10,6 +10,7 @@ import TableRow from "@material-ui/core/TableRow";
 import SimpleModal from "./modal";
 import AccountsService from "../../services/Accounts/accounts.service";
 import Link from "@material-ui/core/Link";
+import { useToasts } from "react-toast-notifications";
 
 const accountsService = new AccountsService();
 
@@ -28,6 +29,7 @@ function seeMore(event: HTMLAnchorElement) {
 
 function Accounts() {
   const [accountList, setAccount] = useState<IAccount[]>([]);
+  const { addToast } = useToasts();
 
   useEffect(() => { 
     accountsService
@@ -37,7 +39,9 @@ function Accounts() {
         JSON.stringify(response);
       })
       .catch((error) => {
-        alert("Ocorreu um erro ao buscar os items");
+        addToast("An error occur to get Accounts. Try again.", {
+          appearance: "error",
+        });
       });
   });
 
@@ -58,17 +62,17 @@ function Accounts() {
 
   return (
     <React.Fragment>
-      <h1>Lista de Contas</h1>
+      <h1>Accounts</h1>
       <TableContainer>
-        <Table className={classes.table} aria-label="customized table">
+        <Table className={classes.table} aria-label="Accounts table">
           <TableHead>
             <TableRow>
               <TableCell align="left">#</TableCell>
-              <TableCell align="left">Numero da Conta</TableCell>
-              <TableCell align="left">Nome</TableCell>
-              <TableCell align="left">email</TableCell>
+              <TableCell align="left">Account number</TableCell>
+              <TableCell align="left">Name</TableCell>
+              <TableCell align="left">Email</TableCell>
               <TableCell align="left">CNPJ</TableCell>
-              <TableCell align="left">Ações</TableCell>
+              <TableCell align="left">Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>{bankPostList}</TableBody>
@@ -76,7 +80,7 @@ function Accounts() {
       </TableContainer>
       <div className={classes.seeMore}>
         <Link color="primary" href="#" onClick={() => seeMore}>
-          Veja mais contas
+          See more
         </Link>
       </div>
     </React.Fragment>
