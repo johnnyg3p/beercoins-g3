@@ -11,10 +11,8 @@ const Routes = () => (
     <PrivateRoute exact path="/">
       <Home />
     </PrivateRoute>
-    {/* <Route exact path="/" component={Home} /> */}
     <Route path="/login" component={SignIn} />
     <Route path="/signup" component={SignUp} />
-    {/* <Route path="/operations" component={Operations} /> */}
     <PrivateRoute path="/operations">
       <Operations />
     </PrivateRoute>

@@ -7,9 +7,10 @@ import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-
+import { useHistory } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
+import { useToasts } from "react-toast-notifications";
 import { SignUpService } from "../../services/Auth.service";
 const signUpService = new SignUpService();
 
@@ -44,24 +45,13 @@ export default function SignUp() {
   const passwordRef = useRef<IInputRef>(null);
   const usernameRef = useRef<IInputRef>(null);
   const roleRef = useRef<ICheckBoxRef>(null);
+  const { addToast } = useToasts();
+  let history = useHistory();
 
   const [state, setState] = React.useState({
     ADMINISTRATOR: false,
     USER: false,
   });
-
-  const signUp = useCallback(async (signUp: ISignUp) => {
-    const { cnpj, email, nome, password, role, username } = signUp;
-
-    await signUpService
-      .execute({ cnpj, email, nome, password, role, username })
-      .then((response) => {
-        console.log("response :>> ", response);
-      })
-      .catch((error) => {
-        console.log("error :>> ", error);
-      });
-  }, []);
 
   const signUpHandler = useCallback(
     async (e: React.FormEvent) => {
@@ -75,22 +65,30 @@ export default function SignUp() {
       const username = usernameRef?.current?.value;
 
       if (cnpj && email && nome && password && role && username) {
-        try {
-          const userData = await signUp({
-            cnpj,
-            email,
-            nome,
-            password,
-            role,
-            username,
+        await signUpService
+        .execute({ cnpj, email, nome, password, role, username })
+        .then((response) => {
+          addToast(
+            "Cadastro efetuado com sucesso! Você pode fazer o login agora.",
+            { appearance: "success" }
+          );
+
+          setTimeout(() => {
+            history.push("/login");
+          }, 1000);
+        })
+        .catch((error) => {
+          const { message } = error.response.data;
+
+          if (message) return addToast(message, { appearance: "error" });
+
+          addToast("Ocorreu um erro. Por favor, tente novamente.", {
+            appearance: "error",
           });
-          console.log("userData :>> ", userData);
-        } catch (e) {
-          console.log("e :>> ", e);
-        }
+        });
       }
     },
-    [signUp]
+    [addToast, history]
   );
 
   const handleChange = useCallback(
@@ -207,7 +205,13 @@ export default function SignUp() {
             </FormGroup>
           </FormControl> */}
 
-          <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+          >
             Register
           </Button>
           <Grid container>
