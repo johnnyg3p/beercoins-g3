@@ -3,26 +3,37 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
+import CircularProgress from '@material-ui/core/CircularProgress';
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
-import { makeStyles } from "@material-ui/core/styles";
-import { useToasts } from 'react-toast-notifications'
+import { blue } from '@material-ui/core/colors';
+import { makeStyles, Theme } from "@material-ui/core/styles";
+import { useToasts } from "react-toast-notifications";
 import { useAuthContext } from "../../context/Auth";
 import { useHistory } from "react-router-dom";
 import { SignInService } from "../../services/Auth.service";
 const signInService = new SignInService();
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
   paper: {
     marginTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+  },
+  wrapper: {
+    position: 'relative',
+  },
+  buttonProgress: {
+    color: blue[500],
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginTop: -12,
+    marginLeft: -12,
   },
   avatar: {
     margin: theme.spacing(1),
@@ -43,8 +54,9 @@ export default function SignIn() {
   const passwordRef = useRef<IInputRef>(null);
   const [usernameInputError, setUsernameInputError] = useState(false);
   const [passwordInputError, setPasswordInputError] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { setUserInfo } = useAuthContext();
-  const { addToast } = useToasts()
+  const { addToast } = useToasts();
 
   let history = useHistory();
 
@@ -58,12 +70,14 @@ export default function SignIn() {
       if (!username) {
         setUsernameInputError(true);
       }
-      
+
       if (!password) {
         setPasswordInputError(true);
       }
 
       if (username && password) {
+        setLoading(true);
+
         await signInService
           .execute({ password, username })
           .then((response) => {
@@ -71,14 +85,19 @@ export default function SignIn() {
 
             setUserInfo(userInformation);
             sessionStorage.setItem("userInfo", JSON.stringify(userInformation));
-            addToast('Login efetuado com sucesso! Você será redirecionado', { appearance: "success"})
-            
+            addToast("Login efetuado com sucesso! Você será redirecionado", {
+              appearance: "success",
+            });
+
             setTimeout(() => {
               history.push("/");
-            }, 2000)
+            }, 2000);
           })
           .catch((error) => {
-            addToast('Credenciais inválidas. Por favor, tente novamente.', { appearance: 'error' })
+            setLoading(false);
+            addToast("Credenciais inválidas. Por favor, tente novamente.", {
+              appearance: "error",
+            });
           });
       }
     },
@@ -126,15 +145,22 @@ export default function SignIn() {
             onFocus={() => setPasswordInputError(false)}
           />
 
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Sign In
-          </Button>
+          <div className={classes.wrapper}>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              size="large"
+              disabled={loading}
+            >
+              Sign In
+            </Button>
+            {loading && (
+              <CircularProgress size={24} className={classes.buttonProgress} />
+            )}
+          </div>
 
           <Grid container>
             <Grid item>

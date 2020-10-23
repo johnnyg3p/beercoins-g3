@@ -3,7 +3,6 @@ interface ISignUp {
   email: string,
   nome: string,
   password: string,
-  role: string[],
   username: string
 }
 

@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { IAuthContextProps } from "../../interfaces/IAuthContextProps";
 
 // const initialState = {
@@ -38,10 +39,13 @@ const initialState = () => {
 
 export const AuthProvider = ({ children }: any) => {
   const [userInfo, setUserInfo] = useState(initialState());
+  let history = useHistory();
 
   const signOut = () => {
     sessionStorage.removeItem("userInfo");
     setUserInfo(initialState());
+
+    history.push('/login');
   };
 
   return <AuthContext.Provider value={{ signOut, userInfo, setUserInfo }}>{children}</AuthContext.Provider>;
