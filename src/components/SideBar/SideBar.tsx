@@ -97,45 +97,49 @@ const SideBar = ({ moderator }: { moderator: "MODERATOR" | "USER" }) => {
   const [open, setOpen] = React.useState(false);
   const { signOut } = useAuthContext();
 
-  const moderatorMenu = [
+  const menuSideaBar = [
     {
       id: 1,
       text: "Cadastrar usuários",
       icon: <AccountCircleIcon />,
       link: "/register",
+      userType: "MODERATOR"
     },
     {
       id: 2,
       text: "Lista de contas",
       icon: <EventAvailableIcon />,
       link: "/accounts",
+      userType: "MODERATOR"
+
     },
     {
       id: 3,
       text: "Transferencias",
       icon: <Cached />,
       link: "/transfers",
+      userType: "MODERATOR"
     },
-  ];
-
-  const userMenu = [
     {
-      id: 1,
+      id: 4,
       text: "Extrato",
       icon: <EventAvailableIcon />,
       link: "/operations",
+      userType: "USER"
     },
     {
-      id: 2,
+      id: 5,
       text: "Transferencias",
       icon: <Cached />,
       link: "/transfers",
+      userType: "USER"
     },
     {
-      id: 3,
+      id: 6,
       text: "Ultimas movimentações",
       icon: <EventNoteIcon />,
       link: "/latest",
+      userType: "USER"
     },
   ];
 
@@ -198,36 +202,22 @@ const SideBar = ({ moderator }: { moderator: "MODERATOR" | "USER" }) => {
           </IconButton>
         </div>
         <Divider />
-
-        {moderator === "MODERATOR" ? (
-          <List>
-            {moderatorMenu.map((item, index) => {
-              const { text, id, icon, link } = item;
-              return (
-                <Link href={link} key={id}>
-                  <ListItem button>
-                    <ListItemIcon> {icon}</ListItemIcon>
-                    <ListItemText primary={text} />
-                  </ListItem>
-                </Link>
-              );
-            })}
-          </List>
-        ) : (
-          <List>
-            {userMenu.map((item, index) => {
-              const { text, id, icon, link } = item;
-              return (
-                <Link href={link} key={id}>
-                  <ListItem button>
-                    <ListItemIcon> {icon}</ListItemIcon>
-                    <ListItemText primary={text} />
-                  </ListItem>
-                </Link>
-              );
-            })}
-          </List>
-        )}
+        <List>
+          {menuSideaBar.map((item, index) => {
+            const { text, id, icon, link, userType } = item;
+            return (
+              userType !== moderator ? '' :
+                <Typography noWrap>
+                  <Link color="inherit" href={link} key={id}>
+                    <ListItem button>
+                      <ListItemIcon> {icon}</ListItemIcon>
+                      <ListItemText primary={text} />
+                    </ListItem>
+                  </Link>
+                </Typography>
+            );
+          })}
+        </List>
         <Divider />
       </Drawer>
     </div>

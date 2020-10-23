@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     content: {
       flexGrow: 1,
-      paddingTop: theme.spacing(8),
+      paddingTop: theme.spacing(5),
       paddingLeft: theme.spacing(9),
     },
   })
@@ -23,7 +23,7 @@ function App() {
       <ToastProvider autoDismiss={true} placement="bottom-right">
         <div className="App">
           <header className="App-header">
-            <SideBar moderator={'MODERATOR'} />
+            <SideBar moderator={'USER'} />
           </header>
           <main className={classes.content}>
             <Routes />
