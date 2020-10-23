@@ -1,15 +1,24 @@
 import axiosRequest from "../../config/axios";
-import { AxiosResponse } from "axios";
+import { AxiosRequestConfig, AxiosResponse } from "axios";
 import { IDeposit } from "../../interfaces/IDeposit";
+
+const header = (): AxiosRequestConfig => { 
+  const userInfo = JSON.parse(sessionStorage.getItem("userInfo") || '');
+  return {
+    headers: {
+      Authorization: `Bearer ${userInfo.accessToken}`,
+    }
+  }
+};
 
 export default class AccountsService {
   async getAccounts() {
-    return new Promise<AxiosResponse<IAccount[]>>(
+    return new Promise<IAccount[]>(
       (resolve, reject) => {
         axiosRequest
-          .get("current-account/accountList")
+          .get("current-account/accountList", header())
           .then((response) => {
-            return resolve(response);
+            return resolve(response.data);
           })
           .catch((error) => reject(error));
       }
@@ -31,9 +40,9 @@ export default class AccountsService {
 
   getAccountsMock(): Promise<IAccount[]> {
     return new Promise(resolve => {
-        setTimeout(() => resolve(this.accountsMock), 1000);
+      setTimeout(() => resolve(this.accountsMock), 1000);
     });
-}
+  }
 
   accountsMock: IAccount[] = [
     {

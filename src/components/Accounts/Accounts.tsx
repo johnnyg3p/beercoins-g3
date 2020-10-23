@@ -29,10 +29,10 @@ function seeMore(event: HTMLAnchorElement) {
 function Accounts() {
   const [accountList, setAccount] = useState<IAccount[]>([]);
 
-  useEffect(() => {
+  useEffect(() => { 
     accountsService
-      .getAccountsMock()
-      .then((response) => {
+      .getAccounts()
+      .then((response) => {        
         setAccount(response);
         JSON.stringify(response);
       })
