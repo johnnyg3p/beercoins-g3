@@ -3,24 +3,45 @@ import { Route, Redirect } from "react-router-dom";
 import { useAuthContext } from "../../context/Auth";
 
 const PrivateRoute = ({ children, ...rest }: any) => {
+  const { role: routeRole } = rest;
   const {
-    userInfo: { accessToken },
+    userInfo: { accessToken, roles },
   } = useAuthContext();
+  const userRole = roles[0];
+  // const userRole = "ROLE_USER";
+  /* ADMIN USER {
+    user: admin,
+    pass: admin
+  } */
 
   return (
     <Route
       {...rest}
       render={({ location }) => {
-        return accessToken ? (
-          children
-        ) : (
-          <Redirect
-            to={{
-              pathname: "/login",
-              state: { from: location },
-            }}
-          />
-        );
+        console.log("routeRole", routeRole);
+        console.log("userRole", userRole);
+
+        if (accessToken) {
+          return !routeRole || routeRole === userRole ? (
+            children
+          ) : (
+            <Redirect
+              to={{
+                pathname: "/",
+                state: { from: location },
+              }}
+            />
+          );
+        } else {
+          return (
+            <Redirect
+              to={{
+                pathname: "/login",
+                state: { from: location },
+              }}
+            />
+          );
+        }
       }}
     />
   );

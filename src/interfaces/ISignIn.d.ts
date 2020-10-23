@@ -3,13 +3,13 @@ interface ISignIn {
   password: string;
 }
 
-type roles = "ROLE_MODERATOR" | "ROLE_USER";
+type IRoles = "ROLE_MODERATOR" | "ROLE_USER";
 
 interface ISignInStatus {
   id: number | null;
   username: string;
   email: string;
-  roles: roles[];
+  roles: IRoles[];
   accessToken: string;
   tokenType: string;
   hash: string;

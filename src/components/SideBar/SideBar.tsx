@@ -21,9 +21,9 @@ import EventAvailableIcon from "@material-ui/icons/EventAvailable";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import Cached from "@material-ui/icons/Cached";
 import EventNoteIcon from "@material-ui/icons/EventNote";
-import Link from "@material-ui/core/Link";
 
 import { useAuthContext } from "../../context/Auth";
+import { Link } from "react-router-dom";
 
 const drawerWidth = 280;
 
@@ -91,7 +91,12 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const SideBar = ({ moderator }: { moderator: "MODERATOR" | "USER" }) => {
+interface IProps {
+  moderator: IRoles;
+}
+
+const SideBar = (props: IProps) => {
+  const { moderator: typeUser } = props;
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -99,47 +104,18 @@ const SideBar = ({ moderator }: { moderator: "MODERATOR" | "USER" }) => {
 
   const menuSideaBar = [
     {
-      id: 1,
-      text: "Cadastrar usuários",
-      icon: <AccountCircleIcon />,
-      link: "/register",
-      userType: "MODERATOR"
-    },
-    {
-      id: 2,
-      text: "Lista de contas",
-      icon: <EventAvailableIcon />,
-      link: "/accounts",
-      userType: "MODERATOR"
-
-    },
-    {
-      id: 3,
-      text: "Transferencias",
-      icon: <Cached />,
-      link: "/transfers",
-      userType: "MODERATOR"
-    },
-    {
       id: 4,
-      text: "Extrato",
+      text: "Operations",
       icon: <EventAvailableIcon />,
       link: "/operations",
-      userType: "USER"
+      userType: "ROLE_MODERATOR",
     },
     {
       id: 5,
-      text: "Transferencias",
+      text: "Payments",
       icon: <Cached />,
-      link: "/transfers",
-      userType: "USER"
-    },
-    {
-      id: 6,
-      text: "Ultimas movimentações",
-      icon: <EventNoteIcon />,
-      link: "/latest",
-      userType: "USER"
+      link: "/payments",
+      userType: "ROLE_USER",
     },
   ];
 
@@ -174,13 +150,11 @@ const SideBar = ({ moderator }: { moderator: "MODERATOR" | "USER" }) => {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" noWrap>
-              Beer Coin
+              <Link color="inherit" to="/">
+                Beer Coin
+              </Link>
             </Typography>
           </Box>
-
-          <IconButton color="inherit" aria-label="exit app" onClick={() => signOut()}>
-            <ExitToAppIcon />
-          </IconButton>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -205,18 +179,25 @@ const SideBar = ({ moderator }: { moderator: "MODERATOR" | "USER" }) => {
         <List>
           {menuSideaBar.map((item, index) => {
             const { text, id, icon, link, userType } = item;
-            return (
-              userType !== moderator ? '' :
-                <Typography noWrap>
-                  <Link color="inherit" href={link} key={id}>
-                    <ListItem button>
-                      <ListItemIcon> {icon}</ListItemIcon>
-                      <ListItemText primary={text} />
-                    </ListItem>
-                  </Link>
-                </Typography>
-            );
+            if (userType === typeUser) {
+              return (
+                <Link color="inherit" key={id} to={link}>
+                  <ListItem button>
+                    <ListItemIcon> {icon}</ListItemIcon>
+                    <ListItemText primary={text} />
+                  </ListItem>
+                </Link>
+              );
+            }
           })}
+          <Link color="inherit" aria-label="exit app" to="/login" onClick={() => signOut()}>
+            <ListItem button>
+              <ListItemIcon>
+                <ExitToAppIcon />
+              </ListItemIcon>
+              <ListItemText>Logout</ListItemText>
+            </ListItem>
+          </Link>
         </List>
         <Divider />
       </Drawer>
