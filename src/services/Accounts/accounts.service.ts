@@ -1,12 +1,14 @@
 import axiosRequest from "../../config/axios";
 import { AxiosRequestConfig, AxiosResponse } from "axios";
 import { IDeposit } from "../../interfaces/IDeposit";
+import HttpConfig from '../../config/axios/httpConfig';
+
 
 const header = (): AxiosRequestConfig => { 
-  const userInfo = JSON.parse(sessionStorage.getItem("userInfo") || '');
+  const userInfo = new HttpConfig();
   return {
     headers: {
-      Authorization: `Bearer ${userInfo.accessToken}`,
+      Authorization: `Bearer ${userInfo.getToken()}`,
     }
   }
 };
