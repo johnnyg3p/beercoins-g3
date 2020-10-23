@@ -91,7 +91,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const SideBar = ({ moderator }: { moderator: 'MODERATOR' | 'USER' }) => {
+const SideBar = ({ moderator }: { moderator: "MODERATOR" | "USER" }) => {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -115,42 +115,38 @@ const SideBar = ({ moderator }: { moderator: 'MODERATOR' | 'USER' }) => {
       text: "Transferencias",
       icon: <Cached />,
       link: "/transfers",
-    }
+    },
   ];
-  
+
   const userMenu = [
     {
       id: 1,
       text: "Extrato",
       icon: <EventAvailableIcon />,
-      link: "/operations"
-      
+      link: "/operations",
     },
     {
       id: 2,
       text: "Transferencias",
       icon: <Cached />,
       link: "/transfers",
-      
     },
     {
       id: 3,
       text: "Ultimas movimentações",
       icon: <EventNoteIcon />,
       link: "/latest",
-      
     },
   ];
-  
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
-  
+
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  
-  
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -159,7 +155,7 @@ const SideBar = ({ moderator }: { moderator: 'MODERATOR' | 'USER' }) => {
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
         })}
-        >
+      >
         <Toolbar>
           <Box display="flex" flexGrow={1} alignItems="center">
             <IconButton
@@ -178,11 +174,7 @@ const SideBar = ({ moderator }: { moderator: 'MODERATOR' | 'USER' }) => {
             </Typography>
           </Box>
 
-          <IconButton
-            color="inherit"
-            aria-label="exit app"
-            onClick={() => signOut()}
-          >
+          <IconButton color="inherit" aria-label="exit app" onClick={() => signOut()}>
             <ExitToAppIcon />
           </IconButton>
         </Toolbar>
@@ -207,13 +199,13 @@ const SideBar = ({ moderator }: { moderator: 'MODERATOR' | 'USER' }) => {
         </div>
         <Divider />
 
-        {moderator === 'MODERATOR' ? (
+        {moderator === "MODERATOR" ? (
           <List>
             {moderatorMenu.map((item, index) => {
               const { text, id, icon, link } = item;
               return (
-                <Link href={link}>
-                  <ListItem button key={id}>
+                <Link href={link} key={id}>
+                  <ListItem button>
                     <ListItemIcon> {icon}</ListItemIcon>
                     <ListItemText primary={text} />
                   </ListItem>
@@ -223,22 +215,22 @@ const SideBar = ({ moderator }: { moderator: 'MODERATOR' | 'USER' }) => {
           </List>
         ) : (
           <List>
-              {userMenu.map((item, index) => {
-                const { text, id, icon, link } = item;
-                return (
-                  <Link href={link}>
-                    <ListItem button key={id}>
-                      <ListItemIcon> {icon}</ListItemIcon>
-                      <ListItemText primary={text} />
-                    </ListItem>
-                  </Link>
-                );
-              })}
-            </List>
-          )}
+            {userMenu.map((item, index) => {
+              const { text, id, icon, link } = item;
+              return (
+                <Link href={link} key={id}>
+                  <ListItem button>
+                    <ListItemIcon> {icon}</ListItemIcon>
+                    <ListItemText primary={text} />
+                  </ListItem>
+                </Link>
+              );
+            })}
+          </List>
+        )}
         <Divider />
       </Drawer>
     </div>
   );
-}
+};
 export default SideBar;

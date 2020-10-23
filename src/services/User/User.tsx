@@ -1,17 +1,18 @@
 import axiosRequest from "../../config/axios";
 import Axios from "axios";
+import { configureGet } from "../../utils/formaters/configure-requests";
 
 // TODO use if api didn't respond
 const GetBalanceMocked = () => Axios.get("mockapi/balance.json");
 const GetStatementMocked = () => Axios.get("mockapi/statement.json");
 
-// const GetBalanceApi = (hash: string) => axiosRequest.get(`/balance/${hash}`);
-// const GetStatementApi = (hash: string) => axiosRequest.get(`/statement/${hash}`);
+const GetBalanceApi = ({ hash, token }: IRequestInfo) => configureGet(`/balance/${hash}`, token);
+const GetStatementApi = ({ hash, token }: IRequestInfo) => configureGet(`/bank-statement/${hash}`, token);
 
-export const GetBalance = (hash: string) => {
+export const GetBalance = (requestProps: IRequestInfo) => {
   return new Promise<IBalance>((resolve, reject) => {
-    GetBalanceMocked()
-      // GetBalanceApi(hash)
+    // GetBalanceMocked()
+    GetBalanceApi(requestProps)
       .then((response) => {
         return resolve(response.data);
       })
@@ -19,10 +20,10 @@ export const GetBalance = (hash: string) => {
   });
 };
 
-export const GetStatement = (hash: string) => {
+export const GetStatement = (requestProps: IRequestInfo) => {
   return new Promise<IStatement[]>((resolve, reject) => {
-    GetStatementMocked()
-      // GetStatementApi(hash)
+    // GetStatementMocked()
+    GetStatementApi(requestProps)
       .then((response) => {
         return resolve(response.data);
       })

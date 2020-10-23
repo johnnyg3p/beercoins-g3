@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from "react";
+import React, { useRef, useCallback, useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -12,6 +12,8 @@ import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { useToasts } from "react-toast-notifications";
 import { SignUpService } from "../../services/Auth.service";
+import { blue } from "@material-ui/core/colors";
+import CircularProgress from "@material-ui/core/CircularProgress";
 const signUpService = new SignUpService();
 
 const useStyles = makeStyles((theme) => ({
@@ -20,6 +22,17 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+  },
+  wrapper: {
+    position: "relative",
+  },
+  buttonProgress: {
+    color: blue[500],
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    marginTop: -12,
+    marginLeft: -12,
   },
   avatar: {
     margin: theme.spacing(1),
@@ -44,14 +57,9 @@ export default function SignUp() {
   const emailRef = useRef<IInputRef>(null);
   const passwordRef = useRef<IInputRef>(null);
   const usernameRef = useRef<IInputRef>(null);
-  const roleRef = useRef<ICheckBoxRef>(null);
+  const [loading, setLoading] = useState(false);
   const { addToast } = useToasts();
   let history = useHistory();
-
-  const [state, setState] = React.useState({
-    ADMINISTRATOR: false,
-    USER: false,
-  });
 
   const signUpHandler = useCallback(
     async (e: React.FormEvent) => {
@@ -61,44 +69,38 @@ export default function SignUp() {
       const email = emailRef?.current?.value;
       const nome = nameRef?.current?.value;
       const password = passwordRef?.current?.value;
-      const role = ["ROLE_USER"];
       const username = usernameRef?.current?.value;
 
-      if (cnpj && email && nome && password && role && username) {
+      if (cnpj && email && nome && password && username) {
+        setLoading(true);
+
         await signUpService
-        .execute({ cnpj, email, nome, password, role, username })
-        .then((response) => {
-          addToast(
-            "Cadastro efetuado com sucesso! Você pode fazer o login agora.",
-            { appearance: "success" }
-          );
+          .execute({ cnpj, email, nome, password, username })
+          .then((response) => {
+            addToast(
+              "Cadastro efetuado com sucesso! Você pode fazer o login agora.",
+              { appearance: "success" }
+            );
 
-          setTimeout(() => {
-            history.push("/login");
-          }, 1000);
-        })
-        .catch((error) => {
-          const { message } = error.response.data;
+            setTimeout(() => {
+              history.push("/login");
+            }, 1000);
+          })
+          .catch((error) => {
+            const { message } = error.response.data;
 
-          if (message) return addToast(message, { appearance: "error" });
+            if (message) return addToast(message, { appearance: "error" });
 
-          addToast("Ocorreu um erro. Por favor, tente novamente.", {
-            appearance: "error",
+            addToast("Ocorreu um erro. Por favor, tente novamente.", {
+              appearance: "error",
+            });
+
+            setLoading(false);
           });
-        });
       }
     },
     [addToast, history]
   );
-
-  const handleChange = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      setState({ ...state, [event.target.name]: event.target.checked });
-    },
-    [state]
-  );
-
-  const { ADMINISTRATOR, USER } = state;
 
   return (
     <Container component="main" maxWidth="xs">
@@ -179,45 +181,27 @@ export default function SignUp() {
             inputRef={usernameRef}
           />
 
-          {/* <FormControl component="fieldset" className={classes.formControl}>
-            <FormLabel component="legend">User Role</FormLabel>
-            <FormGroup>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={ADMINISTRATOR}
-                    onChange={handleChange}
-                    name="ADMINISTRATOR"
-                  />
-                }
-                label="Admin"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={USER}
-                    onChange={handleChange}
-                    name="USER"
-                  />
-                }
-                label="User"
-              />
-            </FormGroup>
-          </FormControl> */}
+          <div className={classes.wrapper}>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              disabled={loading}
+              size="large"
+              className={classes.submit}
+            >
+              Register
+            </Button>
 
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Register
-          </Button>
+            {loading && (
+              <CircularProgress size={24} className={classes.buttonProgress} />
+            )}
+          </div>
           <Grid container>
             <Grid item>
               <Link href="/login" variant="body2">
-                {"Sign In"}
+                {"Already have an account? Sign in"}
               </Link>
             </Grid>
           </Grid>

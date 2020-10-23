@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { IAuthContextProps } from "../../interfaces/IAuthContextProps";
 
-const AuthContext = createContext<IAuthContextProps>({} as IAuthContextProps);
 // const initialState = {
 //   userInfo: {
 //     id: 71,
@@ -15,24 +15,37 @@ const AuthContext = createContext<IAuthContextProps>({} as IAuthContextProps);
 //   },
 // };
 
+const AuthContext = createContext<IAuthContextProps>({} as IAuthContextProps);
+
 const initialState = () => {
-  const sessionStorageInfo = sessionStorage.getItem('userInfo');
+  const sessionStorageInfo = sessionStorage.getItem("userInfo");
 
   if (sessionStorageInfo) {
     const parsedSessionStorageInfo: ISignInStatus = JSON.parse(sessionStorageInfo);
 
-    return parsedSessionStorageInfo
+    return parsedSessionStorageInfo;
   }
 
-  return null
-}
+  return {
+    id: null,
+    username: "",
+    email: "",
+    roles: [],
+    accessToken: "",
+    tokenType: "",
+    hash: "",
+  };
+};
 
 export const AuthProvider = ({ children }: any) => {
   const [userInfo, setUserInfo] = useState(initialState());
+  let history = useHistory();
 
   const signOut = () => {
-    sessionStorage.removeItem('userInfo');
+    sessionStorage.removeItem("userInfo");
     setUserInfo(initialState());
+
+    history.push('/login');
   };
 
   return <AuthContext.Provider value={{ signOut, userInfo, setUserInfo }}>{children}</AuthContext.Provider>;

@@ -3,5 +3,12 @@ interface IStatement {
   tipoOperacao: number;
   valorOperacao: number;
   hash: string;
-  debitCredit: "C" | "D";
+  debitCredit: DebitCredit;
+}
+
+type DebitCredit = "C" | "D";
+
+interface IBankPost {
+  C: "Crédito";
+  D: "Débito";
 }
