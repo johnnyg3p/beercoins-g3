@@ -21,9 +21,9 @@ import EventAvailableIcon from "@material-ui/icons/EventAvailable";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import Cached from "@material-ui/icons/Cached";
 import EventNoteIcon from "@material-ui/icons/EventNote";
-import Link from "@material-ui/core/Link";
 
 import { useAuthContext } from "../../context/Auth";
+import { Link } from "react-router-dom";
 
 const drawerWidth = 280;
 
@@ -91,51 +91,31 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const SideBar = ({ moderator }: { moderator: "MODERATOR" | "USER" }) => {
+interface IProps {
+  moderator: IRoles;
+}
+
+const SideBar = (props: IProps) => {
+  const { moderator: typeUser } = props;
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const { signOut } = useAuthContext();
 
-  const moderatorMenu = [
+  const menuSideaBar = [
     {
-      id: 1,
-      text: "Cadastrar usuários",
-      icon: <AccountCircleIcon />,
-      link: "/register",
-    },
-    {
-      id: 2,
-      text: "Lista de contas",
-      icon: <EventAvailableIcon />,
-      link: "/accounts",
-    },
-    {
-      id: 3,
-      text: "Transferencias",
-      icon: <Cached />,
-      link: "/transfers",
-    },
-  ];
-
-  const userMenu = [
-    {
-      id: 1,
-      text: "Extrato",
+      id: 4,
+      text: "Operations",
       icon: <EventAvailableIcon />,
       link: "/operations",
+      userType: "ROLE_MODERATOR",
     },
     {
-      id: 2,
-      text: "Transferencias",
+      id: 5,
+      text: "Payments",
       icon: <Cached />,
-      link: "/transfers",
-    },
-    {
-      id: 3,
-      text: "Ultimas movimentações",
-      icon: <EventNoteIcon />,
-      link: "/latest",
+      link: "/payments",
+      userType: "ROLE_USER",
     },
   ];
 
@@ -170,13 +150,11 @@ const SideBar = ({ moderator }: { moderator: "MODERATOR" | "USER" }) => {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" noWrap>
-              Beer Coin
+              <Link color="inherit" to="/">
+                Beer Coin
+              </Link>
             </Typography>
           </Box>
-
-          <IconButton color="inherit" aria-label="exit app" onClick={() => signOut()}>
-            <ExitToAppIcon />
-          </IconButton>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -198,36 +176,29 @@ const SideBar = ({ moderator }: { moderator: "MODERATOR" | "USER" }) => {
           </IconButton>
         </div>
         <Divider />
-
-        {moderator === "MODERATOR" ? (
-          <List>
-            {moderatorMenu.map((item, index) => {
-              const { text, id, icon, link } = item;
+        <List>
+          {menuSideaBar.map((item, index) => {
+            const { text, id, icon, link, userType } = item;
+            if (userType === typeUser) {
               return (
-                <Link href={link} key={id}>
+                <Link color="inherit" key={id} to={link}>
                   <ListItem button>
                     <ListItemIcon> {icon}</ListItemIcon>
                     <ListItemText primary={text} />
                   </ListItem>
                 </Link>
               );
-            })}
-          </List>
-        ) : (
-          <List>
-            {userMenu.map((item, index) => {
-              const { text, id, icon, link } = item;
-              return (
-                <Link href={link} key={id}>
-                  <ListItem button>
-                    <ListItemIcon> {icon}</ListItemIcon>
-                    <ListItemText primary={text} />
-                  </ListItem>
-                </Link>
-              );
-            })}
-          </List>
-        )}
+            }
+          })}
+          <Link color="inherit" aria-label="exit app" to="/login" onClick={() => signOut()}>
+            <ListItem button>
+              <ListItemIcon>
+                <ExitToAppIcon />
+              </ListItemIcon>
+              <ListItemText>Logout</ListItemText>
+            </ListItem>
+          </Link>
+        </List>
         <Divider />
       </Drawer>
     </div>

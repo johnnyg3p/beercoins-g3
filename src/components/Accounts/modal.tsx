@@ -15,7 +15,7 @@ interface IProps {
 }
 
 function getModalStyle() {
-  const top = 40;
+  const top = 50;
   const left = 50;
 
   return {
@@ -30,9 +30,9 @@ const accountsService = new AccountsService();
 const useStyles = makeStyles((theme) => ({
     paper: {
         position: 'absolute',
-        padding: 20,
-        height: 300,
-        width: 550,
+        // padding: 20,
+        height: '50%',
+        width: '50%',
         backgroundColor: theme.palette.background.paper,
     },
     root: {
