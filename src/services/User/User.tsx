@@ -5,8 +5,8 @@ import { configureGet } from "../../utils/formaters/configure-requests";
 const GetBalanceMocked = () => Axios.get("mockapi/balance.json");
 const GetStatementMocked = () => Axios.get("mockapi/statement.json");
 
-const GetBalanceApi = ({ hash, token }: IRequestInfo) => configureGet(`/balance/${hash}`, token);
-const GetStatementApi = ({ hash, token }: IRequestInfo) => configureGet(`/bank-statement/${hash}`, token);
+const GetBalanceApi = ({ token }: IRequestInfo) => configureGet(`/balance/`, token);
+const GetStatementApi = ({ token }: IRequestInfo) => configureGet(`/bank-statement/`, token);
 
 export const GetBalance = (requestProps: IRequestInfo) => {
   return new Promise<IBalance>((resolve, reject) => {
