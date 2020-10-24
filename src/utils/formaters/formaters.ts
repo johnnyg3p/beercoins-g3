@@ -5,3 +5,4 @@ export const formatCurrency = (currency: number): string => {
 export const formatBankPost = (bankPost: DebitCredit): string => {
   return bankPost === "D" ? "Débito" : "Crédito";
 };
+

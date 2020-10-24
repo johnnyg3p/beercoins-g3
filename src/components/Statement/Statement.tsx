@@ -15,9 +15,39 @@ import TableLoading from "../TableLoading";
 
 interface IProps {}
 
+const renderTable = (statement: IStatement[] | null) => {
+  if (statement) {
+    if (statement.length) {
+      return statement
+        .sort((a, b) => {
+          if (a.horarioOperacao < b.horarioOperacao) return 1;
+          else if (a.horarioOperacao > b.horarioOperacao) return -1;
+          return 0;
+        })
+        .map((bankPost, index) => (
+          <TableRow key={index + bankPost.hash}>
+            <TableCell align="left">{formatBankPost(bankPost.debitCredit)}</TableCell>
+            <TableCell align="center">{bankPost.horarioOperacao}</TableCell>
+            <TableCell align="right">{formatCurrency(bankPost.valorOperacao)}</TableCell>
+          </TableRow>
+        ));
+    } else {
+      return (
+        <TableRow className="statement-empty">
+          <TableCell colSpan={3} align="center">
+            Você não possui lanlamentos ainda
+          </TableCell>
+        </TableRow>
+      );
+    }
+  }
+
+  return <TableLoading colsPan={3} items={3} />;
+};
+
 function Statement(props: IProps) {
   const { userInfo } = useAuthContext();
-  const [statement, setStatement] = useState<IStatement[]>([]);
+  const [statement, setStatement] = useState<IStatement[] | null>(null);
   const { addToast } = useToasts();
 
   type Order = "asc" | "desc";
@@ -25,7 +55,7 @@ function Statement(props: IProps) {
   useEffect(() => {
     async function getDataFn() {
       try {
-        const resultStatement = await GetStatement({ hash: userInfo.hash || "", token: userInfo.accessToken });
+        const resultStatement = await GetStatement({ token: userInfo.accessToken });
         setStatement(resultStatement);
       } catch (error) {
         addToast("Error to get statement.", {
@@ -35,20 +65,6 @@ function Statement(props: IProps) {
     }
     getDataFn();
   }, [userInfo]);
-
-  const bankPostList = statement
-    .sort((a, b) => {
-      if (a.horarioOperacao < b.horarioOperacao) return 1;
-      else if (a.horarioOperacao > b.horarioOperacao) return -1;
-      return 0;
-    })
-    .map((bankPost, index) => (
-      <TableRow key={index + bankPost.hash}>
-        <TableCell align="left">{formatBankPost(bankPost.debitCredit)}</TableCell>
-        <TableCell align="center">{bankPost.horarioOperacao}</TableCell>
-        <TableCell align="right">{formatCurrency(bankPost.valorOperacao)}</TableCell>
-      </TableRow>
-    ));
 
   return (
     <TableContainer>
@@ -60,7 +76,7 @@ function Statement(props: IProps) {
             <TableCell align="right">Amount</TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>{statement.length ? bankPostList : <TableLoading colsPan={3} items={3} />}</TableBody>
+        <TableBody>{renderTable(statement)}</TableBody>
       </Table>
     </TableContainer>
   );

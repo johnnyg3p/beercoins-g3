@@ -19,12 +19,18 @@ import { useToasts } from "react-toast-notifications";
 import { SignUpService } from "../../services/Auth.service";
 import { blue } from "@material-ui/core/colors";
 import formatCNPJ from "../../utils/formaters/cnpjMask";
-import { isValidCNPJ } from "@brazilian-utils/brazilian-utils";
-import { isValidEmail } from "@brazilian-utils/brazilian-utils";
+import {
+  isValidCNPJ,
+  isValidPhone,
+  isValidEmail,
+} from "@brazilian-utils/brazilian-utils";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import signPagesInputErrorCustomStyle from '../../utils/themes'
 import Image from "../../images/logo.png";
 
+import signPagesInputErrorCustomStyle from "../../utils/themes";
+import formatPhoneNumber from "../../utils/formaters/phoneMask";
+import cleanStringValue from "../../utils/formaters/cleanStringValue";
 
 const signUpService = new SignUpService();
 
@@ -67,6 +73,7 @@ const SignUp = () => {
   const cnpjRef = useRef<IInputRef>(null);
   const nameRef = useRef<IInputRef>(null);
   const emailRef = useRef<IInputRef>(null);
+  const phoneRef = useRef<IInputRef>(null);
   const passwordRef = useRef<IInputRef>(null);
   const usernameRef = useRef<IInputRef>(null);
   const [nameInputError, setNameInputError] = useState(false);
@@ -75,7 +82,9 @@ const SignUp = () => {
   const [userInputError, setUserInputError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [cnpjValue, setCnpjValue] = useState("");
+  const [phoneValue, setPhoneValue] = useState("");
   const [isCnpjValid, setIsCnpjValid] = useState(true);
+  const [isPhoneValid, setIsPhoneValid] = useState(true);
 
   const { addToast } = useToasts();
   let history = useHistory();
@@ -114,6 +123,7 @@ const SignUp = () => {
       const cnpj = cnpjRef?.current?.value;
       const email = emailRef?.current?.value;
       const nome = nameRef?.current?.value;
+      const phone = phoneRef?.current?.value;
       const password = passwordRef?.current?.value;
       const username = usernameRef?.current?.value;
 
@@ -121,15 +131,18 @@ const SignUp = () => {
         { cnpj },
         { email },
         { nome },
+        { phone },
         { password },
         { username },
       ]);
 
-      if (cnpj && email && nome && password && username) {
+      if (cnpj && email && phone && nome && password && username) {
         setLoading(true);
+        const parsedCNPJ = cleanStringValue(cnpj);
+        const parsedPhoneNumber = cleanStringValue(phone);
 
         await signUpService
-          .execute({ cnpj, email, nome, password, username })
+          .execute({ cnpj: parsedCNPJ, email, nome, phone: parsedPhoneNumber, password, username })
           .then((response) => {
             addToast(
               "Cadastro efetuado com sucesso! Você pode fazer o login agora.",
@@ -141,6 +154,8 @@ const SignUp = () => {
             }, 1000);
           })
           .catch((error) => {
+            setLoading(false);
+
             const { message } = error.response.data;
 
             if (message) return addToast(message, { appearance: "error" });
@@ -148,8 +163,6 @@ const SignUp = () => {
             addToast("Ocorreu um erro. Por favor, tente novamente.", {
               appearance: "error",
             });
-
-            setLoading(false);
           });
       }
     },
@@ -169,6 +182,21 @@ const SignUp = () => {
       }
     },
     [handleCheckIfCNPJisValid]
+  );
+
+  const handleCheckIfPhoneNumberIsValid = useCallback((phoneNumber: string) => {
+    setIsPhoneValid(isValidPhone(phoneNumber));
+  }, []);
+
+  const handleFormatAndValidatePhone = useCallback(
+    (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+      setPhoneValue(formatPhoneNumber(e.target.value));
+
+      if (formatPhoneNumber(e.target.value).length === 15) {
+        handleCheckIfPhoneNumberIsValid(formatPhoneNumber(e.target.value));
+      }
+    },
+    [handleCheckIfPhoneNumberIsValid]
   );
 
   const handleCheckIsEmailIsValid = useCallback(
@@ -268,6 +296,24 @@ const SignUp = () => {
                    ),
                   }}
 
+            />
+
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="phone"
+              label="Phone"
+              name="phone"
+              autoComplete="phone"
+              autoFocus
+              value={phoneValue}
+              onChange={(e) => handleFormatAndValidatePhone(e)}
+              inputRef={phoneRef}
+              error={!isPhoneValid}
+              onFocus={() => setIsPhoneValid(true)}
+              helperText={!isPhoneValid && "Please, type a valid phone number."}
             />
 
             <TextField

@@ -11,6 +11,5 @@ interface IBalance {
 }
 
 interface IRequestInfo {
-  hash: string;
   token: string;
 }

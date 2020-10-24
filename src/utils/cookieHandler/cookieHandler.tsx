@@ -1,14 +1,10 @@
 class cookieHandler {
     create(cookieName: string, cookieValue: string, expirationTime?: number) {
         let expiration;
-        const date = new Date();
-        const miliSeconds = 1000;
         const seconds = 60;
 
         if (expirationTime) {
-            date.setTime(date.getTime() + (expirationTime * seconds * miliSeconds));
-
-            expiration = expirationTime ? `; expires=${date.toUTCString()}` : '';
+            expiration = expirationTime ? `; max-age=${(expirationTime * seconds)}` : '';
         }
            
         document.cookie = `${cookieName}=${cookieValue}${expiration}`;
@@ -21,7 +17,8 @@ class cookieHandler {
             const cookie = cookieArr[i];
 
             if (cookie && cookie.indexOf(cookieName) === 0) {
-                const cookieValue = cookie.replace(`userInfo=`, '');
+                const parsedCookieName = `${cookieName}=`;
+                const cookieValue = cookie.replace(parsedCookieName, '');
 
                 return cookieValue
             }
