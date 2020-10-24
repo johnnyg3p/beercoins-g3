@@ -30,10 +30,10 @@ function Accounts() {
   const [accountList, setAccount] = useState<IAccount[]>([]);
   const { addToast } = useToasts();
 
-  useEffect(() => {
+  useEffect(() => { 
     accountsService
-      .getAccountsMock()
-      .then((response) => {
+      .getAccounts()
+      .then((response) => {        
         setAccount(response);
         JSON.stringify(response);
       })

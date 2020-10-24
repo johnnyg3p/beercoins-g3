@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export default function SignIn() {
+const SignIn = () => {
   const classes = useStyles();
   const usernameRef = useRef<IInputRef>(null);
   const passwordRef = useRef<IInputRef>(null);
@@ -126,6 +126,7 @@ export default function SignIn() {
             autoFocus
             inputRef={usernameRef}
             error={usernameInputError}
+            helperText={usernameInputError && "Type an username"}
             onFocus={() => setUsernameInputError(false)}
           />
           <TextField
@@ -140,6 +141,7 @@ export default function SignIn() {
             autoComplete="current-password"
             inputRef={passwordRef}
             error={passwordInputError}
+            helperText={passwordInputError && "Type a password"}
             onFocus={() => setPasswordInputError(false)}
           />
 
@@ -170,3 +172,5 @@ export default function SignIn() {
     </Container>
   );
 }
+
+export default React.memo(SignIn);

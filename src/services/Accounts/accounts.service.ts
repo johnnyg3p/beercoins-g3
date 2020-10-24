@@ -1,17 +1,28 @@
 import axiosRequest from "../../config/axios";
-import { AxiosResponse } from "axios";
+import { AxiosRequestConfig, AxiosResponse } from "axios";
 import { IDeposit } from "../../interfaces/IDeposit";
+
+const header = (): AxiosRequestConfig => { 
+  const userInfo = JSON.parse(sessionStorage.getItem("userInfo") || '');
+  return {
+    headers: {
+      Authorization: `Bearer ${userInfo.accessToken}`,
+    }
+  }
+};
 
 export default class AccountsService {
   async getAccounts() {
-    return new Promise<AxiosResponse<IAccount[]>>((resolve, reject) => {
-      axiosRequest
-        .get("current-account/accountList")
-        .then((response) => {
-          return resolve(response);
-        })
-        .catch((error) => reject(error));
-    });
+    return new Promise<IAccount[]>(
+      (resolve, reject) => {
+        axiosRequest
+          .get("current-account/accountList", header())
+          .then((response) => {
+            return resolve(response.data);
+          })
+          .catch((error) => reject(error));
+      }
+    );
   }
 
   async deposit(deposit: IDeposit) {
