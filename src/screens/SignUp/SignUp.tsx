@@ -89,7 +89,7 @@ const SignUp = () => {
       const cnpj = cnpjRef?.current?.value;
       const email = emailRef?.current?.value;
       const nome = nameRef?.current?.value;
-      const phone = phoneRef?.current?.value;
+      const phonenumber = phoneRef?.current?.value;
       const password = passwordRef?.current?.value;
       const username = usernameRef?.current?.value;
 
@@ -97,22 +97,22 @@ const SignUp = () => {
         { cnpj },
         { email },
         { nome },
-        { phone },
+        { phonenumber },
         { password },
         { username },
       ]);
 
-      if (cnpj && email && phone && nome && password && username) {
+      if (cnpj && email && phonenumber && nome && password && username) {
         setLoading(true);
         const parsedCNPJ = cleanStringValue(cnpj);
-        const parsedPhoneNumber = cleanStringValue(phone);
+        const parsedPhoneNumber = cleanStringValue(phonenumber);
 
         await signUpService
           .execute({
             cnpj: parsedCNPJ,
             email,
             nome,
-            phone: parsedPhoneNumber,
+            phonenumber: parsedPhoneNumber,
             password,
             username,
           })

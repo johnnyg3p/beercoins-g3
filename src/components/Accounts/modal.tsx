@@ -9,6 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import { Grid, InputAdornment } from "@material-ui/core";
 import { useToasts } from "react-toast-notifications";
 import TextField from "@material-ui/core/TextField";
+import { formatCurrency, formatCurrencyIntoInteger, formatCurrencyWithouCurrencyDisplay } from "../../utils/formaters/formaters";
 
 interface IProps {
   account: IAccount;
@@ -79,9 +80,12 @@ export default function SimpleModal(props: IProps) {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const currencyStringValue = e.target.value;
+    const parsedNumber = formatCurrencyIntoInteger(currencyStringValue);
+    
     setValues({
       ...values,
-      "amount": e.currentTarget.value.replace(/\D/g, ""),
+      amount: formatCurrencyWithouCurrencyDisplay(parsedNumber)
     });
   };
 
@@ -92,8 +96,7 @@ export default function SimpleModal(props: IProps) {
           Depósito
         </Typography>
         <h3>
-          Digite o valor para realizar o depósito na conta de{" "}
-          {props.account.nome}
+          {`Digite o valor para realizar o depósito na conta de ${props.account.nome}`}
         </h3>
         <Grid item xs={12} className={classes.padd}>
           <TextField
