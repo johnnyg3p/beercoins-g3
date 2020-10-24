@@ -21,7 +21,6 @@ const signInService = new SignInService();
 
 const useStyles = makeStyles((theme: Theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -108,7 +107,7 @@ const SignIn = () => {
   );
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -164,9 +163,7 @@ const SignIn = () => {
             >
               Sign In
             </Button>
-            {loading && (
-              <CircularProgress size={24} className={classes.buttonProgress} />
-            )}
+            {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
           </div>
 
           <Grid container>

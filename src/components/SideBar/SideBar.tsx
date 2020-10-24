@@ -48,6 +48,7 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "none",
     },
     drawer: {
+      backgroundColor: "#03185a",
       width: drawerWidth,
       flexShrink: 0,
       whiteSpace: "nowrap",
@@ -66,20 +67,13 @@ const useStyles = makeStyles((theme: Theme) =>
       }),
       overflowX: "hidden",
       width: theme.spacing(7) + 1,
-      [theme.breakpoints.up("sm")]: {
-        width: theme.spacing(9) + 1,
-      },
     },
     toolbar: {
       display: "flex",
       alignItems: "center",
       justifyContent: "flex-end",
-      padding: theme.spacing(0, 1),
+      padding: theme.spacing(0, 0.5),
       ...theme.mixins.toolbar,
-    },
-    content: {
-      flexGrow: 1,
-      padding: theme.spacing(3),
     },
   })
 );
