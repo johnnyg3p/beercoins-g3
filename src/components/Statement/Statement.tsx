@@ -8,9 +8,11 @@ import TableRow from "@material-ui/core/TableRow";
 import { useAuthContext } from "../../context/Auth";
 import { GetStatement } from "../../services/User/User";
 import "./Statement.scss";
-import { formatCurrency, formatBankPost } from "../../utils/formaters/formaters";
+import {
+  formatCurrency,
+  formatBankPost,
+} from "../../utils/formaters/formaters";
 import { useToasts } from "react-toast-notifications";
-import { Skeleton } from "@material-ui/lab";
 import TableLoading from "../TableLoading";
 
 interface IProps {}
@@ -26,9 +28,13 @@ const renderTable = (statement: IStatement[] | null) => {
         })
         .map((bankPost, index) => (
           <TableRow key={index + bankPost.hash}>
-            <TableCell align="left">{formatBankPost(bankPost.debitCredit)}</TableCell>
+            <TableCell align="left">
+              {formatBankPost(bankPost.debitCredit)}
+            </TableCell>
             <TableCell align="center">{bankPost.horarioOperacao}</TableCell>
-            <TableCell align="right">{formatCurrency(bankPost.valorOperacao)}</TableCell>
+            <TableCell align="right">
+              {formatCurrency(bankPost.valorOperacao)}
+            </TableCell>
           </TableRow>
         ));
     } else {
@@ -55,7 +61,9 @@ function Statement(props: IProps) {
   useEffect(() => {
     async function getDataFn() {
       try {
-        const resultStatement = await GetStatement({ token: userInfo.accessToken });
+        const resultStatement = await GetStatement({
+          token: userInfo.accessToken,
+        });
         setStatement(resultStatement);
       } catch (error) {
         addToast("Error to get statement.", {
@@ -64,7 +72,7 @@ function Statement(props: IProps) {
       }
     }
     getDataFn();
-  }, [userInfo]);
+  }, [addToast, userInfo]);
 
   return (
     <TableContainer>

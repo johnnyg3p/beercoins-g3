@@ -1,9 +1,8 @@
-import Axios from "axios";
 import { configureGet } from "../../utils/formaters/configure-requests";
 
 // TODO use if api didn't respond
-const GetBalanceMocked = () => Axios.get("mockapi/balance.json");
-const GetStatementMocked = () => Axios.get("mockapi/statement.json");
+// const GetBalanceMocked = () => Axios.get("mockapi/balance.json");
+// const GetStatementMocked = () => Axios.get("mockapi/statement.json");
 
 const GetBalanceApi = ({ token }: IRequestInfo) => configureGet(`/balance/`, token);
 const GetStatementApi = ({ token }: IRequestInfo) => configureGet(`/bank-statement/`, token);
