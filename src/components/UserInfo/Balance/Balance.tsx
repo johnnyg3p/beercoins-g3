@@ -27,7 +27,7 @@ const Balance = () => {
       }
     }
     getDataFn();
-  }, [userInfo]);
+  }, [addToast, userInfo]);
 
   return (
     <div className="balance">
@@ -38,7 +38,12 @@ const Balance = () => {
       </Avatar>
       <span className="balance-text">Tap on the walet to update</span>
       {balance === null ? (
-        <Skeleton variant="rect" width={"calc(100% - 10%)"} height={82} animation="wave" />
+        <Skeleton
+          variant="rect"
+          width={"calc(100% - 10%)"}
+          height={82}
+          animation="wave"
+        />
       ) : (
         <CurrentBalance balance={balance} />
       )}

@@ -43,7 +43,7 @@ function Accounts() {
           appearance: "error",
         });
       });
-  }, []);
+  }, [addToast]);
 
   const actounts = accountList.map((account, index) => (
     <TableRow key={account.hash}>
@@ -75,7 +75,13 @@ function Accounts() {
               <TableCell align="left">Actions</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>{accountList.length ? actounts : <TableLoading colsPan={6} items={3} />}</TableBody>
+          <TableBody>
+            {accountList.length ? (
+              actounts
+            ) : (
+              <TableLoading colsPan={6} items={3} />
+            )}
+          </TableBody>
         </Table>
       </TableContainer>
       <div className={classes.seeMore}>

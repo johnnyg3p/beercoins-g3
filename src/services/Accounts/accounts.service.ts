@@ -1,5 +1,5 @@
 import axiosRequest from "../../config/axios";
-import { AxiosRequestConfig, AxiosResponse } from "axios";
+import { AxiosRequestConfig } from "axios";
 import { IDeposit } from "../../interfaces/IDeposit";
 import HttpConfig from '../../config/axios/httpConfig';
 
