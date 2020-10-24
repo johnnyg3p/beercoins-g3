@@ -14,7 +14,8 @@ import { useToasts } from "react-toast-notifications";
 import { SignUpService } from "../../services/Auth.service";
 import { blue } from "@material-ui/core/colors";
 import formatCNPJ from "../../utils/formaters/cnpjMask";
-import { isValidCNPJ } from '@brazilian-utils/brazilian-utils';
+import { isValidCNPJ } from "@brazilian-utils/brazilian-utils";
+import { isValidEmail } from "@brazilian-utils/brazilian-utils";
 import CircularProgress from "@material-ui/core/CircularProgress";
 const signUpService = new SignUpService();
 
@@ -66,9 +67,37 @@ const SignUp = () => {
   const [loading, setLoading] = useState(false);
   const [cnpjValue, setCnpjValue] = useState("");
   const [isCnpjValid, setIsCnpjValid] = useState(true);
-  
+
   const { addToast } = useToasts();
   let history = useHistory();
+
+  const validateInputFields = useCallback(
+    (inputArray: IInputValidationObject[]) => {
+      inputArray.map((inputObjectWithNameAndValue) => {
+        const objectName = Object.keys(inputObjectWithNameAndValue)[0];
+        const objectValue = Object.values(inputObjectWithNameAndValue)[0];
+
+        switch (objectName) {
+          case "cnpj":
+            if (!objectValue) setIsCnpjValid(false);
+            break;
+          case "email":
+            if (!objectValue) setEmailInputError(true);
+            break;
+          case "nome":
+            if (!objectValue) setNameInputError(true);
+            break;
+          case "password":
+            if (!objectValue) setPasswordInputError(true);
+            break;
+          case "username":
+            if (!objectValue) setUserInputError(true);
+            break;
+        }
+      });
+    },
+    []
+  );
 
   const signUpHandler = useCallback(
     async (e: React.FormEvent) => {
@@ -78,8 +107,14 @@ const SignUp = () => {
       const nome = nameRef?.current?.value;
       const password = passwordRef?.current?.value;
       const username = usernameRef?.current?.value;
-      
-      validateInputFields([{cnpj}, {email}, {nome}, {password}, {username}]);
+
+      validateInputFields([
+        { cnpj },
+        { email },
+        { nome },
+        { password },
+        { username },
+      ]);
 
       if (cnpj && email && nome && password && username) {
         setLoading(true);
@@ -109,52 +144,33 @@ const SignUp = () => {
           });
       }
     },
-    [addToast, history]
+    [addToast, history, validateInputFields]
   );
-
-  const validateInputFields = (inputArray: IInputValidationObject[]) => {
-    inputArray.map((inputObjectWithNameAndValue) => {
-      const objectName = Object.keys(inputObjectWithNameAndValue)[0];
-      const objectValue = Object.values(inputObjectWithNameAndValue)[0];
-
-      switch(objectName) {
-        case 'cnpj':
-          if (!objectValue)
-            setIsCnpjValid(false);
-          break;
-        case 'email':
-          if (!objectValue)
-            setEmailInputError(true);
-          break;
-        case 'nome':
-          if (!objectValue)
-            setNameInputError(true);
-          break;
-        case 'password':
-          if (!objectValue)
-            setPasswordInputError(true);
-          break;
-        case 'username':
-          if (!objectValue)
-            setUserInputError(true);
-          break;
-      }
-    })
-  }
 
   const handleCheckIfCNPJisValid = useCallback((CNPJ: string) => {
     setIsCnpjValid(isValidCNPJ(CNPJ));
-  }, [])
+  }, []);
 
-  const handleFormatAndValidCNPJ = useCallback(
+  const handleFormatAndValidateCNPJ = useCallback(
     (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
       setCnpjValue(formatCNPJ(e.target.value));
 
       if (formatCNPJ(e.target.value).length === 18) {
-        handleCheckIfCNPJisValid(formatCNPJ(e.target.value))
+        handleCheckIfCNPJisValid(formatCNPJ(e.target.value));
       }
     },
     [handleCheckIfCNPJisValid]
+  );
+
+  const handleCheckIsEmailIsValid = useCallback(
+    (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      const emailInputValue = e.target.value;
+
+      if (emailInputValue) {
+        setEmailInputError(!isValidEmail(emailInputValue));
+      }
+    },
+    []
   );
 
   return (
@@ -182,13 +198,13 @@ const SignUp = () => {
             autoComplete="cnpj"
             autoFocus
             value={cnpjValue}
-            onChange={(e) => handleFormatAndValidCNPJ(e)}
+            onChange={(e) => handleFormatAndValidateCNPJ(e)}
             inputRef={cnpjRef}
             error={!isCnpjValid}
             onFocus={() => setIsCnpjValid(true)}
             helperText={!isCnpjValid && "Please, type a valid CNPJ number."}
           />
-          
+
           <TextField
             variant="outlined"
             margin="normal"
@@ -216,6 +232,7 @@ const SignUp = () => {
             type="email"
             autoComplete="email"
             onFocus={() => setEmailInputError(false)}
+            onBlur={(e) => handleCheckIsEmailIsValid(e)}
             helperText={emailInputError && "Type an email"}
             error={emailInputError}
             inputRef={emailRef}
@@ -281,6 +298,6 @@ const SignUp = () => {
       </div>
     </Container>
   );
-}
+};
 
-export default React.memo(SignUp)
+export default React.memo(SignUp);
