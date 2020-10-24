@@ -10,6 +10,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import signPagesInputErrorCustomStyle from "../../utils/themes";
+import themes from "../../utils/themes";
 import { blue } from "@material-ui/core/colors";
 import { makeStyles, Theme, ThemeProvider } from "@material-ui/core/styles";
 import { useToasts } from "react-toast-notifications";
@@ -17,9 +18,44 @@ import { useAuthContext } from "../../context/Auth";
 import { useHistory } from "react-router-dom";
 import { SignInService } from "../../services/Auth.service";
 import cookieHandler from "../../utils/cookieHandler";
+import beerIcon from '../../assets/images/felicidades.svg'
+
 const signInService = new SignInService();
 
 const useStyles = makeStyles((theme: Theme) => ({
+  "@keyframes fadeIn": {
+    "0%": {
+      opacity: 0,
+      transform: "translateX(-100px)"
+    },
+    "100%": {
+      opacity: 1,
+      transform: "translateX(0)"
+    }
+  },
+  titleContainer: {
+    display: 'flex',
+    
+  },
+  iconContainer: {
+    maxWidth: '100px'
+  },
+  headerText: {
+    opacity: 0,
+    transform: "translateX(-100px)",
+    animation: `$fadeIn 1300ms ${theme.transitions.easing.easeInOut} forwards 500ms`,
+  },
+  icon: {
+    opacity: 0,
+    maxWidth: '100px',
+    width: '100%',
+    display: 'block',
+    margin: '0 auto',
+    animation: `$fadeIn 1300ms ${theme.transitions.easing.easeInOut} forwards`,
+  },
+  iconImg: {
+    width: '100%'
+  },
   paper: {
     marginTop: theme.spacing(8),
     display: "flex",
@@ -110,16 +146,19 @@ const SignIn = () => {
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
+
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          <i className={classes.icon}>
+            <img className={classes.iconImg}src={beerIcon} alt="Icon with 2 beer mugs"/>
+          </i>
+          <span className={classes.headerText}>
+            Welcome to the BankBeer
+          </span>
         </Typography>
 
         <form className={classes.form} onSubmit={signInHandler} noValidate>
-          <ThemeProvider theme={signPagesInputErrorCustomStyle}>
+          <ThemeProvider theme={themes.signPagesInputErrorCustomStyle}>
             <TextField
               variant="outlined"
               margin="normal"

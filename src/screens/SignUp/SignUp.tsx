@@ -20,13 +20,28 @@ import {
   isValidEmail,
 } from "@brazilian-utils/brazilian-utils";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import signPagesInputErrorCustomStyle from "../../utils/themes";
+import themes from "../../utils/themes";
 import formatPhoneNumber from "../../utils/formaters/phoneMask";
 import cleanStringValue from "../../utils/formaters/cleanStringValue";
 
 const signUpService = new SignUpService();
 
 const useStyles = makeStyles((theme) => ({
+  "@keyframes fadeIn": {
+    "0%": {
+      opacity: 0,
+      transform: "translateX(-100px)"
+    },
+    "100%": {
+      opacity: 1,
+      transform: "translateX(0)"
+    }
+  },
+  containerWrapper: {
+    animation: `$fadeIn 1500ms ${theme.transitions.easing.easeInOut} forwards`,
+    opacity: 0,
+    transform: "translateX(-100px)"
+  },
   paper: {
     marginTop: theme.spacing(8),
     display: "flex",
@@ -96,6 +111,9 @@ const SignUp = () => {
             break;
           case "nome":
             if (!objectValue) setNameInputError(true);
+            break;
+          case "phone":
+            if (!objectValue) setIsPhoneValid(false);
             break;
           case "password":
             if (!objectValue) setPasswordInputError(true);
@@ -203,7 +221,7 @@ const SignUp = () => {
   );
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xs" className={classes.containerWrapper}>
       <CssBaseline />
 
       <div className={classes.paper}>
@@ -216,7 +234,7 @@ const SignUp = () => {
         </Typography>
 
         <form className={classes.form} onSubmit={signUpHandler} noValidate>
-          <ThemeProvider theme={signPagesInputErrorCustomStyle}>
+          <ThemeProvider theme={themes.signPagesInputErrorCustomStyle}>
             <TextField
               variant="outlined"
               margin="normal"
@@ -277,7 +295,6 @@ const SignUp = () => {
               label="Phone"
               name="phone"
               autoComplete="phone"
-              autoFocus
               value={phoneValue}
               onChange={(e) => handleFormatAndValidatePhone(e)}
               inputRef={phoneRef}
