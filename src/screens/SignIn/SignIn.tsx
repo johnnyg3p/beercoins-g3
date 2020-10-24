@@ -128,6 +128,7 @@ export default function SignIn() {
             autoFocus
             inputRef={usernameRef}
             error={usernameInputError}
+            helperText={usernameInputError && "Type an username"}
             onFocus={() => setUsernameInputError(false)}
           />
           <TextField
@@ -142,6 +143,7 @@ export default function SignIn() {
             autoComplete="current-password"
             inputRef={passwordRef}
             error={passwordInputError}
+            helperText={passwordInputError && "Type a password"}
             onFocus={() => setPasswordInputError(false)}
           />
 
