@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid } from "@material-ui/core";
+import { Paper, Grid, Container } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
@@ -10,6 +10,12 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
   },
+  paper: {
+    padding: theme.spacing(2),
+    display: "flex",
+    overflow: "auto",
+    flexDirection: "column",
+  },
 }));
 
 const NotFound = () => {
@@ -17,9 +23,13 @@ const NotFound = () => {
 
   return (
     <>
-      <Grid container className={classes.container} direction="row" justify="center" spacing={2}>
-        Page Not Found
-      </Grid>
+      <Container maxWidth="lg" className={classes.container}>
+        <Grid container direction="row" justify="center" spacing={2}>
+          <Grid item xs={12}>
+            <Paper className={classes.paper}>Page not Found</Paper>
+          </Grid>
+        </Grid>
+      </Container>
     </>
   );
 };

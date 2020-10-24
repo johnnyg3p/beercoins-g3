@@ -10,6 +10,8 @@ import { GetStatement } from "../../services/User/User";
 import "./Statement.scss";
 import { formatCurrency, formatBankPost } from "../../utils/formaters/formaters";
 import { useToasts } from "react-toast-notifications";
+import { Skeleton } from "@material-ui/lab";
+import TableLoading from "../TableLoading";
 
 interface IProps {}
 
@@ -34,7 +36,7 @@ function Statement(props: IProps) {
     getDataFn();
   }, [userInfo]);
 
-  let bankPostList = statement
+  const bankPostList = statement
     .sort((a, b) => {
       if (a.horarioOperacao < b.horarioOperacao) return 1;
       else if (a.horarioOperacao > b.horarioOperacao) return -1;
@@ -58,7 +60,7 @@ function Statement(props: IProps) {
             <TableCell align="right">Amount</TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>{bankPostList}</TableBody>
+        <TableBody>{statement.length ? bankPostList : <TableLoading colsPan={3} items={3} />}</TableBody>
       </Table>
     </TableContainer>
   );
