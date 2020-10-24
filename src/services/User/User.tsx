@@ -1,4 +1,3 @@
-import axiosRequest from "../../config/axios";
 import Axios from "axios";
 import { configureGet } from "../../utils/formaters/configure-requests";
 
