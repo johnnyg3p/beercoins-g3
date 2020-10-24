@@ -1,21 +1,28 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute";
 import SignIn from "./screens/SignIn";
 import SignUp from "./screens/SignUp";
 import Home from "./screens/Home";
 import Operations from "./screens/Operations";
+import NotFound from "./screens/NotFound/NotFound";
 
 const Routes = () => (
   <>
-    <PrivateRoute exact path="/">
-      <Home />
-    </PrivateRoute>
-    <Route path="/login" component={SignIn} />
-    <Route path="/signup" component={SignUp} />
-    <PrivateRoute path="/operations">
-      <Operations />
-    </PrivateRoute>
+    <Switch>
+      <Route path="/login" component={SignIn} />
+      <Route path="/signup" component={SignUp} />
+      <PrivateRoute exact path="/">
+        <Home />
+      </PrivateRoute>
+      <PrivateRoute path="/operations" role="ROLE_MODERATOR">
+        <Operations />
+      </PrivateRoute>
+      <PrivateRoute path="/payments" role="ROLE_USER">
+        <div>PAYMENTS</div>
+      </PrivateRoute>
+      <Route path="*" component={() => <NotFound />} />
+    </Switch>
   </>
 );
 
