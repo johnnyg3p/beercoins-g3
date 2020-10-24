@@ -9,7 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import { Grid, InputAdornment } from "@material-ui/core";
 import { useToasts } from "react-toast-notifications";
 import TextField from "@material-ui/core/TextField";
-import { formatCurrency, formatCurrencyIntoInteger, formatCurrencyWithouCurrencyDisplay } from "../../utils/formaters/formaters";
+import { formatCurrency, formatCurrencyIntoInteger, formatCurrencyWithoutCurrencySymbol } from "../../utils/formaters/formaters";
 
 interface IProps {
   account: IAccount;
@@ -51,6 +51,7 @@ export default function SimpleModal(props: IProps) {
   const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
   const [values, setValues] = React.useState({ amount: "0" });
+  const [loading, setLoading] = React.useState(false);
 
   const handleOpen = () => {
     setOpen(true);
@@ -61,6 +62,8 @@ export default function SimpleModal(props: IProps) {
   };
 
   const makeDeposit = () => {
+    setLoading(true);
+
     const account: IDeposit = {
       hash: props.account.hash,
       valorOperacao: Number(values.amount),
@@ -68,11 +71,15 @@ export default function SimpleModal(props: IProps) {
     accountsService
       .deposit(account)
       .then(() => {
+        setLoading(false);
+
         addToast("Depósito efetuado com sucesso!", {
           appearance: "success",
         });
       })
       .catch(() => {
+        setLoading(false);
+
         addToast("An error occur to make Deposit. Try again.", {
           appearance: "error",
         });
@@ -85,7 +92,7 @@ export default function SimpleModal(props: IProps) {
     
     setValues({
       ...values,
-      amount: formatCurrencyWithouCurrencyDisplay(parsedNumber)
+      amount: formatCurrencyWithoutCurrencySymbol(parsedNumber)
     });
   };
 
@@ -122,6 +129,7 @@ export default function SimpleModal(props: IProps) {
           color="primary"
           onClick={makeDeposit}
           className={classes.button}
+          disabled={loading}
         >
           Realizar Depósito
         </Button>

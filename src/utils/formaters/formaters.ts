@@ -2,7 +2,7 @@ export const formatCurrency = (currency: number): string => {
   return currency.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 };
 
-export const formatCurrencyWithouCurrencyDisplay = (currency: number): string => {
+export const formatCurrencyWithoutCurrencySymbol = (currency: number): string => {
   const formatedCurrency = currency.toLocaleString("pt-BR", { style: "currency", currency: "BRL"});
 
   return formatedCurrency.replace('R$ ', '');
