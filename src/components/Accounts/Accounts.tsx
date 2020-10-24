@@ -43,7 +43,7 @@ function Accounts() {
           appearance: "error",
         });
       });
-  });
+  },[]);
 
   let bankPostList = accountList.map((account, index) => (
     <TableRow key={account.hash}>
