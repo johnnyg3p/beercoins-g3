@@ -20,7 +20,7 @@ export class SignInService {
           id: 71,
           username: "maria",
           email: "maria@gmail.com",
-          roles: ["ROLE_MODERATOR"],
+          roles: "ROLE_MODERATOR",
           hash: "c54caf29-184a-4706-9845-6672cbf0025d",
           accessToken:
             "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXJpYSIsImlhdCI6MTYwMzMyNjE1OCwiZXhwIjoxNjAzNDEyNTU4fQ.P2-8L59AfTXm2w8XC5pi3np71HTg78NoVivXNhAIzwYHJAHdOeMhtJ66E_K-f3WSFPGUK10CqyM0Db5I0eFE_Q",

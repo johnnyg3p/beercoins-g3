@@ -7,7 +7,6 @@ const PrivateRoute = ({ children, ...rest }: any) => {
   const {
     userInfo: { accessToken, roles },
   } = useAuthContext();
-  const userRole = roles[0];
   // const userRole = "ROLE_USER";
   /* ADMIN USER {
     user: admin,
@@ -19,7 +18,7 @@ const PrivateRoute = ({ children, ...rest }: any) => {
       {...rest}
       render={({ location }) => {
         if (accessToken) {
-          return !routeRole || routeRole === userRole ? (
+          return !routeRole || routeRole === roles ? (
             children
           ) : (
             <Redirect

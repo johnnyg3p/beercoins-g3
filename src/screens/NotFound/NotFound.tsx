@@ -1,7 +1,6 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,11 +17,9 @@ const NotFound = () => {
 
   return (
     <>
-      <Container maxWidth="lg" className={classes.container}>
-        <Grid container direction="row" justify="center" spacing={2}>
-          Page Not Found
-        </Grid>
-      </Container>
+      <Grid container className={classes.container} direction="row" justify="center" spacing={2}>
+        Page Not Found
+      </Grid>
     </>
   );
 };
