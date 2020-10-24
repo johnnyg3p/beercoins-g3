@@ -17,7 +17,7 @@ const Balance = () => {
   useEffect(() => {
     async function getDataFn() {
       try {
-        const resultBalance = await GetBalance({ hash: userInfo.hash || "", token: userInfo.accessToken });
+        const resultBalance = await GetBalance({ token: userInfo.accessToken });
         const { saldo } = resultBalance;
         setBalance(saldo);
       } catch (error) {
