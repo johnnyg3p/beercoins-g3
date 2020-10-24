@@ -6,7 +6,7 @@ import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Container from "@material-ui/core/Container";
-import Image from "../../images/new-logo.png";
+import Image from "../../images/logo.png";
 import themes from "../../utils/themes";
 import { ThemeProvider } from "@material-ui/core/styles";
 import PersonIcon from "@material-ui/icons/Person";
