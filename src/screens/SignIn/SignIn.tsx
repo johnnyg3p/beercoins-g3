@@ -16,6 +16,7 @@ import { useToasts } from "react-toast-notifications";
 import { useAuthContext } from "../../context/Auth";
 import { useHistory } from "react-router-dom";
 import { SignInService } from "../../services/Auth.service";
+import cookieHandler from "../../utils/cookieHandler";
 const signInService = new SignInService();
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -85,7 +86,9 @@ const SignIn = () => {
             const userInformation = response.data;
 
             setUserInfo(userInformation);
-            sessionStorage.setItem("userInfo", JSON.stringify(userInformation));
+
+            cookieHandler.create("userInfo", JSON.stringify(userInformation), 30);
+
             addToast("Login efetuado com sucesso!", {
               appearance: "success",
             });
@@ -94,6 +97,7 @@ const SignIn = () => {
           })
           .catch((error) => {
             setLoading(false);
+
             addToast("Credenciais inválidas. Por favor, tente novamente.", {
               appearance: "error",
             });

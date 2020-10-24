@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { IAuthContextProps } from "../../interfaces/IAuthContextProps";
+import cookieHandler from '../../utils/cookieHandler'
 
 const initialStateObj: ISignInStatus = {
   id: null,
@@ -15,12 +16,12 @@ const initialStateObj: ISignInStatus = {
 const AuthContext = createContext<IAuthContextProps>({} as IAuthContextProps);
 
 const initialState = () => {
-  const sessionStorageInfo = sessionStorage.getItem("userInfo");
+  const userInfo = cookieHandler.read("userInfo");
 
-  if (sessionStorageInfo) {
-    const parsedSessionStorageInfo: ISignInStatus = JSON.parse(sessionStorageInfo);
+  if (userInfo) {
+    const parsedUserInfo: ISignInStatus = JSON.parse(userInfo);
 
-    return parsedSessionStorageInfo;
+    return parsedUserInfo;
   }
 
   return initialStateObj;
@@ -31,7 +32,7 @@ export const AuthProvider = ({ children }: any) => {
   let history = useHistory();
 
   const signOut = () => {
-    sessionStorage.removeItem("userInfo");
+    cookieHandler.remove("userInfo");
     setUserInfo(initialState());
 
     history.push("/login");
