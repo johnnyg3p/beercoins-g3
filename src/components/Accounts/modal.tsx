@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
@@ -8,6 +8,8 @@ import { IDeposit } from '../../interfaces/IDeposit';
 import Typography from '@material-ui/core/Typography';
 import { Grid, Input, InputAdornment } from '@material-ui/core';
 import { useToasts } from "react-toast-notifications";
+import TextField from '@material-ui/core/TextField';
+import { formatCurrency } from '../../utils/formaters/formaters';
 
 interface IProps {
   account: IAccount;
@@ -33,9 +35,9 @@ const useStyles = makeStyles((theme) => ({
     height: '30%',
     width: '50%',
     backgroundColor: theme.palette.background.paper,
-  }, 
+  },
   button: {
-    marginTop: theme.spacing(4),   
+    marginTop: theme.spacing(4),
   },
   padd: {
     paddingTop: theme.spacing(2),
@@ -48,7 +50,7 @@ export default function SimpleModal(props: IProps) {
   const { addToast } = useToasts();
   const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
-  const [values, setValues] = React.useState({ amount: '' });
+  const [values, setValues] = React.useState({ amount: '0' });
 
   const handleOpen = () => {
     setOpen(true);
@@ -68,7 +70,7 @@ export default function SimpleModal(props: IProps) {
         appearance: "success",
       });
     })
-      .catch((error) => {
+      .catch(() => {
         addToast("An error occur to make Deposit. Try again.", {
           appearance: "error",
         });
@@ -76,7 +78,7 @@ export default function SimpleModal(props: IProps) {
   };
 
   const handleChange = ((e: React.ChangeEvent<HTMLInputElement>): void => {
-    setValues({ ...values, ['amount']: e.currentTarget.value });
+    setValues({ ...values, ['amount']: e.currentTarget.value.replace(/\D/g, '') });
   });
 
   const body = (
@@ -85,11 +87,23 @@ export default function SimpleModal(props: IProps) {
         <Typography component="h1" variant="h4" align="center">Depósito</Typography>
         <h3>Digite o valor para realizar o depósito na conta de {props.account.nome}</h3>
         <Grid item xs={12} className={classes.padd}>
-          <Input fullWidth
-            id="standard-adornment-amount"
-            value={values.amount}
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="amount"
+            label="Valor do depósito"
+            name="amount"
             onChange={handleChange}
-            startAdornment={<InputAdornment position="start">R$</InputAdornment>}
+            value={values.amount}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  R$
+                </InputAdornment>
+              ),
+            }}
           />
         </Grid>
         <Button fullWidth variant="contained" color="primary" onClick={makeDeposit} className={classes.button}>Realizar Depósito</Button>

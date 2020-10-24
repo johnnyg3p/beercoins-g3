@@ -1,12 +1,17 @@
 import React, { useRef, useCallback, useState } from "react";
-import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
+import PersonIcon from "@material-ui/icons/Person";
+import LockIcon from "@material-ui/icons/Lock";
+import BusinessIcon from "@material-ui/icons/Business";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import PhoneIcon from '@material-ui/icons/Phone';
+import HomeIcon from "@material-ui/icons/Home";
+import PermContactCalendarIcon from "@material-ui/icons/PermContactCalendar";
 import Container from "@material-ui/core/Container";
 import { useHistory } from "react-router-dom";
 import { makeStyles, ThemeProvider } from "@material-ui/core/styles";
@@ -21,6 +26,7 @@ import {
 } from "@brazilian-utils/brazilian-utils";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import themes from "../../utils/themes";
+import Image from "../../images/logo.png";
 import formatPhoneNumber from "../../utils/formaters/phoneMask";
 import cleanStringValue from "../../utils/formaters/cleanStringValue";
 
@@ -30,17 +36,10 @@ const useStyles = makeStyles((theme) => ({
   "@keyframes fadeIn": {
     "0%": {
       opacity: 0,
-      transform: "translateX(-100px)"
     },
     "100%": {
       opacity: 1,
-      transform: "translateX(0)"
-    }
-  },
-  containerWrapper: {
-    animation: `$fadeIn 1500ms ${theme.transitions.easing.easeInOut} forwards`,
-    opacity: 0,
-    transform: "translateX(-100px)"
+    },
   },
   paper: {
     marginTop: theme.spacing(8),
@@ -61,7 +60,9 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    padding: theme.spacing(1),
+    opacity: 0,
+    animation: `$fadeIn 1300ms ${theme.transitions.easing.easeInOut} forwards`,
   },
   form: {
     width: "100%", // Fix IE 11 issue.
@@ -69,9 +70,39 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    opacity: 0,
+    animation: `$fadeIn 1000ms ${theme.transitions.easing.easeInOut} forwards 800ms`,
+  },
+  signInLink: {
+    opacity: 0,
+    animation: `$fadeIn 1000ms ${theme.transitions.easing.easeInOut} forwards 1100ms`,
   },
   formControl: {
     margin: theme.spacing(3),
+  },
+  firstInput: {
+    opacity: 0,
+    animation: `$fadeIn 1000ms ${theme.transitions.easing.easeInOut} forwards 200ms`,
+  },
+  secondInput: {
+    opacity: 0,
+    animation: `$fadeIn 1000ms ${theme.transitions.easing.easeInOut} forwards 300ms`,
+  },
+  thirdInput: {
+    opacity: 0,
+    animation: `$fadeIn 1000ms ${theme.transitions.easing.easeInOut} forwards 400ms`,
+  },
+  fourthInput: {
+    opacity: 0,
+    animation: `$fadeIn 1000ms ${theme.transitions.easing.easeInOut} forwards 500ms`,
+  },
+  fifthInput: {
+    opacity: 0,
+    animation: `$fadeIn 1000ms ${theme.transitions.easing.easeInOut} forwards 600ms`,
+  },
+  sixthInput: {
+    opacity: 0,
+    animation: `$fadeIn 1000ms ${theme.transitions.easing.easeInOut} forwards 700ms`,
   },
 }));
 
@@ -152,7 +183,14 @@ const SignUp = () => {
         const parsedPhoneNumber = cleanStringValue(phone);
 
         await signUpService
-          .execute({ cnpj: parsedCNPJ, email, nome, phone: parsedPhoneNumber, password, username })
+          .execute({
+            cnpj: parsedCNPJ,
+            email,
+            nome,
+            phone: parsedPhoneNumber,
+            password,
+            username,
+          })
           .then((response) => {
             addToast(
               "Cadastro efetuado com sucesso! Você pode fazer o login agora.",
@@ -221,17 +259,16 @@ const SignUp = () => {
   );
 
   return (
-    <Container component="main" maxWidth="xs" className={classes.containerWrapper}>
+    <Container
+      component="main"
+      maxWidth="xs"
+    >
       <CssBaseline />
 
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-
-        <Typography component="h1" variant="h5">
-          Sign Up
-        </Typography>
+        <div className={classes.avatar}>
+          <img src={Image} alt="logo" />
+        </div>
 
         <form className={classes.form} onSubmit={signUpHandler} noValidate>
           <ThemeProvider theme={themes.signPagesInputErrorCustomStyle}>
@@ -251,6 +288,14 @@ const SignUp = () => {
               error={!isCnpjValid}
               onFocus={() => setIsCnpjValid(true)}
               helperText={!isCnpjValid && "Please, type a valid CNPJ number."}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <BusinessIcon />
+                  </InputAdornment>
+                ),
+              }}
+              className={classes.firstInput}
             />
 
             <TextField
@@ -267,6 +312,14 @@ const SignUp = () => {
               onFocus={() => setNameInputError(false)}
               helperText={nameInputError && "Type a name"}
               inputRef={nameRef}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <PersonIcon />
+                  </InputAdornment>
+                ),
+              }}
+              className={classes.secondInput}
             />
 
             <TextField
@@ -284,6 +337,14 @@ const SignUp = () => {
               helperText={emailInputError && "Type an email"}
               error={emailInputError}
               inputRef={emailRef}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <HomeIcon />
+                  </InputAdornment>
+                ),
+              }}
+              className={classes.thirdInput}
             />
 
             <TextField
@@ -301,6 +362,14 @@ const SignUp = () => {
               error={!isPhoneValid}
               onFocus={() => setIsPhoneValid(true)}
               helperText={!isPhoneValid && "Please, type a valid phone number."}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <PhoneIcon />
+                  </InputAdornment>
+                ),
+              }}
+              className={classes.fourthInput}
             />
 
             <TextField
@@ -317,6 +386,14 @@ const SignUp = () => {
               onFocus={() => setPasswordInputError(false)}
               helperText={passwordInputError && "Type a password"}
               inputRef={passwordRef}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <LockIcon />
+                  </InputAdornment>
+                ),
+              }}
+              className={classes.fifthInput}
             />
 
             <TextField
@@ -333,6 +410,14 @@ const SignUp = () => {
               onFocus={() => setUserInputError(false)}
               helperText={userInputError && "Type an username"}
               inputRef={usernameRef}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <PermContactCalendarIcon />
+                  </InputAdornment>
+                ),
+              }}
+              className={classes.sixthInput}
             />
           </ThemeProvider>
 
@@ -353,7 +438,7 @@ const SignUp = () => {
               <CircularProgress size={24} className={classes.buttonProgress} />
             )}
           </div>
-          <Grid container>
+          <Grid container className={classes.signInLink}>
             <Grid item>
               <Link href="/login" variant="body2">
                 {"Already have an account? Sign in"}
