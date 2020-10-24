@@ -9,7 +9,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import { useHistory } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, ThemeProvider } from "@material-ui/core/styles";
 import { useToasts } from "react-toast-notifications";
 import { SignUpService } from "../../services/Auth.service";
 import { blue } from "@material-ui/core/colors";
@@ -17,6 +17,8 @@ import formatCNPJ from "../../utils/formaters/cnpjMask";
 import { isValidCNPJ } from "@brazilian-utils/brazilian-utils";
 import { isValidEmail } from "@brazilian-utils/brazilian-utils";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import signPagesInputErrorCustomStyle from '../../utils/themes'
+
 const signUpService = new SignUpService();
 
 const useStyles = makeStyles((theme) => ({
@@ -187,88 +189,90 @@ const SignUp = () => {
         </Typography>
 
         <form className={classes.form} onSubmit={signUpHandler} noValidate>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="cnpj"
-            label="CNPJ"
-            name="cnpj"
-            autoComplete="cnpj"
-            autoFocus
-            value={cnpjValue}
-            onChange={(e) => handleFormatAndValidateCNPJ(e)}
-            inputRef={cnpjRef}
-            error={!isCnpjValid}
-            onFocus={() => setIsCnpjValid(true)}
-            helperText={!isCnpjValid && "Please, type a valid CNPJ number."}
-          />
+          <ThemeProvider theme={signPagesInputErrorCustomStyle}>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="cnpj"
+              label="CNPJ"
+              name="cnpj"
+              autoComplete="cnpj"
+              autoFocus
+              value={cnpjValue}
+              onChange={(e) => handleFormatAndValidateCNPJ(e)}
+              inputRef={cnpjRef}
+              error={!isCnpjValid}
+              onFocus={() => setIsCnpjValid(true)}
+              helperText={!isCnpjValid && "Please, type a valid CNPJ number."}
+            />
 
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="name"
-            label="Name"
-            name="name"
-            type="text"
-            autoComplete="name"
-            error={nameInputError}
-            onFocus={() => setNameInputError(false)}
-            helperText={nameInputError && "Type an name"}
-            inputRef={nameRef}
-          />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="name"
+              label="Name"
+              name="name"
+              type="text"
+              autoComplete="name"
+              error={nameInputError}
+              onFocus={() => setNameInputError(false)}
+              helperText={nameInputError && "Type a name"}
+              inputRef={nameRef}
+            />
 
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            type="email"
-            autoComplete="email"
-            onFocus={() => setEmailInputError(false)}
-            onBlur={(e) => handleCheckIsEmailIsValid(e)}
-            helperText={emailInputError && "Type an email"}
-            error={emailInputError}
-            inputRef={emailRef}
-          />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              type="email"
+              autoComplete="email"
+              onFocus={() => setEmailInputError(false)}
+              onBlur={(e) => handleCheckIsEmailIsValid(e)}
+              helperText={emailInputError && "Type an email"}
+              error={emailInputError}
+              inputRef={emailRef}
+            />
 
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="password"
-            error={passwordInputError}
-            onFocus={() => setPasswordInputError(false)}
-            helperText={passwordInputError && "Type a password"}
-            inputRef={passwordRef}
-          />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="password"
+              error={passwordInputError}
+              onFocus={() => setPasswordInputError(false)}
+              helperText={passwordInputError && "Type a password"}
+              inputRef={passwordRef}
+            />
 
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="username"
-            label="Username"
-            type="username"
-            id="username"
-            autoComplete="username"
-            error={userInputError}
-            onFocus={() => setUserInputError(false)}
-            helperText={userInputError && "Type an username"}
-            inputRef={usernameRef}
-          />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="username"
+              label="Username"
+              type="username"
+              id="username"
+              autoComplete="username"
+              error={userInputError}
+              onFocus={() => setUserInputError(false)}
+              helperText={userInputError && "Type an username"}
+              inputRef={usernameRef}
+            />
+          </ThemeProvider>
 
           <div className={classes.wrapper}>
             <Button

@@ -1,26 +1,20 @@
 import React from "react";
 import clsx from "clsx";
-import { createStyles, makeStyles, useTheme, Theme } from "@material-ui/core/styles";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Box from "@material-ui/core/Box";
 import List from "@material-ui/core/List";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
+import { IconButton } from "@material-ui/core";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import HomeIcon from "@material-ui/icons/Home";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import EventAvailableIcon from "@material-ui/icons/EventAvailable";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import Cached from "@material-ui/icons/Cached";
-import EventNoteIcon from "@material-ui/icons/EventNote";
 
 import { useAuthContext } from "../../context/Auth";
 import { Link } from "react-router-dom";
@@ -81,7 +75,6 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: "center",
       justifyContent: "flex-end",
       padding: theme.spacing(0, 1),
-      // necessary for content to be below app bar
       ...theme.mixins.toolbar,
     },
     content: {
@@ -96,22 +89,28 @@ interface IProps {
 }
 
 const SideBar = (props: IProps) => {
-  const { moderator: typeUser } = props;
+  const { moderator: typeUserProps } = props;
   const classes = useStyles();
-  const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const { signOut } = useAuthContext();
 
   const menuSideaBar = [
     {
-      id: 4,
+      id: 1,
+      text: "Home",
+      icon: <HomeIcon />,
+      link: "/",
+      userType: typeUserProps,
+    },
+    {
+      id: 2,
       text: "Operations",
       icon: <EventAvailableIcon />,
       link: "/operations",
       userType: "ROLE_MODERATOR",
     },
     {
-      id: 5,
+      id: 3,
       text: "Payments",
       icon: <Cached />,
       link: "/payments",
@@ -119,44 +118,9 @@ const SideBar = (props: IProps) => {
     },
   ];
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar
-        position="fixed"
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: open,
-        })}
-      >
-        <Toolbar>
-          <Box display="flex" flexGrow={1} alignItems="center">
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              onClick={handleDrawerOpen}
-              edge="start"
-              className={clsx(classes.menuButton, {
-                [classes.hide]: open,
-              })}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h6" noWrap>
-              <Link color="inherit" to="/">
-                Beer Coin
-              </Link>
-            </Typography>
-          </Box>
-        </Toolbar>
-      </AppBar>
       <Drawer
         variant="permanent"
         className={clsx(classes.drawer, {
@@ -171,33 +135,28 @@ const SideBar = (props: IProps) => {
         }}
       >
         <div className={classes.toolbar}>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === "rtl" ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-          </IconButton>
+          <IconButton onClick={() => setOpen(!open)}>{open ? <ChevronLeftIcon /> : <ChevronRightIcon />}</IconButton>
         </div>
         <Divider />
         <List>
           {menuSideaBar.map((item, index) => {
             const { text, id, icon, link, userType } = item;
-            if (userType === typeUser) {
+            if (userType === typeUserProps) {
               return (
-                <Link color="inherit" key={id} to={link}>
-                  <ListItem button>
-                    <ListItemIcon> {icon}</ListItemIcon>
-                    <ListItemText primary={text} />
-                  </ListItem>
-                </Link>
+                <ListItem color="inherit" key={id} component={Link} to={link} button>
+                  <ListItemIcon> {icon}</ListItemIcon>
+                  <ListItemText primary={text} />
+                </ListItem>
               );
             }
+            return "";
           })}
-          <Link color="inherit" aria-label="exit app" to="/login" onClick={() => signOut()}>
-            <ListItem button>
-              <ListItemIcon>
-                <ExitToAppIcon />
-              </ListItemIcon>
-              <ListItemText>Logout</ListItemText>
-            </ListItem>
-          </Link>
+          <ListItem component={Link} to="/login" onClick={() => signOut()} button>
+            <ListItemIcon>
+              <ExitToAppIcon />
+            </ListItemIcon>
+            <ListItemText>Logout</ListItemText>
+          </ListItem>
         </List>
         <Divider />
       </Drawer>

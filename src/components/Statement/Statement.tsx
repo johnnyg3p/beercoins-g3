@@ -9,19 +9,27 @@ import { useAuthContext } from "../../context/Auth";
 import { GetStatement } from "../../services/User/User";
 import "./Statement.scss";
 import { formatCurrency, formatBankPost } from "../../utils/formaters/formaters";
+import { useToasts } from "react-toast-notifications";
 
 interface IProps {}
 
 function Statement(props: IProps) {
   const { userInfo } = useAuthContext();
   const [statement, setStatement] = useState<IStatement[]>([]);
+  const { addToast } = useToasts();
 
   type Order = "asc" | "desc";
 
   useEffect(() => {
     async function getDataFn() {
-      const resultStatement = await GetStatement({ hash: userInfo.hash || "", token: userInfo.accessToken });
-      setStatement(resultStatement);
+      try {
+        const resultStatement = await GetStatement({ hash: userInfo.hash || "", token: userInfo.accessToken });
+        setStatement(resultStatement);
+      } catch (error) {
+        addToast("Error to get statement.", {
+          appearance: "error",
+        });
+      }
     }
     getDataFn();
   }, [userInfo]);
