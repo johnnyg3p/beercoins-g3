@@ -156,12 +156,15 @@ const SignIn = () => {
             />
 
             <FormControl className={clsx(classes.form)} variant="outlined">
-              <InputLabel htmlFor="outlined-adornment-password" className={classes.secondInput}>
+              <InputLabel
+                htmlFor="outlined-adornment-password"
+                className={classes.secondInput}
+              >
                 Password
               </InputLabel>
               <OutlinedInput
                 className={classes.secondInput}
-                id="username"
+                id="password"
                 type={values.showPassword ? "text" : "password"}
                 value={values.password}
                 inputRef={passwordRef}
@@ -201,7 +204,9 @@ const SignIn = () => {
             >
               Sign In
             </Button>
-            {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
+            {loading && (
+              <CircularProgress size={24} className={classes.buttonProgress} />
+            )}
           </div>
 
           <Grid container className={classes.signUpLink}>
