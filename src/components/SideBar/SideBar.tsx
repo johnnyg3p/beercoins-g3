@@ -75,6 +75,9 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: theme.spacing(0, 0.5),
       ...theme.mixins.toolbar,
     },
+    icon: {
+      minWidth: theme.spacing(5) + 1,
+    },
   })
 );
 
@@ -138,7 +141,7 @@ const SideBar = (props: IProps) => {
             if (userType === typeUserProps) {
               return (
                 <ListItem color="inherit" key={id} component={Link} to={link} button>
-                  <ListItemIcon> {icon}</ListItemIcon>
+                  <ListItemIcon className={classes.icon}>{icon}</ListItemIcon>
                   <ListItemText primary={text} />
                 </ListItem>
               );
@@ -146,7 +149,7 @@ const SideBar = (props: IProps) => {
             return "";
           })}
           <ListItem component={Link} to="/login" onClick={() => signOut()} button>
-            <ListItemIcon>
+            <ListItemIcon className={classes.icon}>
               <ExitToAppIcon />
             </ListItemIcon>
             <ListItemText>Logout</ListItemText>

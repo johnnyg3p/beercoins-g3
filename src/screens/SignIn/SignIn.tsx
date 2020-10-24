@@ -74,6 +74,11 @@ const useStyles = makeStyles((theme: Theme) => ({
   textField: {
     width: "25ch",
   },
+  content: {
+    display: "flex",
+    height: "100%",
+    alignItems: "center",
+  },
 }));
 interface State {
   amount: string;
@@ -160,7 +165,7 @@ const SignIn = () => {
   );
 
   return (
-    <Container maxWidth="xs">
+    <Container className={classes.content} maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <div className={classes.avatar}>
@@ -192,28 +197,6 @@ const SignIn = () => {
                 ),
               }}
             />
-            {/* <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              inputRef={passwordRef}
-              error={passwordInputError}
-              helperText={passwordInputError && "Type a password"}
-              onFocus={() => setPasswordInputError(false)}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <LockIcon />
-                  </InputAdornment>
-                ),
-              }}
-            /> */}
 
             <FormControl className={clsx(classes.form)} variant="outlined">
               <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>

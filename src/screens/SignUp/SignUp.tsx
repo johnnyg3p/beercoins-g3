@@ -6,12 +6,12 @@ import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import PersonIcon from '@material-ui/icons/Person';
-import LockIcon from '@material-ui/icons/Lock';
-import BusinessIcon from '@material-ui/icons/Business';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import HomeIcon from '@material-ui/icons/Home';
-import PermContactCalendarIcon from '@material-ui/icons/PermContactCalendar';
+import PersonIcon from "@material-ui/icons/Person";
+import LockIcon from "@material-ui/icons/Lock";
+import BusinessIcon from "@material-ui/icons/Business";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import HomeIcon from "@material-ui/icons/Home";
+import PermContactCalendarIcon from "@material-ui/icons/PermContactCalendar";
 import Container from "@material-ui/core/Container";
 import { useHistory } from "react-router-dom";
 import { makeStyles, ThemeProvider } from "@material-ui/core/styles";
@@ -19,13 +19,9 @@ import { useToasts } from "react-toast-notifications";
 import { SignUpService } from "../../services/Auth.service";
 import { blue } from "@material-ui/core/colors";
 import formatCNPJ from "../../utils/formaters/cnpjMask";
-import {
-  isValidCNPJ,
-  isValidPhone,
-  isValidEmail,
-} from "@brazilian-utils/brazilian-utils";
+import { isValidCNPJ, isValidPhone, isValidEmail } from "@brazilian-utils/brazilian-utils";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import signPagesInputErrorCustomStyle from '../../utils/themes'
+import signPagesInputErrorCustomStyle from "../../utils/themes";
 import Image from "../../images/logo.png";
 
 import formatPhoneNumber from "../../utils/formaters/phoneMask";
@@ -35,7 +31,6 @@ const signUpService = new SignUpService();
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -65,6 +60,11 @@ const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(3),
   },
+  content: {
+    display: "flex",
+    height: "100%",
+    alignItems: "center",
+  },
 }));
 
 const SignUp = () => {
@@ -88,33 +88,30 @@ const SignUp = () => {
   const { addToast } = useToasts();
   let history = useHistory();
 
-  const validateInputFields = useCallback(
-    (inputArray: IInputValidationObject[]) => {
-      inputArray.map((inputObjectWithNameAndValue) => {
-        const objectName = Object.keys(inputObjectWithNameAndValue)[0];
-        const objectValue = Object.values(inputObjectWithNameAndValue)[0];
+  const validateInputFields = useCallback((inputArray: IInputValidationObject[]) => {
+    inputArray.map((inputObjectWithNameAndValue) => {
+      const objectName = Object.keys(inputObjectWithNameAndValue)[0];
+      const objectValue = Object.values(inputObjectWithNameAndValue)[0];
 
-        switch (objectName) {
-          case "cnpj":
-            if (!objectValue) setIsCnpjValid(false);
-            break;
-          case "email":
-            if (!objectValue) setEmailInputError(true);
-            break;
-          case "nome":
-            if (!objectValue) setNameInputError(true);
-            break;
-          case "password":
-            if (!objectValue) setPasswordInputError(true);
-            break;
-          case "username":
-            if (!objectValue) setUserInputError(true);
-            break;
-        }
-      });
-    },
-    []
-  );
+      switch (objectName) {
+        case "cnpj":
+          if (!objectValue) setIsCnpjValid(false);
+          break;
+        case "email":
+          if (!objectValue) setEmailInputError(true);
+          break;
+        case "nome":
+          if (!objectValue) setNameInputError(true);
+          break;
+        case "password":
+          if (!objectValue) setPasswordInputError(true);
+          break;
+        case "username":
+          if (!objectValue) setUserInputError(true);
+          break;
+      }
+    });
+  }, []);
 
   const signUpHandler = useCallback(
     async (e: React.FormEvent) => {
@@ -126,14 +123,7 @@ const SignUp = () => {
       const password = passwordRef?.current?.value;
       const username = usernameRef?.current?.value;
 
-      validateInputFields([
-        { cnpj },
-        { email },
-        { nome },
-        { phone },
-        { password },
-        { username },
-      ]);
+      validateInputFields([{ cnpj }, { email }, { nome }, { phone }, { password }, { username }]);
 
       if (cnpj && email && phone && nome && password && username) {
         setLoading(true);
@@ -143,10 +133,7 @@ const SignUp = () => {
         await signUpService
           .execute({ cnpj: parsedCNPJ, email, nome, phone: parsedPhoneNumber, password, username })
           .then((response) => {
-            addToast(
-              "Cadastro efetuado com sucesso! Você pode fazer o login agora.",
-              { appearance: "success" }
-            );
+            addToast("Cadastro efetuado com sucesso! Você pode fazer o login agora.", { appearance: "success" });
 
             setTimeout(() => {
               history.push("/login");
@@ -198,19 +185,16 @@ const SignUp = () => {
     [handleCheckIfPhoneNumberIsValid]
   );
 
-  const handleCheckIsEmailIsValid = useCallback(
-    (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      const emailInputValue = e.target.value;
+  const handleCheckIsEmailIsValid = useCallback((e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const emailInputValue = e.target.value;
 
-      if (emailInputValue) {
-        setEmailInputError(!isValidEmail(emailInputValue));
-      }
-    },
-    []
-  );
+    if (emailInputValue) {
+      setEmailInputError(!isValidEmail(emailInputValue));
+    }
+  }, []);
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container className={classes.content} maxWidth="xs">
       <CssBaseline />
 
       <div className={classes.paper}>
@@ -218,9 +202,7 @@ const SignUp = () => {
           <img src={Image} alt="logo" />
         </div>
 
-        <Typography component="h6">
-          Sign Up
-        </Typography>
+        <Typography component="h6">Sign Up</Typography>
 
         <form className={classes.form} onSubmit={signUpHandler} noValidate>
           <ThemeProvider theme={signPagesInputErrorCustomStyle}>
@@ -245,8 +227,8 @@ const SignUp = () => {
                   <InputAdornment position="start">
                     <BusinessIcon />
                   </InputAdornment>
-                   ),
-                  }}
+                ),
+              }}
             />
 
             <TextField
@@ -268,8 +250,8 @@ const SignUp = () => {
                   <InputAdornment position="start">
                     <PersonIcon />
                   </InputAdornment>
-                   ),
-                  }}
+                ),
+              }}
             />
 
             <TextField
@@ -292,9 +274,8 @@ const SignUp = () => {
                   <InputAdornment position="start">
                     <HomeIcon />
                   </InputAdornment>
-                   ),
-                  }}
-
+                ),
+              }}
             />
 
             <TextField
@@ -334,9 +315,8 @@ const SignUp = () => {
                   <InputAdornment position="start">
                     <LockIcon />
                   </InputAdornment>
-                   ),
-                  }}
-
+                ),
+              }}
             />
 
             <TextField
@@ -358,9 +338,8 @@ const SignUp = () => {
                   <InputAdornment position="start">
                     <PermContactCalendarIcon />
                   </InputAdornment>
-                   ),
-                  }}
-
+                ),
+              }}
             />
           </ThemeProvider>
 
@@ -377,9 +356,7 @@ const SignUp = () => {
               Register
             </Button>
 
-            {loading && (
-              <CircularProgress size={24} className={classes.buttonProgress} />
-            )}
+            {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
           </div>
           <Grid container>
             <Grid item>
