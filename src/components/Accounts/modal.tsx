@@ -32,8 +32,8 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     position: 'absolute',
     padding: 20,
-    height: '30%',
-    width: '50%',
+    minHeight: '30%',
+    width: '35%',
     backgroundColor: theme.palette.background.paper,
   },
   button: {
