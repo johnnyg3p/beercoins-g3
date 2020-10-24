@@ -1,12 +1,14 @@
 import axiosRequest from "../../config/axios";
 import { AxiosRequestConfig, AxiosResponse } from "axios";
 import { IDeposit } from "../../interfaces/IDeposit";
+import HttpConfig from '../../config/axios/httpConfig';
+
 
 const header = (): AxiosRequestConfig => { 
-  const userInfo = JSON.parse(sessionStorage.getItem("userInfo") || '');
+  const userInfo = new HttpConfig();
   return {
     headers: {
-      Authorization: `Bearer ${userInfo.accessToken}`,
+      Authorization: `Bearer ${userInfo.getToken()}`,
     }
   }
 };
@@ -26,11 +28,11 @@ export default class AccountsService {
   }
 
   async deposit(deposit: IDeposit) {
-    return new Promise<AxiosResponse<IAccount>>((resolve, reject) => {
+    return new Promise<IAccount>((resolve, reject) => {
       axiosRequest
-        .post("auth/deposit", deposit)
+        .post("auth/deposit", deposit, header())
         .then((response) => {
-          return resolve(response);
+          return resolve(response.data);
         })
         .catch((error) => reject(error));
     });

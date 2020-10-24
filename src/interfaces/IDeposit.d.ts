@@ -1,7 +1,5 @@
 import { OperationType } from './OperationType';
-interface IDeposit {
-    authToken: string,
-    hash: string,
-    tipoOperacao: OperationType,
+interface IDeposit {   
+    hash: string,   
     valorOperacao: number
 }

@@ -17,13 +17,12 @@ const Body = () => {
     userInfo: { accessToken, roles },
   } = useAuthContext();
   const classes = useStyles();
-  const userRole = roles[0];
 
   return (
     <div className="App">
       {accessToken ? (
         <header className="App-header">
-          <SideBar moderator={userRole} />
+          <SideBar moderator={roles} />
         </header>
       ) : null}
       <main className={classes.content}>

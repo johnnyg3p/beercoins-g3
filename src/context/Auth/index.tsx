@@ -1,40 +1,30 @@
 import React, { createContext, useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { IAuthContextProps } from "../../interfaces/IAuthContextProps";
+import cookieHandler from '../../utils/cookieHandler'
 
-// const initialState = {
-//   userInfo: {
-//     id: 71,
-//     username: "maria",
-//     email: "maria@gmail.com",
-//     roles: ["ROLE_MODERATOR"],
-//     hash: "c54caf29-184a-4706-9845-6672cbf0025d",
-//     accessToken:
-//       "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXJpYSIsImlhdCI6MTYwMzMyNjE1OCwiZXhwIjoxNjAzNDEyNTU4fQ.P2-8L59AfTXm2w8XC5pi3np71HTg78NoVivXNhAIzwYHJAHdOeMhtJ66E_K-f3WSFPGUK10CqyM0Db5I0eFE_Q",
-//     tokenType: "Bearer",
-//   },
-// };
+const initialStateObj: ISignInStatus = {
+  id: null,
+  username: "",
+  email: "",
+  roles: "",
+  hash: "",
+  accessToken: "",
+  tokenType: "",
+};
 
 const AuthContext = createContext<IAuthContextProps>({} as IAuthContextProps);
 
 const initialState = () => {
-  const sessionStorageInfo = sessionStorage.getItem("userInfo");
+  const userInfo = cookieHandler.read("userInfo");
 
-  if (sessionStorageInfo) {
-    const parsedSessionStorageInfo: ISignInStatus = JSON.parse(sessionStorageInfo);
+  if (userInfo) {
+    const parsedUserInfo: ISignInStatus = JSON.parse(userInfo);
 
-    return parsedSessionStorageInfo;
+    return parsedUserInfo;
   }
 
-  return {
-    id: null,
-    username: "",
-    email: "",
-    roles: [],
-    accessToken: "",
-    tokenType: "",
-    hash: "",
-  };
+  return initialStateObj;
 };
 
 export const AuthProvider = ({ children }: any) => {
@@ -42,10 +32,10 @@ export const AuthProvider = ({ children }: any) => {
   let history = useHistory();
 
   const signOut = () => {
-    sessionStorage.removeItem("userInfo");
+    cookieHandler.remove("userInfo");
     setUserInfo(initialState());
 
-    history.push('/login');
+    history.push("/login");
   };
 
   return <AuthContext.Provider value={{ signOut, userInfo, setUserInfo }}>{children}</AuthContext.Provider>;
