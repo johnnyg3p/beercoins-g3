@@ -9,8 +9,9 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
+import signPagesInputErrorCustomStyle from "../../utils/themes";
 import { blue } from "@material-ui/core/colors";
-import { makeStyles, Theme } from "@material-ui/core/styles";
+import { makeStyles, Theme, ThemeProvider } from "@material-ui/core/styles";
 import { useToasts } from "react-toast-notifications";
 import { useAuthContext } from "../../context/Auth";
 import { useHistory } from "react-router-dom";
@@ -48,7 +49,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export default function SignIn() {
+const SignIn = () => {
   const classes = useStyles();
   const usernameRef = useRef<IInputRef>(null);
   const passwordRef = useRef<IInputRef>(null);
@@ -114,34 +115,38 @@ export default function SignIn() {
         </Typography>
 
         <form className={classes.form} onSubmit={signInHandler} noValidate>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="username"
-            label="Username"
-            name="username"
-            autoComplete="username"
-            autoFocus
-            inputRef={usernameRef}
-            error={usernameInputError}
-            onFocus={() => setUsernameInputError(false)}
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            inputRef={passwordRef}
-            error={passwordInputError}
-            onFocus={() => setPasswordInputError(false)}
-          />
+          <ThemeProvider theme={signPagesInputErrorCustomStyle}>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="username"
+              label="Username"
+              name="username"
+              autoComplete="username"
+              autoFocus
+              inputRef={usernameRef}
+              error={usernameInputError}
+              helperText={usernameInputError && "Type an username"}
+              onFocus={() => setUsernameInputError(false)}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              inputRef={passwordRef}
+              error={passwordInputError}
+              helperText={passwordInputError && "Type a password"}
+              onFocus={() => setPasswordInputError(false)}
+            />
+          </ThemeProvider>
 
           <div className={classes.wrapper}>
             <Button
@@ -155,7 +160,9 @@ export default function SignIn() {
             >
               Sign In
             </Button>
-            {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
+            {loading && (
+              <CircularProgress size={24} className={classes.buttonProgress} />
+            )}
           </div>
 
           <Grid container>
@@ -169,4 +176,6 @@ export default function SignIn() {
       </div>
     </Container>
   );
-}
+};
+
+export default React.memo(SignIn);

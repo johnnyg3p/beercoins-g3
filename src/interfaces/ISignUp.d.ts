@@ -1,9 +1,9 @@
 interface ISignUp {
-  cnpj: string,
-  email: string,
-  nome: string,
-  password: string,
-  username: string
+  cnpj: string;
+  email: string;
+  nome: string;
+  password: string;
+  username: string;
 }
 
 interface ISignUpStatus {
@@ -30,4 +30,12 @@ interface IInputRef {
 
 interface ICheckBoxRef {
   value: string[];
+}
+
+interface IInputValidationObject {
+  cnpj?: string | undefined;
+  email?: string | undefined;
+  nome?: string | undefined;
+  password?: string | undefined;
+  username?: string | undefined;
 }

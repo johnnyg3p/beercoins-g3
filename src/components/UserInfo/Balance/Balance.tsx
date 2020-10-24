@@ -7,16 +7,24 @@ import { Avatar } from "@material-ui/core";
 import "./Balance.scss";
 import { GetBalance } from "../../../services/User/User";
 import { useAuthContext } from "../../../context/Auth";
+import { useToasts } from "react-toast-notifications";
 
 const Balance = () => {
   const { userInfo } = useAuthContext();
   const [balance, setBalance] = useState<number | null>(null);
+  const { addToast } = useToasts();
 
   useEffect(() => {
     async function getDataFn() {
-      const resultBalance = await GetBalance({ hash: userInfo.hash || "", token: userInfo.accessToken });
-      const { saldo } = resultBalance;
-      setBalance(saldo);
+      try {
+        const resultBalance = await GetBalance({ hash: userInfo.hash || "", token: userInfo.accessToken });
+        const { saldo } = resultBalance;
+        setBalance(saldo);
+      } catch (error) {
+        addToast("Error to get balance.", {
+          appearance: "error",
+        });
+      }
     }
     getDataFn();
   }, [userInfo]);

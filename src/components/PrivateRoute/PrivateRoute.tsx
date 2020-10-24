@@ -18,9 +18,6 @@ const PrivateRoute = ({ children, ...rest }: any) => {
     <Route
       {...rest}
       render={({ location }) => {
-        console.log("routeRole", routeRole);
-        console.log("userRole", userRole);
-
         if (accessToken) {
           return !routeRole || routeRole === userRole ? (
             children
