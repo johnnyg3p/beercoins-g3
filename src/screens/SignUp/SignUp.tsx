@@ -5,8 +5,13 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
+import PersonIcon from '@material-ui/icons/Person';
+import LockIcon from '@material-ui/icons/Lock';
+import BusinessIcon from '@material-ui/icons/Business';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import HomeIcon from '@material-ui/icons/Home';
+import PermContactCalendarIcon from '@material-ui/icons/PermContactCalendar';
 import Container from "@material-ui/core/Container";
 import { useHistory } from "react-router-dom";
 import { makeStyles, ThemeProvider } from "@material-ui/core/styles";
@@ -20,7 +25,9 @@ import {
   isValidEmail,
 } from "@brazilian-utils/brazilian-utils";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import signPagesInputErrorCustomStyle from "../../utils/themes";
+import signPagesInputErrorCustomStyle from '../../utils/themes'
+import Image from "../../images/logo.png";
+
 import formatPhoneNumber from "../../utils/formaters/phoneMask";
 import cleanStringValue from "../../utils/formaters/cleanStringValue";
 
@@ -46,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    padding: theme.spacing(1),
   },
   form: {
     width: "100%", // Fix IE 11 issue.
@@ -207,11 +214,11 @@ const SignUp = () => {
       <CssBaseline />
 
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
+        <div className={classes.avatar}>
+          <img src={Image} alt="logo" />
+        </div>
 
-        <Typography component="h1" variant="h5">
+        <Typography component="h6">
           Sign Up
         </Typography>
 
@@ -233,6 +240,13 @@ const SignUp = () => {
               error={!isCnpjValid}
               onFocus={() => setIsCnpjValid(true)}
               helperText={!isCnpjValid && "Please, type a valid CNPJ number."}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <BusinessIcon />
+                  </InputAdornment>
+                   ),
+                  }}
             />
 
             <TextField
@@ -249,6 +263,13 @@ const SignUp = () => {
               onFocus={() => setNameInputError(false)}
               helperText={nameInputError && "Type a name"}
               inputRef={nameRef}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <PersonIcon />
+                  </InputAdornment>
+                   ),
+                  }}
             />
 
             <TextField
@@ -266,6 +287,14 @@ const SignUp = () => {
               helperText={emailInputError && "Type an email"}
               error={emailInputError}
               inputRef={emailRef}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <HomeIcon />
+                  </InputAdornment>
+                   ),
+                  }}
+
             />
 
             <TextField
@@ -300,6 +329,14 @@ const SignUp = () => {
               onFocus={() => setPasswordInputError(false)}
               helperText={passwordInputError && "Type a password"}
               inputRef={passwordRef}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <LockIcon />
+                  </InputAdornment>
+                   ),
+                  }}
+
             />
 
             <TextField
@@ -316,6 +353,14 @@ const SignUp = () => {
               onFocus={() => setUserInputError(false)}
               helperText={userInputError && "Type an username"}
               inputRef={usernameRef}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <PermContactCalendarIcon />
+                  </InputAdornment>
+                   ),
+                  }}
+
             />
           </ThemeProvider>
 
