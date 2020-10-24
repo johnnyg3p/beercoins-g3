@@ -28,7 +28,6 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import signPagesInputErrorCustomStyle from '../../utils/themes'
 import Image from "../../images/logo.png";
 
-import signPagesInputErrorCustomStyle from "../../utils/themes";
 import formatPhoneNumber from "../../utils/formaters/phoneMask";
 import cleanStringValue from "../../utils/formaters/cleanStringValue";
 
