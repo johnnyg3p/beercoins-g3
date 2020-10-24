@@ -6,7 +6,7 @@ import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Container from "@material-ui/core/Container";
-import Image from "../../images/logo.png";
+import Image from "../../images/new-logo.png";
 import themes from "../../utils/themes";
 import { ThemeProvider } from "@material-ui/core/styles";
 import PersonIcon from "@material-ui/icons/Person";
@@ -156,12 +156,15 @@ const SignIn = () => {
             />
 
             <FormControl className={clsx(classes.form)} variant="outlined">
-              <InputLabel htmlFor="outlined-adornment-password" className={classes.secondInput}>
+              <InputLabel
+                htmlFor="outlined-adornment-password"
+                className={classes.secondInput}
+              >
                 Password
               </InputLabel>
               <OutlinedInput
                 className={classes.secondInput}
-                id="username"
+                id="password"
                 type={values.showPassword ? "text" : "password"}
                 value={values.password}
                 inputRef={passwordRef}
@@ -201,7 +204,9 @@ const SignIn = () => {
             >
               Sign In
             </Button>
-            {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
+            {loading && (
+              <CircularProgress size={24} className={classes.buttonProgress} />
+            )}
           </div>
 
           <Grid container className={classes.signUpLink}>
