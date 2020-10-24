@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export default function SignIn() {
+const SignIn = () => {
   const classes = useStyles();
   const usernameRef = useRef<IInputRef>(null);
   const passwordRef = useRef<IInputRef>(null);
@@ -172,3 +172,5 @@ export default function SignIn() {
     </Container>
   );
 }
+
+export default React.memo(SignIn);
