@@ -10,6 +10,7 @@ import SimpleModal from "./modal";
 import AccountsService from "../../services/Accounts/accounts.service";
 import Link from "@material-ui/core/Link";
 import { useToasts } from "react-toast-notifications";
+import TableLoading from "../TableLoading";
 
 const accountsService = new AccountsService();
 
@@ -30,10 +31,10 @@ function Accounts() {
   const [accountList, setAccount] = useState<IAccount[]>([]);
   const { addToast } = useToasts();
 
-  useEffect(() => { 
+  useEffect(() => {
     accountsService
       .getAccounts()
-      .then((response) => {        
+      .then((response) => {
         setAccount(response);
         JSON.stringify(response);
       })
@@ -42,9 +43,9 @@ function Accounts() {
           appearance: "error",
         });
       });
-  },[]);
+  }, []);
 
-  let bankPostList = accountList.map((account, index) => (
+  const actounts = accountList.map((account, index) => (
     <TableRow key={account.hash}>
       <TableCell align="left">{index}</TableCell>
       <TableCell align="left">{account.hash}</TableCell>
@@ -74,7 +75,7 @@ function Accounts() {
               <TableCell align="left">Actions</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>{bankPostList}</TableBody>
+          <TableBody>{accountList.length ? actounts : <TableLoading colsPan={6} items={3} />}</TableBody>
         </Table>
       </TableContainer>
       <div className={classes.seeMore}>

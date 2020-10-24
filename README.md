@@ -1,11 +1,18 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 
+
+URL do projeto
+[URL] (https://beer-coins-g3-git-main.beer-tech-g3.vercel.app/login)
+
 Documentação de Back-End
-[Swagger](https://beercoin-fusion-api.herokuapp.com/swagger-ui.html#/operation-controller/listSaldoContaUsingGET)
+[Swagger](https://beercoin-fusion-api.herokuapp.com/swagger-ui.html#)
 
 PDF de REQUISITOS
 [PDF] (https://github.com/leoqbc/beertech-react/blob/master/Aula11_challenge/projetochallengebeer.pdf)
+
+Deploy automático pelo Vercel
+[URL] (https://vercel.com/beer-tech-g3/beer-coins-g3)
 
 
 

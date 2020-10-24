@@ -8,6 +8,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     content: {
       paddingLeft: 0,
+      height: "100%",
     },
   })
 );
@@ -17,7 +18,7 @@ const Home = () => {
 
   return (
     <Grid container className={classes.content} direction="row" justify="center" spacing={0}>
-      <Grid item xs={12} sm={4}>
+      <Grid item xs={12} sm={4} style={{ backgroundColor: "white" }}>
         <UserInfo />
       </Grid>
       <Grid item xs={12} sm={8}>

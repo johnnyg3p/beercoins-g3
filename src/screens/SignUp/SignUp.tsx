@@ -1,12 +1,16 @@
 import React, { useRef, useCallback, useState } from "react";
-import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import Typography from "@material-ui/core/Typography";
+import PersonIcon from "@material-ui/icons/Person";
+import LockIcon from "@material-ui/icons/Lock";
+import BusinessIcon from "@material-ui/icons/Business";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import PhoneIcon from '@material-ui/icons/Phone';
+import HomeIcon from "@material-ui/icons/Home";
+import PermContactCalendarIcon from "@material-ui/icons/PermContactCalendar";
 import Container from "@material-ui/core/Container";
 import { useHistory } from "react-router-dom";
 import { makeStyles, ThemeProvider } from "@material-ui/core/styles";
@@ -14,16 +18,26 @@ import { useToasts } from "react-toast-notifications";
 import { SignUpService } from "../../services/Auth.service";
 import { blue } from "@material-ui/core/colors";
 import formatCNPJ from "../../utils/formaters/cnpjMask";
-import { isValidCNPJ } from "@brazilian-utils/brazilian-utils";
-import { isValidEmail } from "@brazilian-utils/brazilian-utils";
+import { isValidCNPJ, isValidPhone, isValidEmail } from "@brazilian-utils/brazilian-utils";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import signPagesInputErrorCustomStyle from '../../utils/themes'
+import themes from "../../utils/themes";
+import Image from "../../images/logo.png";
+
+import formatPhoneNumber from "../../utils/formaters/phoneMask";
+import cleanStringValue from "../../utils/formaters/cleanStringValue";
 
 const signUpService = new SignUpService();
 
 const useStyles = makeStyles((theme) => ({
+  "@keyframes fadeIn": {
+    "0%": {
+      opacity: 0,
+    },
+    "100%": {
+      opacity: 1,
+    },
+  },
   paper: {
-    marginTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -41,7 +55,9 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    padding: theme.spacing(1),
+    opacity: 0,
+    animation: `$fadeIn 1300ms ${theme.transitions.easing.easeInOut} forwards`,
   },
   form: {
     width: "100%", // Fix IE 11 issue.
@@ -49,9 +65,44 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    opacity: 0,
+    animation: `$fadeIn 1000ms ${theme.transitions.easing.easeInOut} forwards 800ms`,
+  },
+  signInLink: {
+    opacity: 0,
+    animation: `$fadeIn 1000ms ${theme.transitions.easing.easeInOut} forwards 1100ms`,
   },
   formControl: {
     margin: theme.spacing(3),
+  },
+  firstInput: {
+    opacity: 0,
+    animation: `$fadeIn 1000ms ${theme.transitions.easing.easeInOut} forwards 200ms`,
+  },
+  secondInput: {
+    opacity: 0,
+    animation: `$fadeIn 1000ms ${theme.transitions.easing.easeInOut} forwards 300ms`,
+  },
+  thirdInput: {
+    opacity: 0,
+    animation: `$fadeIn 1000ms ${theme.transitions.easing.easeInOut} forwards 400ms`,
+  },
+  fourthInput: {
+    opacity: 0,
+    animation: `$fadeIn 1000ms ${theme.transitions.easing.easeInOut} forwards 500ms`,
+  },
+  fifthInput: {
+    opacity: 0,
+    animation: `$fadeIn 1000ms ${theme.transitions.easing.easeInOut} forwards 600ms`,
+  },
+  sixthInput: {
+    opacity: 0,
+    animation: `$fadeIn 1000ms ${theme.transitions.easing.easeInOut} forwards 700ms`,
+  },
+  content: {
+    display: "flex",
+    height: "100%",
+    alignItems: "center",
   },
 }));
 
@@ -60,6 +111,7 @@ const SignUp = () => {
   const cnpjRef = useRef<IInputRef>(null);
   const nameRef = useRef<IInputRef>(null);
   const emailRef = useRef<IInputRef>(null);
+  const phoneRef = useRef<IInputRef>(null);
   const passwordRef = useRef<IInputRef>(null);
   const usernameRef = useRef<IInputRef>(null);
   const [nameInputError, setNameInputError] = useState(false);
@@ -68,7 +120,9 @@ const SignUp = () => {
   const [userInputError, setUserInputError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [cnpjValue, setCnpjValue] = useState("");
+  const [phoneValue, setPhoneValue] = useState("");
   const [isCnpjValid, setIsCnpjValid] = useState(true);
+  const [isPhoneValid, setIsPhoneValid] = useState(true);
 
   const { addToast } = useToasts();
   let history = useHistory();
@@ -89,6 +143,9 @@ const SignUp = () => {
           case "nome":
             if (!objectValue) setNameInputError(true);
             break;
+          case "phone":
+            if (!objectValue) setIsPhoneValid(false);
+            break;
           case "password":
             if (!objectValue) setPasswordInputError(true);
             break;
@@ -107,33 +164,36 @@ const SignUp = () => {
       const cnpj = cnpjRef?.current?.value;
       const email = emailRef?.current?.value;
       const nome = nameRef?.current?.value;
+      const phone = phoneRef?.current?.value;
       const password = passwordRef?.current?.value;
       const username = usernameRef?.current?.value;
 
-      validateInputFields([
-        { cnpj },
-        { email },
-        { nome },
-        { password },
-        { username },
-      ]);
+      validateInputFields([{ cnpj }, { email }, { nome }, { phone }, { password }, { username }]);
 
-      if (cnpj && email && nome && password && username) {
+      if (cnpj && email && phone && nome && password && username) {
         setLoading(true);
+        const parsedCNPJ = cleanStringValue(cnpj);
+        const parsedPhoneNumber = cleanStringValue(phone);
 
         await signUpService
-          .execute({ cnpj, email, nome, password, username })
+          .execute({
+            cnpj: parsedCNPJ,
+            email,
+            nome,
+            phone: parsedPhoneNumber,
+            password,
+            username,
+          })
           .then((response) => {
-            addToast(
-              "Cadastro efetuado com sucesso! Você pode fazer o login agora.",
-              { appearance: "success" }
-            );
+            addToast("Cadastro efetuado com sucesso! Você pode fazer o login agora.", { appearance: "success" });
 
             setTimeout(() => {
               history.push("/login");
             }, 1000);
           })
           .catch((error) => {
+            setLoading(false);
+
             const { message } = error.response.data;
 
             if (message) return addToast(message, { appearance: "error" });
@@ -141,8 +201,6 @@ const SignUp = () => {
             addToast("Ocorreu um erro. Por favor, tente novamente.", {
               appearance: "error",
             });
-
-            setLoading(false);
           });
       }
     },
@@ -164,32 +222,40 @@ const SignUp = () => {
     [handleCheckIfCNPJisValid]
   );
 
-  const handleCheckIsEmailIsValid = useCallback(
-    (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      const emailInputValue = e.target.value;
+  const handleCheckIfPhoneNumberIsValid = useCallback((phoneNumber: string) => {
+    setIsPhoneValid(isValidPhone(phoneNumber));
+  }, []);
 
-      if (emailInputValue) {
-        setEmailInputError(!isValidEmail(emailInputValue));
+  const handleFormatAndValidatePhone = useCallback(
+    (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+      setPhoneValue(formatPhoneNumber(e.target.value));
+
+      if (formatPhoneNumber(e.target.value).length === 15) {
+        handleCheckIfPhoneNumberIsValid(formatPhoneNumber(e.target.value));
       }
     },
-    []
+    [handleCheckIfPhoneNumberIsValid]
   );
 
+  const handleCheckIsEmailIsValid = useCallback((e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const emailInputValue = e.target.value;
+
+    if (emailInputValue) {
+      setEmailInputError(!isValidEmail(emailInputValue));
+    }
+  }, []);
+
   return (
-    <Container component="main" maxWidth="xs">
+    <Container className={classes.content} maxWidth="xs">
       <CssBaseline />
 
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-
-        <Typography component="h1" variant="h5">
-          Sign Up
-        </Typography>
+        <div className={classes.avatar}>
+          <img src={Image} alt="logo" />
+        </div>
 
         <form className={classes.form} onSubmit={signUpHandler} noValidate>
-          <ThemeProvider theme={signPagesInputErrorCustomStyle}>
+          <ThemeProvider theme={themes.signPagesInputErrorCustomStyle}>
             <TextField
               variant="outlined"
               margin="normal"
@@ -206,6 +272,14 @@ const SignUp = () => {
               error={!isCnpjValid}
               onFocus={() => setIsCnpjValid(true)}
               helperText={!isCnpjValid && "Please, type a valid CNPJ number."}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <BusinessIcon />
+                  </InputAdornment>
+                ),
+              }}
+              className={classes.firstInput}
             />
 
             <TextField
@@ -222,6 +296,14 @@ const SignUp = () => {
               onFocus={() => setNameInputError(false)}
               helperText={nameInputError && "Type a name"}
               inputRef={nameRef}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <PersonIcon />
+                  </InputAdornment>
+                ),
+              }}
+              className={classes.secondInput}
             />
 
             <TextField
@@ -239,6 +321,39 @@ const SignUp = () => {
               helperText={emailInputError && "Type an email"}
               error={emailInputError}
               inputRef={emailRef}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <HomeIcon />
+                  </InputAdornment>
+                ),
+              }}
+              className={classes.thirdInput}
+            />
+
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="phone"
+              label="Phone"
+              name="phone"
+              autoComplete="phone"
+              value={phoneValue}
+              onChange={(e) => handleFormatAndValidatePhone(e)}
+              inputRef={phoneRef}
+              error={!isPhoneValid}
+              onFocus={() => setIsPhoneValid(true)}
+              helperText={!isPhoneValid && "Please, type a valid phone number."}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <PhoneIcon />
+                  </InputAdornment>
+                ),
+              }}
+              className={classes.fourthInput}
             />
 
             <TextField
@@ -255,6 +370,14 @@ const SignUp = () => {
               onFocus={() => setPasswordInputError(false)}
               helperText={passwordInputError && "Type a password"}
               inputRef={passwordRef}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <LockIcon />
+                  </InputAdornment>
+                ),
+              }}
+              className={classes.fifthInput}
             />
 
             <TextField
@@ -271,6 +394,14 @@ const SignUp = () => {
               onFocus={() => setUserInputError(false)}
               helperText={userInputError && "Type an username"}
               inputRef={usernameRef}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <PermContactCalendarIcon />
+                  </InputAdornment>
+                ),
+              }}
+              className={classes.sixthInput}
             />
           </ThemeProvider>
 
@@ -287,11 +418,9 @@ const SignUp = () => {
               Register
             </Button>
 
-            {loading && (
-              <CircularProgress size={24} className={classes.buttonProgress} />
-            )}
+            {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
           </div>
-          <Grid container>
+          <Grid container className={classes.signInLink}>
             <Grid item>
               <Link href="/login" variant="body2">
                 {"Already have an account? Sign in"}
