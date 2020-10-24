@@ -30,7 +30,7 @@ export default class AccountsService {
   async deposit(deposit: IDeposit) {
     return new Promise<IAccount>((resolve, reject) => {
       axiosRequest
-        .post("auth/deposit", deposit, header())
+        .post("deposits", deposit, header())
         .then((response) => {
           return resolve(response.data);
         })
