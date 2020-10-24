@@ -4,7 +4,6 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
 import PersonIcon from "@material-ui/icons/Person";
 import LockIcon from "@material-ui/icons/Lock";
 import BusinessIcon from "@material-ui/icons/Business";
@@ -19,14 +18,11 @@ import { useToasts } from "react-toast-notifications";
 import { SignUpService } from "../../services/Auth.service";
 import { blue } from "@material-ui/core/colors";
 import formatCNPJ from "../../utils/formaters/cnpjMask";
-import {
-  isValidCNPJ,
-  isValidPhone,
-  isValidEmail,
-} from "@brazilian-utils/brazilian-utils";
+import { isValidCNPJ, isValidPhone, isValidEmail } from "@brazilian-utils/brazilian-utils";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import themes from "../../utils/themes";
 import Image from "../../images/logo.png";
+
 import formatPhoneNumber from "../../utils/formaters/phoneMask";
 import cleanStringValue from "../../utils/formaters/cleanStringValue";
 
@@ -42,7 +38,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   paper: {
-    marginTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -103,6 +98,11 @@ const useStyles = makeStyles((theme) => ({
   sixthInput: {
     opacity: 0,
     animation: `$fadeIn 1000ms ${theme.transitions.easing.easeInOut} forwards 700ms`,
+  },
+  content: {
+    display: "flex",
+    height: "100%",
+    alignItems: "center",
   },
 }));
 
@@ -168,14 +168,7 @@ const SignUp = () => {
       const password = passwordRef?.current?.value;
       const username = usernameRef?.current?.value;
 
-      validateInputFields([
-        { cnpj },
-        { email },
-        { nome },
-        { phone },
-        { password },
-        { username },
-      ]);
+      validateInputFields([{ cnpj }, { email }, { nome }, { phone }, { password }, { username }]);
 
       if (cnpj && email && phone && nome && password && username) {
         setLoading(true);
@@ -192,10 +185,7 @@ const SignUp = () => {
             username,
           })
           .then((response) => {
-            addToast(
-              "Cadastro efetuado com sucesso! Você pode fazer o login agora.",
-              { appearance: "success" }
-            );
+            addToast("Cadastro efetuado com sucesso! Você pode fazer o login agora.", { appearance: "success" });
 
             setTimeout(() => {
               history.push("/login");
@@ -247,22 +237,16 @@ const SignUp = () => {
     [handleCheckIfPhoneNumberIsValid]
   );
 
-  const handleCheckIsEmailIsValid = useCallback(
-    (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      const emailInputValue = e.target.value;
+  const handleCheckIsEmailIsValid = useCallback((e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const emailInputValue = e.target.value;
 
-      if (emailInputValue) {
-        setEmailInputError(!isValidEmail(emailInputValue));
-      }
-    },
-    []
-  );
+    if (emailInputValue) {
+      setEmailInputError(!isValidEmail(emailInputValue));
+    }
+  }, []);
 
   return (
-    <Container
-      component="main"
-      maxWidth="xs"
-    >
+    <Container className={classes.content} maxWidth="xs">
       <CssBaseline />
 
       <div className={classes.paper}>
@@ -434,9 +418,7 @@ const SignUp = () => {
               Register
             </Button>
 
-            {loading && (
-              <CircularProgress size={24} className={classes.buttonProgress} />
-            )}
+            {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
           </div>
           <Grid container className={classes.signInLink}>
             <Grid item>

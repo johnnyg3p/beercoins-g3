@@ -21,6 +21,7 @@ import cookieHandler from "../../utils/cookieHandler";
 import IconButton from "@material-ui/core/IconButton";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import InputLabel from "@material-ui/core/InputLabel";
+import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
@@ -48,7 +49,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     animation: `$fadeIn 1300ms ${theme.transitions.easing.easeInOut} forwards`,
   },
   paper: {
-    marginTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -101,6 +101,11 @@ const useStyles = makeStyles((theme: Theme) => ({
   signUpLink: {
     opacity: 0,
     animation: `$fadeIn 1000ms ${theme.transitions.easing.easeInOut} forwards 400ms`,
+  },
+  content: {
+    display: "flex",
+    height: "100%",
+    alignItems: "center",
   },
 }));
 interface State {
@@ -196,7 +201,7 @@ const SignIn = () => {
   );
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container className={classes.content} component="main" maxWidth="xs">
       <CssBaseline />
 
       <div className={classes.paper}>
@@ -276,9 +281,7 @@ const SignIn = () => {
             >
               Sign In
             </Button>
-            {loading && (
-              <CircularProgress size={24} className={classes.buttonProgress} />
-            )}
+            {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
           </div>
 
           <Grid container className={classes.signUpLink}>
