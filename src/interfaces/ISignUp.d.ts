@@ -10,7 +10,7 @@ interface ISignUpStatus {
   id: number;
   username: string;
   email: string;
-  roles: string[];
+  roles: IRoles;
   accessToken: string;
   tokenType: string;
   hash: string;
