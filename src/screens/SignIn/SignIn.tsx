@@ -6,17 +6,32 @@ import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
+import Image from "../../images/logo.png";
 import signPagesInputErrorCustomStyle from "../../utils/themes";
 import { blue } from "@material-ui/core/colors";
 import { makeStyles, Theme, ThemeProvider } from "@material-ui/core/styles";
+import PersonIcon from '@material-ui/icons/Person';
+import LockIcon from '@material-ui/icons/Lock';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import { useToasts } from "react-toast-notifications";
 import { useAuthContext } from "../../context/Auth";
 import { useHistory } from "react-router-dom";
 import { SignInService } from "../../services/Auth.service";
 import cookieHandler from "../../utils/cookieHandler";
+import IconButton from '@material-ui/core/IconButton';
+import Input from '@material-ui/core/Input';
+import FilledInput from '@material-ui/core/FilledInput';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import clsx from 'clsx';
+
+
 const signInService = new SignInService();
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -39,7 +54,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    padding: theme.spacing(1),
   },
   form: {
     width: "100%", // Fix IE 11 issue.
@@ -48,7 +63,27 @@ const useStyles = makeStyles((theme: Theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  margin: {
+    margin: theme.spacing(1),
+  },
+  withoutLabel: {
+    marginTop: theme.spacing(3),
+  },
+  textField: {
+    width: '25ch',
+  },
 }));
+interface State {
+  amount: string;
+  password: string;
+  weight: string;
+  weightRange: string;
+  showPassword: boolean;
+}
 
 const SignIn = () => {
   const classes = useStyles();
@@ -59,6 +94,26 @@ const SignIn = () => {
   const [loading, setLoading] = useState(false);
   const { setUserInfo } = useAuthContext();
   const { addToast } = useToasts();
+  const [values, setValues] = React.useState<State>({
+    amount: '',
+    password: '',
+    weight: '',
+    weightRange: '',
+    showPassword: false,
+  });
+
+  const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValues({ ...values, [prop]: event.target.value });
+  };
+
+
+  const handleClickShowPassword = () => {
+    setValues({ ...values, showPassword: !values.showPassword });
+  };
+
+  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+  };
 
   let history = useHistory();
 
@@ -108,14 +163,15 @@ const SignIn = () => {
   );
 
   return (
+
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
+        <div className={classes.avatar}>
+          <img src={Image} alt="logo" />
+        </div>
+        <Typography component="h6">
+          Sign In
         </Typography>
 
         <form className={classes.form} onSubmit={signInHandler} noValidate>
@@ -132,10 +188,17 @@ const SignIn = () => {
               autoFocus
               inputRef={usernameRef}
               error={usernameInputError}
-              helperText={usernameInputError && "Type an username"}
+              helperText={usernameInputError && ""}
               onFocus={() => setUsernameInputError(false)}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <PersonIcon />
+                  </InputAdornment>
+                ),
+              }}
             />
-            <TextField
+            {/* <TextField
               variant="outlined"
               margin="normal"
               required
@@ -149,7 +212,47 @@ const SignIn = () => {
               error={passwordInputError}
               helperText={passwordInputError && "Type a password"}
               onFocus={() => setPasswordInputError(false)}
-            />
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <LockIcon />
+                  </InputAdornment>
+                ),
+              }}
+            /> */}
+
+
+            <FormControl className={clsx(classes.form)} variant="outlined">
+              <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+              <OutlinedInput
+              id="username"
+              type={values.showPassword ? 'text' : 'password'}
+                value={values.password}
+                inputRef={passwordRef}
+                error={passwordInputError}
+                onChange={handleChange('password')}
+                startAdornment={
+                  <InputAdornment position="start">
+                    <LockIcon />
+                  </InputAdornment>
+                }
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                    >
+                      {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+                labelWidth={70}
+
+
+              />
+            </FormControl>
           </ThemeProvider>
 
           <div className={classes.wrapper}>
