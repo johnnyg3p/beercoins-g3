@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   headerText: {
     opacity: 0,
-    animation: `$fadeIn 1300ms ${theme.transitions.easing.easeInOut} forwards`,
+    animation: `$fadeIn 400ms ${theme.transitions.easing.easeInOut} forwards`,
   },
   paper: {
     display: "flex",
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
     opacity: 0,
-    animation: `$fadeIn 1000ms ${theme.transitions.easing.easeInOut} forwards 600ms`,
+    animation: `$fadeIn 600ms ${theme.transitions.easing.easeInOut} forwards 550ms`,
   },
   root: {
     display: "flex",
@@ -64,15 +64,15 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   firstInput: {
     opacity: 0,
-    animation: `$fadeIn 1000ms ${theme.transitions.easing.easeInOut} forwards 200ms`,
+    animation: `$fadeIn 400ms ${theme.transitions.easing.easeInOut} forwards 400ms`,
   },
   secondInput: {
     opacity: 0,
-    animation: `$fadeIn 1000ms ${theme.transitions.easing.easeInOut} forwards 300ms`,
+    animation: `$fadeIn 400ms ${theme.transitions.easing.easeInOut} forwards 450ms`,
   },
   signUpLink: {
     opacity: 0,
-    animation: `$fadeIn 1000ms ${theme.transitions.easing.easeInOut} forwards 400ms`,
+    animation: `$fadeIn 400ms ${theme.transitions.easing.easeInOut} forwards 500ms`,
   },
   content: {
     display: "flex",
