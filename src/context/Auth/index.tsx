@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { IAuthContextProps } from "../../interfaces/IAuthContextProps";
-import cookieHandler from '../../utils/cookieHandler'
+import cookieHandler from "../../utils/cookieHandler";
 
 const initialStateObj: ISignInStatus = {
   id: null,
@@ -11,6 +11,7 @@ const initialStateObj: ISignInStatus = {
   hash: "",
   accessToken: "",
   tokenType: "",
+  name: "",
 };
 
 const AuthContext = createContext<IAuthContextProps>({} as IAuthContextProps);

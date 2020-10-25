@@ -9,7 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import { Grid, InputAdornment } from "@material-ui/core";
 import { useToasts } from "react-toast-notifications";
 import TextField from "@material-ui/core/TextField";
-import { formatCurrency, formatCurrencyIntoInteger, formatCurrencyWithoutCurrencySymbol } from "../../utils/formaters/formaters";
+import { formatCurrencyIntoInteger, formatCurrencyWithoutCurrencySymbol } from "../../utils/formaters/formaters";
 
 interface IProps {
   account: IAccount;
@@ -63,17 +63,18 @@ export default function SimpleModal(props: IProps) {
 
   const makeDeposit = () => {
     setLoading(true);
+    const parsedNumber = formatCurrencyIntoInteger(values.amount);
 
     const account: IDeposit = {
       hash: props.account.hash,
-      valorOperacao: Number(values.amount),
+      valorOperacao: parsedNumber,
     };
     accountsService
       .deposit(account)
       .then(() => {
         setLoading(false);
 
-        addToast("Depósito efetuado com sucesso!", {
+        addToast("Solicitação de depósito efetuada!", {
           appearance: "success",
         });
       })
@@ -89,10 +90,10 @@ export default function SimpleModal(props: IProps) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const currencyStringValue = e.target.value;
     const parsedNumber = formatCurrencyIntoInteger(currencyStringValue);
-    
+
     setValues({
       ...values,
-      amount: formatCurrencyWithoutCurrencySymbol(parsedNumber)
+      amount: formatCurrencyWithoutCurrencySymbol(parsedNumber),
     });
   };
 
@@ -102,9 +103,7 @@ export default function SimpleModal(props: IProps) {
         <Typography component="h1" variant="h4" align="center">
           Depósito
         </Typography>
-        <h3>
-          {`Digite o valor para realizar o depósito na conta de ${props.account.nome}`}
-        </h3>
+        <h3>{`Digite o valor para realizar o depósito na conta de ${props.account.nome}`}</h3>
         <Grid item xs={12} className={classes.padd}>
           <TextField
             variant="outlined"
@@ -117,9 +116,7 @@ export default function SimpleModal(props: IProps) {
             onChange={handleChange}
             value={values.amount}
             InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">R$</InputAdornment>
-              ),
+              startAdornment: <InputAdornment position="start">R$</InputAdornment>,
             }}
           />
         </Grid>

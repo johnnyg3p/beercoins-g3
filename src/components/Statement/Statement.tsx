@@ -8,10 +8,7 @@ import TableRow from "@material-ui/core/TableRow";
 import { useAuthContext } from "../../context/Auth";
 import { GetStatement } from "../../services/User/User";
 import "./Statement.scss";
-import {
-  formatCurrency,
-  formatBankPost,
-} from "../../utils/formaters/formaters";
+import { formatCurrency, formatBankPost } from "../../utils/formaters/formaters";
 import { useToasts } from "react-toast-notifications";
 import TableLoading from "../TableLoading";
 
@@ -28,20 +25,16 @@ const renderTable = (statement: IStatement[] | null) => {
         })
         .map((bankPost, index) => (
           <TableRow key={index + bankPost.hash}>
-            <TableCell align="left">
-              {formatBankPost(bankPost.debitCredit)}
-            </TableCell>
+            <TableCell align="left">{formatBankPost(bankPost.debitCredit)}</TableCell>
             <TableCell align="center">{bankPost.horarioOperacao}</TableCell>
-            <TableCell align="right">
-              {formatCurrency(bankPost.valorOperacao)}
-            </TableCell>
+            <TableCell align="right">{formatCurrency(bankPost.valorOperacao)}</TableCell>
           </TableRow>
         ));
     } else {
       return (
         <TableRow className="statement-empty">
           <TableCell colSpan={3} align="center">
-            Você não possui lanlamentos ainda
+            Você ainda não possui lanlamentos
           </TableCell>
         </TableRow>
       );
@@ -66,7 +59,7 @@ function Statement(props: IProps) {
         });
         setStatement(resultStatement);
       } catch (error) {
-        addToast("Error to get statement.", {
+        addToast("Erro ao carregar o extrato", {
           appearance: "error",
         });
       }
@@ -79,9 +72,9 @@ function Statement(props: IProps) {
       <Table className="statement" aria-label="customized table">
         <TableHead>
           <TableRow>
-            <TableCell align="left">Bank posting</TableCell>
-            <TableCell align="center">Type</TableCell>
-            <TableCell align="right">Amount</TableCell>
+            <TableCell align="left">Transação</TableCell>
+            <TableCell align="center">Tipo</TableCell>
+            <TableCell align="right">Valor</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>{renderTable(statement)}</TableBody>

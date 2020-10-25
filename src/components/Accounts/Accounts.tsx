@@ -11,6 +11,7 @@ import AccountsService from "../../services/Accounts/accounts.service";
 import Link from "@material-ui/core/Link";
 import { useToasts } from "react-toast-notifications";
 import TableLoading from "../TableLoading";
+import Button from "@material-ui/core/Button";
 
 const accountsService = new AccountsService();
 
@@ -24,12 +25,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function seeMore(event: HTMLAnchorElement) {
-  alert("see more");
+  alert("Ver mais");
 }
 
 function Accounts() {
   const [accountList, setAccount] = useState<IAccount[]>([]);
+  const [loading, setLoading] = React.useState(false);
   const { addToast } = useToasts();
+
+  function seeMore(event: HTMLAnchorElement) {
+    alert("see more");
+  }
 
   useEffect(() => {
     accountsService
@@ -39,13 +45,13 @@ function Accounts() {
         JSON.stringify(response);
       })
       .catch((error) => {
-        addToast("An error occur to get Accounts. Try again.", {
+        addToast("Erro ao carregar a lista de contas", {
           appearance: "error",
         });
       });
   }, [addToast]);
 
-  const actounts = accountList.map((account, index) => (
+  const accounts = accountList.map((account, index) => (
     <TableRow key={account.hash}>
       <TableCell align="left">{index}</TableCell>
       <TableCell align="left">{account.hash}</TableCell>
@@ -62,31 +68,25 @@ function Accounts() {
 
   return (
     <React.Fragment>
-      <h1>Accounts</h1>
+      <h1>Contas</h1>
       <TableContainer>
         <Table className={classes.table} aria-label="Accounts table">
           <TableHead>
             <TableRow>
               <TableCell align="left">#</TableCell>
-              <TableCell align="left">Account number</TableCell>
-              <TableCell align="left">Name</TableCell>
-              <TableCell align="left">Email</TableCell>
+              <TableCell align="left">Número da conta</TableCell>
+              <TableCell align="left">Nome</TableCell>
+              <TableCell align="left">E-mail</TableCell>
               <TableCell align="left">CNPJ</TableCell>
-              <TableCell align="left">Actions</TableCell>
+              <TableCell align="left">Ações</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
-            {accountList.length ? (
-              actounts
-            ) : (
-              <TableLoading colsPan={6} items={3} />
-            )}
-          </TableBody>
+          <TableBody>{accountList.length ? accounts : <TableLoading colsPan={6} items={3} />}</TableBody>
         </Table>
       </TableContainer>
       <div className={classes.seeMore}>
         <Link color="primary" href="#" onClick={() => seeMore}>
-          See more
+          Ver mais
         </Link>
       </div>
     </React.Fragment>

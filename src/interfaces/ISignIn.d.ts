@@ -13,6 +13,7 @@ interface ISignInStatus {
   accessToken: string;
   tokenType: string;
   hash: string;
+  name: string;
 }
 
 interface ISignInError {
