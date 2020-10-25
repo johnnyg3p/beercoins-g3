@@ -1,71 +1,26 @@
 import React, { useRef, useCallback, useState } from "react";
-import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
+import { PermContactCalendar, Email, Home, Phone, Business, Person, Lock } from "@material-ui/icons";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import { PermContactCalendar, Phone, Business, Lock, Person, Email } from "@material-ui/icons";
 import Container from "@material-ui/core/Container";
 import { useHistory } from "react-router-dom";
-import { makeStyles, ThemeProvider } from "@material-ui/core/styles";
+import { ThemeProvider } from "@material-ui/core/styles";
 import { useToasts } from "react-toast-notifications";
 import { SignUpService } from "../../services/Auth.service";
-import { blue } from "@material-ui/core/colors";
 import formatCNPJ from "../../utils/formaters/cnpjMask";
 import { isValidCNPJ, isValidPhone, isValidEmail } from "@brazilian-utils/brazilian-utils";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import signPagesInputErrorCustomStyle from "../../utils/themes";
+import themes from "../../utils/themes";
 import Image from "../../images/logo.png";
-
 import formatPhoneNumber from "../../utils/formaters/phoneMask";
 import cleanStringValue from "../../utils/formaters/cleanStringValue";
+import useStyles from "./signUpStyles";
 
 const signUpService = new SignUpService();
-
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  },
-  wrapper: {
-    position: "relative",
-  },
-  buttonProgress: {
-    color: blue[500],
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    marginTop: -12,
-    marginLeft: -12,
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    padding: theme.spacing(1),
-  },
-  form: {
-    width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-  formControl: {
-    margin: theme.spacing(3),
-  },
-  content: {
-    display: "flex",
-    alignItems: "center",
-    padding: theme.spacing(3),
-    "@media (min-height: 720px)": {
-      padding: theme.spacing(0),
-      height: "100%",
-    },
-  },
-}));
 
 const SignUp = () => {
   const classes = useStyles();
@@ -103,6 +58,9 @@ const SignUp = () => {
         case "nome":
           if (!objectValue) setNameInputError(true);
           break;
+        case "phone":
+          if (!objectValue) setIsPhoneValid(false);
+          break;
         case "password":
           if (!objectValue) setPasswordInputError(true);
           break;
@@ -119,19 +77,26 @@ const SignUp = () => {
       const cnpj = cnpjRef?.current?.value;
       const email = emailRef?.current?.value;
       const nome = nameRef?.current?.value;
-      const phone = phoneRef?.current?.value;
+      const phonenumber = phoneRef?.current?.value;
       const password = passwordRef?.current?.value;
       const username = usernameRef?.current?.value;
 
-      validateInputFields([{ cnpj }, { email }, { nome }, { phone }, { password }, { username }]);
+      validateInputFields([{ cnpj }, { email }, { nome }, { phonenumber }, { password }, { username }]);
 
-      if (cnpj && email && phone && nome && password && username) {
+      if (cnpj && email && phonenumber && nome && password && username) {
         setLoading(true);
         const parsedCNPJ = cleanStringValue(cnpj);
-        const parsedPhoneNumber = cleanStringValue(phone);
+        const parsedPhoneNumber = cleanStringValue(phonenumber);
 
         await signUpService
-          .execute({ cnpj: parsedCNPJ, email, nome, phone: parsedPhoneNumber, password, username })
+          .execute({
+            cnpj: parsedCNPJ,
+            email,
+            nome,
+            phonenumber: parsedPhoneNumber,
+            password,
+            username,
+          })
           .then((response) => {
             addToast("Cadastro efetuado com sucesso! Você pode fazer o login agora.", { appearance: "success" });
 
@@ -202,10 +167,8 @@ const SignUp = () => {
           <img src={Image} alt="logo" />
         </div>
 
-        <Typography component="h6">Sign Up</Typography>
-
         <form className={classes.form} onSubmit={signUpHandler} noValidate>
-          <ThemeProvider theme={signPagesInputErrorCustomStyle}>
+          <ThemeProvider theme={themes.signPagesInputErrorCustomStyle}>
             <TextField
               variant="outlined"
               margin="normal"
@@ -229,6 +192,7 @@ const SignUp = () => {
                   </InputAdornment>
                 ),
               }}
+              className={classes.firstInput}
             />
 
             <TextField
@@ -252,6 +216,7 @@ const SignUp = () => {
                   </InputAdornment>
                 ),
               }}
+              className={classes.secondInput}
             />
 
             <TextField
@@ -276,6 +241,7 @@ const SignUp = () => {
                   </InputAdornment>
                 ),
               }}
+              className={classes.thirdInput}
             />
 
             <TextField
@@ -300,6 +266,7 @@ const SignUp = () => {
                   </InputAdornment>
                 ),
               }}
+              className={classes.fourthInput}
             />
 
             <TextField
@@ -323,6 +290,7 @@ const SignUp = () => {
                   </InputAdornment>
                 ),
               }}
+              className={classes.fifthInput}
             />
 
             <TextField
@@ -346,6 +314,7 @@ const SignUp = () => {
                   </InputAdornment>
                 ),
               }}
+              className={classes.sixthInput}
             />
           </ThemeProvider>
 
@@ -364,7 +333,7 @@ const SignUp = () => {
 
             {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
           </div>
-          <Grid container>
+          <Grid container className={classes.signInLink}>
             <Grid item>
               <Link href="/login" variant="body2">
                 {"Already have an account? Sign in"}

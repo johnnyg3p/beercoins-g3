@@ -2,7 +2,7 @@ interface ISignUp {
   cnpj: string;
   email: string;
   nome: string;
-  phone: string;
+  phonenumber: string;
   password: string;
   username: string;
 }
@@ -35,7 +35,7 @@ interface ICheckBoxRef {
 
 interface IInputValidationObject {
   cnpj?: string | undefined;
-  phone?: string | undefined;
+  phonenumber?: string | undefined;
   email?: string | undefined;
   nome?: string | undefined;
   password?: string | undefined;

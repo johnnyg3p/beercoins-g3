@@ -12,4 +12,4 @@ const signPagesInputErrorCustomStyle = createMuiTheme({
     },
   });
 
-export default signPagesInputErrorCustomStyle
+export default {signPagesInputErrorCustomStyle}

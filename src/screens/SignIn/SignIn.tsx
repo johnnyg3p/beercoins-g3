@@ -1,17 +1,14 @@
 import React, { useRef, useCallback, useState } from "react";
-import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import Image from "../../images/logo.png";
-import signPagesInputErrorCustomStyle from "../../utils/themes";
-import { blue } from "@material-ui/core/colors";
-import { makeStyles, Theme, ThemeProvider } from "@material-ui/core/styles";
+import themes from "../../utils/themes";
+import { ThemeProvider } from "@material-ui/core/styles";
 import PersonIcon from "@material-ui/icons/Person";
 import LockIcon from "@material-ui/icons/Lock";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -21,67 +18,16 @@ import { useHistory } from "react-router-dom";
 import { SignInService } from "../../services/Auth.service";
 import cookieHandler from "../../utils/cookieHandler";
 import IconButton from "@material-ui/core/IconButton";
-import Input from "@material-ui/core/Input";
-import FilledInput from "@material-ui/core/FilledInput";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import InputLabel from "@material-ui/core/InputLabel";
-import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import clsx from "clsx";
+import useStyles from "./signInStyles";
 
 const signInService = new SignInService();
 
-const useStyles = makeStyles((theme: Theme) => ({
-  paper: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  },
-  wrapper: {
-    position: "relative",
-  },
-  buttonProgress: {
-    color: blue[500],
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    marginTop: -12,
-    marginLeft: -12,
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    padding: theme.spacing(1),
-  },
-  form: {
-    width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-  root: {
-    display: "flex",
-    flexWrap: "wrap",
-  },
-  margin: {
-    margin: theme.spacing(1),
-  },
-  withoutLabel: {
-    marginTop: theme.spacing(3),
-  },
-  textField: {
-    width: "25ch",
-  },
-  content: {
-    display: "flex",
-    alignItems: "center",
-    [theme.breakpoints.up("sm")]: {
-      height: "100%",
-    },
-  },
-}));
 interface State {
   amount: string;
   password: string;
@@ -167,16 +113,16 @@ const SignIn = () => {
   );
 
   return (
-    <Container className={classes.content} maxWidth="xs">
+    <Container className={classes.content} component="main" maxWidth="xs">
       <CssBaseline />
+
       <div className={classes.paper}>
-        <div className={classes.avatar}>
+        <div className={classes.headerText}>
           <img src={Image} alt="logo" />
         </div>
-        <Typography component="h6">Sign In</Typography>
 
         <form className={classes.form} onSubmit={signInHandler} noValidate>
-          <ThemeProvider theme={signPagesInputErrorCustomStyle}>
+          <ThemeProvider theme={themes.signPagesInputErrorCustomStyle}>
             <TextField
               variant="outlined"
               margin="normal"
@@ -198,12 +144,16 @@ const SignIn = () => {
                   </InputAdornment>
                 ),
               }}
+              className={classes.firstInput}
             />
 
             <FormControl className={clsx(classes.form)} variant="outlined">
-              <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+              <InputLabel htmlFor="outlined-adornment-password" className={classes.secondInput}>
+                Password
+              </InputLabel>
               <OutlinedInput
-                id="username"
+                className={classes.secondInput}
+                id="password"
                 type={values.showPassword ? "text" : "password"}
                 value={values.password}
                 inputRef={passwordRef}
@@ -246,7 +196,7 @@ const SignIn = () => {
             {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
           </div>
 
-          <Grid container>
+          <Grid container className={classes.signUpLink}>
             <Grid item>
               <Link href="/signup" variant="body2">
                 {"Don't have an account? Sign Up"}
