@@ -101,14 +101,14 @@ const SideBar = (props: IProps) => {
     },
     {
       id: 2,
-      text: "Operations",
+      text: "Operações",
       icon: <SwapVert />,
       link: "/operations",
       userType: "ROLE_MODERATOR",
     },
     {
       id: 3,
-      text: "Payments",
+      text: "Pagamentos",
       icon: <AttachMoney />,
       link: "/payments",
       userType: "ROLE_USER",
@@ -158,7 +158,7 @@ const SideBar = (props: IProps) => {
             <ListItemIcon className={(classes.icon, "sidebar-text")}>
               <ExitToAppIcon />
             </ListItemIcon>
-            <ListItemText className="sidebar-text">Logout</ListItemText>
+            <ListItemText className="sidebar-text">Sair</ListItemText>
           </ListItem>
         </List>
         <Divider />

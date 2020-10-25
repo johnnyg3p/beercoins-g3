@@ -184,7 +184,7 @@ const SignUp = () => {
               inputRef={cnpjRef}
               error={!isCnpjValid}
               onFocus={() => setIsCnpjValid(true)}
-              helperText={!isCnpjValid && "Please, type a valid CNPJ number."}
+              helperText={!isCnpjValid && "Digite seu CNPJ."}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -201,13 +201,13 @@ const SignUp = () => {
               required
               fullWidth
               id="name"
-              label="Name"
+              label="Nome"
               name="name"
               type="text"
               autoComplete="name"
               error={nameInputError}
               onFocus={() => setNameInputError(false)}
-              helperText={nameInputError && "Type a name"}
+              helperText={nameInputError && "Digite seu nome."}
               inputRef={nameRef}
               InputProps={{
                 startAdornment: (
@@ -225,13 +225,13 @@ const SignUp = () => {
               required
               fullWidth
               id="email"
-              label="Email Address"
+              label="E-mail"
               name="email"
               type="email"
               autoComplete="email"
               onFocus={() => setEmailInputError(false)}
               onBlur={(e) => handleCheckIsEmailIsValid(e)}
-              helperText={emailInputError && "Type an email"}
+              helperText={emailInputError && "Digite seu e-mail."}
               error={emailInputError}
               inputRef={emailRef}
               InputProps={{
@@ -250,7 +250,7 @@ const SignUp = () => {
               required
               fullWidth
               id="phone"
-              label="Phone"
+              label="Telefone"
               name="phone"
               autoComplete="phone"
               value={phoneValue}
@@ -258,7 +258,7 @@ const SignUp = () => {
               inputRef={phoneRef}
               error={!isPhoneValid}
               onFocus={() => setIsPhoneValid(true)}
-              helperText={!isPhoneValid && "Please, type a valid phone number."}
+              helperText={!isPhoneValid && "Por favor, digite um telefone válido."}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -275,13 +275,13 @@ const SignUp = () => {
               required
               fullWidth
               name="password"
-              label="Password"
+              label="Senha"
               type="password"
               id="password"
               autoComplete="password"
               error={passwordInputError}
               onFocus={() => setPasswordInputError(false)}
-              helperText={passwordInputError && "Type a password"}
+              helperText={passwordInputError && "Digite uma senha"}
               inputRef={passwordRef}
               InputProps={{
                 startAdornment: (
@@ -299,13 +299,13 @@ const SignUp = () => {
               required
               fullWidth
               name="username"
-              label="Username"
+              label="Nome de usuário"
               type="username"
               id="username"
               autoComplete="username"
               error={userInputError}
               onFocus={() => setUserInputError(false)}
-              helperText={userInputError && "Type an username"}
+              helperText={userInputError && "Digite um nome de usuário."}
               inputRef={usernameRef}
               InputProps={{
                 startAdornment: (
@@ -328,7 +328,7 @@ const SignUp = () => {
               size="large"
               className={classes.submit}
             >
-              Register
+              Cadastrar
             </Button>
 
             {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
@@ -336,7 +336,7 @@ const SignUp = () => {
           <Grid container className={classes.signInLink}>
             <Grid item>
               <Link href="/login" variant="body2">
-                {"Already have an account? Sign in"}
+                {"Já é cadastrado? Entrar."}
               </Link>
             </Grid>
           </Grid>

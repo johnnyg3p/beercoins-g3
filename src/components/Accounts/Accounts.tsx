@@ -24,7 +24,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
+function seeMore(event: HTMLAnchorElement) {
+  alert("Ver mais");
+}
 
 function Accounts() {
   const [accountList, setAccount] = useState<IAccount[]>([]);
@@ -43,7 +45,7 @@ function Accounts() {
         JSON.stringify(response);
       })
       .catch((error) => {
-        addToast("An error occur to get Accounts. Try again.", {
+        addToast("Erro ao carregar a lista de contas", {
           appearance: "error",
         });
       });
@@ -66,31 +68,25 @@ function Accounts() {
 
   return (
     <React.Fragment>
-      <h1>Accounts</h1>
+      <h1>Contas</h1>
       <TableContainer>
         <Table className={classes.table} aria-label="Accounts table">
           <TableHead>
             <TableRow>
               <TableCell align="left">#</TableCell>
-              <TableCell align="left">Account number</TableCell>
-              <TableCell align="left">Name</TableCell>
-              <TableCell align="left">Email</TableCell>
+              <TableCell align="left">Número da conta</TableCell>
+              <TableCell align="left">Nome</TableCell>
+              <TableCell align="left">E-mail</TableCell>
               <TableCell align="left">CNPJ</TableCell>
-              <TableCell align="left">Actions</TableCell>
+              <TableCell align="left">Ações</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
-            {accountList.length ? (
-              accounts
-            ) : (
-              <TableLoading colsPan={6} items={3} />
-            )}
-          </TableBody>
+          <TableBody>{accountList.length ? accounts : <TableLoading colsPan={6} items={3} />}</TableBody>
         </Table>
       </TableContainer>
       <div className={classes.seeMore}>
         <Link color="primary" href="#" onClick={() => seeMore}>
-          See more
+          Ver mais
         </Link>
       </div>
     </React.Fragment>
