@@ -63,10 +63,11 @@ export default function SimpleModal(props: IProps) {
 
   const makeDeposit = () => {
     setLoading(true);
+    const parsedNumber = formatCurrencyIntoInteger(values.amount);
 
     const account: IDeposit = {
       hash: props.account.hash,
-      valorOperacao: Number(values.amount),
+      valorOperacao: parsedNumber,
     };
     accountsService
       .deposit(account)
