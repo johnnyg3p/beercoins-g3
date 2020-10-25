@@ -21,7 +21,11 @@ const useStyles = makeStyles((theme) => ({
   },
   seeMore: {
     marginTop: theme.spacing(3),
+    maxWidth: '200px'
   },
+  tableHeadItem: {
+    fontWeight: "bold"
+  }
 }));
 
 function seeMore(event: HTMLAnchorElement) {
@@ -73,21 +77,26 @@ function Accounts() {
         <Table className={classes.table} aria-label="Accounts table">
           <TableHead>
             <TableRow>
-              <TableCell align="left">#</TableCell>
-              <TableCell align="left">Número da conta</TableCell>
-              <TableCell align="left">Nome</TableCell>
-              <TableCell align="left">E-mail</TableCell>
-              <TableCell align="left">CNPJ</TableCell>
-              <TableCell align="left">Ações</TableCell>
+              <TableCell align="left" className={classes.tableHeadItem}>#</TableCell>
+              <TableCell align="left" className={classes.tableHeadItem}>Número da conta</TableCell>
+              <TableCell align="left" className={classes.tableHeadItem}>Nome</TableCell>
+              <TableCell align="left" className={classes.tableHeadItem}>E-mail</TableCell>
+              <TableCell align="left" className={classes.tableHeadItem}>CNPJ</TableCell>
+              <TableCell align="left" className={classes.tableHeadItem}>Ações</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>{accountList.length ? accounts : <TableLoading colsPan={6} items={3} />}</TableBody>
         </Table>
       </TableContainer>
       <div className={classes.seeMore}>
-        <Link color="primary" href="#" onClick={() => seeMore}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => seeMore}
+          disabled={loading}
+        >
           Ver mais
-        </Link>
+        </Button>
       </div>
     </React.Fragment>
   );
