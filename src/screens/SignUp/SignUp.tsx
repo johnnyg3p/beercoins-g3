@@ -58,7 +58,7 @@ const SignUp = () => {
         case "nome":
           if (!objectValue) setNameInputError(true);
           break;
-        case "phone":
+        case "phonenumber":
           if (!objectValue) setIsPhoneValid(false);
           break;
         case "password":
