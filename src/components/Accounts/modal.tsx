@@ -57,7 +57,7 @@ export default function SimpleModal(props: IProps) {
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const handleModalClose = () => {
     setOpen(false);
 
     setValues({
@@ -79,6 +79,7 @@ export default function SimpleModal(props: IProps) {
       .deposit(account)
       .then(() => {
         setLoading(false);
+        handleModalClose();
 
         addToast("Solicitação de depósito efetuada!", {
           appearance: "success",
@@ -148,7 +149,7 @@ export default function SimpleModal(props: IProps) {
       </Link>
       <Modal
         open={open}
-        onClose={handleClose}
+        onClose={handleModalClose}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
       >
