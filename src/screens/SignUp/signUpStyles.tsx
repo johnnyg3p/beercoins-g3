@@ -72,6 +72,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     opacity: 0,
     animation: `$fadeIn 400ms ${theme.transitions.easing.easeInOut} forwards 700ms`,
   },
+  textFieldGeneral: {
+    marginBottom: '15px'
+  },
   content: {
     display: "flex",
     alignItems: "center",

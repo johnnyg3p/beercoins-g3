@@ -9,6 +9,11 @@ const signPagesInputErrorCustomStyle = createMuiTheme({
           top: "100%"
         },
       },
+      MuiTextField: {
+        root: {
+          marginBottom: '15px'
+        }
+      }
     },
   });
 

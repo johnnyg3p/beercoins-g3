@@ -59,12 +59,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   withoutLabel: {
     marginTop: theme.spacing(3),
   },
-  textField: {
-    width: "25ch",
-  },
   firstInput: {
     opacity: 0,
-    animation: `$fadeIn 400ms ${theme.transitions.easing.easeInOut} forwards 400ms`,
+    animation: `$fadeIn 400ms ${theme.transitions.easing.easeInOut} forwards 400ms`
   },
   secondInput: {
     opacity: 0,
