@@ -181,6 +181,7 @@ const SignUp = () => {
               autoFocus
               value={cnpjValue}
               onChange={(e) => handleFormatAndValidateCNPJ(e)}
+              onBlur={(e) => handleCheckIfCNPJisValid(e.target.value)}
               inputRef={cnpjRef}
               error={!isCnpjValid}
               onFocus={() => setIsCnpjValid(true)}
