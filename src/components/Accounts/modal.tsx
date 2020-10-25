@@ -73,7 +73,7 @@ export default function SimpleModal(props: IProps) {
       .then(() => {
         setLoading(false);
 
-        addToast("Depósito efetuado com sucesso!", {
+        addToast("Solicitação de depósito efetuada!", {
           appearance: "success",
         });
       })

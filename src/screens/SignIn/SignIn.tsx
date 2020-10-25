@@ -129,7 +129,7 @@ const SignIn = () => {
               required
               fullWidth
               id="username"
-              label="Username"
+              label="usuário"
               name="username"
               autoComplete="username"
               autoFocus
@@ -149,7 +149,7 @@ const SignIn = () => {
 
             <FormControl className={clsx(classes.form)} variant="outlined">
               <InputLabel htmlFor="outlined-adornment-password" className={classes.secondInput}>
-                Password
+                Senha
               </InputLabel>
               <OutlinedInput
                 className={classes.secondInput}
@@ -191,7 +191,7 @@ const SignIn = () => {
               size="large"
               disabled={loading}
             >
-              Sign In
+              Entrar
             </Button>
             {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
           </div>
@@ -199,7 +199,7 @@ const SignIn = () => {
           <Grid container className={classes.signUpLink}>
             <Grid item>
               <Link href="/signup" variant="body2">
-                {"Don't have an account? Sign Up"}
+                {"Ainda não tem conta? Cadastre-se!"}
               </Link>
             </Grid>
           </Grid>

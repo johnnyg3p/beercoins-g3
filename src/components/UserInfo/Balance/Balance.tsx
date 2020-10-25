@@ -21,7 +21,7 @@ const Balance = () => {
         const { saldo } = resultBalance;
         setBalance(saldo);
       } catch (error) {
-        addToast("Error to get balance.", {
+        addToast("Erro ao carregar o saldo", {
           appearance: "error",
         });
       }
@@ -36,14 +36,9 @@ const Balance = () => {
           <AccountBalanceWallet className="balance-avatar-icon-button-wallet" />
         </IconButton>
       </Avatar>
-      <span className="balance-text">Tap on the walet to update</span>
+      <span className="balance-text">Clique para atualizar sua carteira</span>
       {balance === null ? (
-        <Skeleton
-          variant="rect"
-          width={"calc(100% - 10%)"}
-          height={82}
-          animation="wave"
-        />
+        <Skeleton variant="rect" width={"calc(100% - 10%)"} height={82} animation="wave" />
       ) : (
         <CurrentBalance balance={balance} />
       )}
