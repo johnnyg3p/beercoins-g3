@@ -4,7 +4,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
-import { PermContactCalendar, Email, Home, Phone, Business, Person, Lock } from "@material-ui/icons";
+import { PermContactCalendar, Email, Phone, Business, Person, Lock } from "@material-ui/icons";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Container from "@material-ui/core/Container";
 import { useHistory } from "react-router-dom";

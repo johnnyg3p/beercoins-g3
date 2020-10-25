@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import clsx from "clsx";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -14,7 +14,6 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import { SwapVert, AttachMoney } from "@material-ui/icons";
-import Cached from "@material-ui/icons/Cached";
 import { useAuthContext } from "../../context/Auth";
 import { Link, NavLink } from "react-router-dom";
 import "./Sidebar.scss";
