@@ -57,21 +57,29 @@ export default function SimpleModal(props: IProps) {
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const handleModalClose = () => {
     setOpen(false);
+
+    setValues({
+      ...values,
+      amount: "0",
+    });
   };
 
   const makeDeposit = () => {
     setLoading(true);
+    const parsedNumber = formatCurrencyIntoInteger(values.amount);
 
     const account: IDeposit = {
       hash: props.account.hash,
-      valorOperacao: Number(values.amount),
+      valorOperacao: parsedNumber,
     };
+
     accountsService
       .deposit(account)
       .then(() => {
         setLoading(false);
+        handleModalClose();
 
         addToast("Solicitação de depósito efetuada!", {
           appearance: "success",
@@ -114,6 +122,7 @@ export default function SimpleModal(props: IProps) {
             name="amount"
             onChange={handleChange}
             value={values.amount}
+            autoFocus
             InputProps={{
               startAdornment: <InputAdornment position="start">R$</InputAdornment>,
             }}
@@ -140,7 +149,7 @@ export default function SimpleModal(props: IProps) {
       </Link>
       <Modal
         open={open}
-        onClose={handleClose}
+        onClose={handleModalClose}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
       >

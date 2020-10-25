@@ -3,4 +3,11 @@
 .statement {
   &-empty {
   }
+  thead {
+    tr {
+      th {
+        font-weight: bold;
+      }
+    }
+  }
 }
