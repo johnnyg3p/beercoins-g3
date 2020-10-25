@@ -11,6 +11,7 @@ import AccountsService from "../../services/Accounts/accounts.service";
 import Link from "@material-ui/core/Link";
 import { useToasts } from "react-toast-notifications";
 import TableLoading from "../TableLoading";
+import Button from "@material-ui/core/Button";
 
 const accountsService = new AccountsService();
 
@@ -23,13 +24,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function seeMore(event: HTMLAnchorElement) {
-  alert("see more");
-}
+
 
 function Accounts() {
   const [accountList, setAccount] = useState<IAccount[]>([]);
+  const [loading, setLoading] = React.useState(false);
   const { addToast } = useToasts();
+
+  function seeMore(event: HTMLAnchorElement) {
+    alert("see more");
+  }
 
   useEffect(() => {
     accountsService
@@ -45,7 +49,7 @@ function Accounts() {
       });
   }, [addToast]);
 
-  const actounts = accountList.map((account, index) => (
+  const accounts = accountList.map((account, index) => (
     <TableRow key={account.hash}>
       <TableCell align="left">{index}</TableCell>
       <TableCell align="left">{account.hash}</TableCell>
@@ -77,7 +81,7 @@ function Accounts() {
           </TableHead>
           <TableBody>
             {accountList.length ? (
-              actounts
+              accounts
             ) : (
               <TableLoading colsPan={6} items={3} />
             )}
