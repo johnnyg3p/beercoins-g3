@@ -59,6 +59,11 @@ export default function SimpleModal(props: IProps) {
 
   const handleClose = () => {
     setOpen(false);
+
+    setValues({
+      ...values,
+      amount: "0",
+    });
   };
 
   const makeDeposit = () => {
@@ -69,6 +74,7 @@ export default function SimpleModal(props: IProps) {
       hash: props.account.hash,
       valorOperacao: parsedNumber,
     };
+
     accountsService
       .deposit(account)
       .then(() => {
@@ -115,6 +121,7 @@ export default function SimpleModal(props: IProps) {
             name="amount"
             onChange={handleChange}
             value={values.amount}
+            autoFocus
             InputProps={{
               startAdornment: <InputAdornment position="start">R$</InputAdornment>,
             }}
