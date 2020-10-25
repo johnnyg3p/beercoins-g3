@@ -6,12 +6,8 @@ import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import PersonIcon from "@material-ui/icons/Person";
-import LockIcon from "@material-ui/icons/Lock";
-import BusinessIcon from "@material-ui/icons/Business";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import HomeIcon from "@material-ui/icons/Home";
-import PermContactCalendarIcon from "@material-ui/icons/PermContactCalendar";
+import { PermContactCalendar, Phone, Business, Lock, Person, Email } from "@material-ui/icons";
 import Container from "@material-ui/core/Container";
 import { useHistory } from "react-router-dom";
 import { makeStyles, ThemeProvider } from "@material-ui/core/styles";
@@ -62,8 +58,12 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     display: "flex",
-    height: "100%",
     alignItems: "center",
+    padding: theme.spacing(3),
+    "@media (min-height: 720px)": {
+      padding: theme.spacing(0),
+      height: "100%",
+    },
   },
 }));
 
@@ -225,7 +225,7 @@ const SignUp = () => {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <BusinessIcon />
+                    <Business />
                   </InputAdornment>
                 ),
               }}
@@ -248,7 +248,7 @@ const SignUp = () => {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <PersonIcon />
+                    <Person />
                   </InputAdornment>
                 ),
               }}
@@ -272,7 +272,7 @@ const SignUp = () => {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <HomeIcon />
+                    <Email />
                   </InputAdornment>
                 ),
               }}
@@ -287,13 +287,19 @@ const SignUp = () => {
               label="Phone"
               name="phone"
               autoComplete="phone"
-              autoFocus
               value={phoneValue}
               onChange={(e) => handleFormatAndValidatePhone(e)}
               inputRef={phoneRef}
               error={!isPhoneValid}
               onFocus={() => setIsPhoneValid(true)}
               helperText={!isPhoneValid && "Please, type a valid phone number."}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Phone />
+                  </InputAdornment>
+                ),
+              }}
             />
 
             <TextField
@@ -313,7 +319,7 @@ const SignUp = () => {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <LockIcon />
+                    <Lock />
                   </InputAdornment>
                 ),
               }}
@@ -336,7 +342,7 @@ const SignUp = () => {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <PermContactCalendarIcon />
+                    <PermContactCalendar />
                   </InputAdornment>
                 ),
               }}

@@ -76,8 +76,10 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   content: {
     display: "flex",
-    height: "100%",
     alignItems: "center",
+    [theme.breakpoints.up("sm")]: {
+      height: "100%",
+    },
   },
 }));
 interface State {
