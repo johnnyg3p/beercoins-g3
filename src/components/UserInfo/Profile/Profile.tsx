@@ -9,8 +9,8 @@ const Profile = () => {
     <div className="user-profile">
       <GetThumb src="./assets/user1.jpg" text={userInfo.name} size="large" />
       <h2 className="user-profile-name">{userInfo.name}</h2>
-      <span className="user-profile-position">Software Engineering</span>
-      <span className="user-profile-company">Beertech - AbInbev</span>
+      <span className="user-profile-position">{userInfo.email}</span>
+      <span className="user-profile-company">{userInfo.roles}</span>
     </div>
   );
 };
