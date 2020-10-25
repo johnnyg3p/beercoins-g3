@@ -53,9 +53,7 @@ const SignIn = () => {
     showPassword: false,
   });
 
-  const handleChange = (prop: keyof State) => (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
     setValues({ ...values, [prop]: event.target.value });
   };
 
@@ -63,9 +61,7 @@ const SignIn = () => {
     setValues({ ...values, showPassword: !values.showPassword });
   };
 
-  const handleMouseDownPassword = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
+  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
   };
 
@@ -96,11 +92,7 @@ const SignIn = () => {
 
             setUserInfo(userInformation);
 
-            cookieHandler.create(
-              "userInfo",
-              JSON.stringify(userInformation),
-              30
-            );
+            cookieHandler.create("userInfo", JSON.stringify(userInformation), 30);
 
             addToast("Login efetuado com sucesso!", {
               appearance: "success",
@@ -156,10 +148,7 @@ const SignIn = () => {
             />
 
             <FormControl className={clsx(classes.form)} variant="outlined">
-              <InputLabel
-                htmlFor="outlined-adornment-password"
-                className={classes.secondInput}
-              >
+              <InputLabel htmlFor="outlined-adornment-password" className={classes.secondInput}>
                 Password
               </InputLabel>
               <OutlinedInput
@@ -204,9 +193,7 @@ const SignIn = () => {
             >
               Sign In
             </Button>
-            {loading && (
-              <CircularProgress size={24} className={classes.buttonProgress} />
-            )}
+            {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
           </div>
 
           <Grid container className={classes.signUpLink}>

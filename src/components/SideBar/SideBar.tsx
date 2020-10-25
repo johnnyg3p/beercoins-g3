@@ -13,11 +13,10 @@ import HomeIcon from "@material-ui/icons/Home";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import EventAvailableIcon from "@material-ui/icons/EventAvailable";
-import Cached from "@material-ui/icons/Cached";
-
+import { SwapVert, AttachMoney } from "@material-ui/icons";
 import { useAuthContext } from "../../context/Auth";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import "./Sidebar.scss";
 
 const drawerWidth = 280;
 
@@ -48,7 +47,6 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "none",
     },
     drawer: {
-      backgroundColor: "#03185a",
       width: drawerWidth,
       flexShrink: 0,
       whiteSpace: "nowrap",
@@ -59,6 +57,7 @@ const useStyles = makeStyles((theme: Theme) =>
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.enteringScreen,
       }),
+      backgroundColor: "#03185a",
     },
     drawerClose: {
       transition: theme.transitions.create("width", {
@@ -67,6 +66,7 @@ const useStyles = makeStyles((theme: Theme) =>
       }),
       overflowX: "hidden",
       width: theme.spacing(7) + 1,
+      backgroundColor: "#03185a",
     },
     toolbar: {
       display: "flex",
@@ -102,21 +102,21 @@ const SideBar = (props: IProps) => {
     {
       id: 2,
       text: "Operations",
-      icon: <EventAvailableIcon />,
+      icon: <SwapVert />,
       link: "/operations",
       userType: "ROLE_MODERATOR",
     },
     {
       id: 3,
       text: "Payments",
-      icon: <Cached />,
+      icon: <AttachMoney />,
       link: "/payments",
       userType: "ROLE_USER",
     },
   ];
 
   return (
-    <div className={classes.root}>
+    <div className={(classes.root, "sidebar")}>
       <CssBaseline />
       <Drawer
         variant="permanent"
@@ -132,7 +132,13 @@ const SideBar = (props: IProps) => {
         }}
       >
         <div className={classes.toolbar}>
-          <IconButton onClick={() => setOpen(!open)}>{open ? <ChevronLeftIcon /> : <ChevronRightIcon />}</IconButton>
+          <IconButton onClick={() => setOpen(!open)}>
+            {open ? (
+              <ChevronLeftIcon className="sidebar-open-close" />
+            ) : (
+              <ChevronRightIcon className="sidebar-open-close" />
+            )}
+          </IconButton>
         </div>
         <Divider />
         <List>
@@ -140,19 +146,19 @@ const SideBar = (props: IProps) => {
             const { text, id, icon, link, userType } = item;
             if (userType === typeUserProps) {
               return (
-                <ListItem color="inherit" key={id} component={Link} to={link} button>
-                  <ListItemIcon className={classes.icon}>{icon}</ListItemIcon>
-                  <ListItemText primary={text} />
+                <ListItem key={id} component={NavLink} exact={true} activeClassName="is-active" to={link} button>
+                  <ListItemIcon className={(classes.icon, "sidebar-icon")}>{icon}</ListItemIcon>
+                  <ListItemText className="sidebar-text" primary={text} />
                 </ListItem>
               );
             }
             return "";
           })}
           <ListItem component={Link} to="/login" onClick={() => signOut()} button>
-            <ListItemIcon className={classes.icon}>
+            <ListItemIcon className={(classes.icon, "sidebar-text")}>
               <ExitToAppIcon />
             </ListItemIcon>
-            <ListItemText>Logout</ListItemText>
+            <ListItemText className="sidebar-text">Logout</ListItemText>
           </ListItem>
         </List>
         <Divider />

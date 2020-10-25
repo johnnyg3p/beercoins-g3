@@ -1,0 +1,41 @@
+@import "../../assets/scss/variables.scss";
+
+.sidebar {
+  &-icon,
+  &-text {
+    .MuiListItemText-primary,
+    &.MuiSvgIcon-root,
+    &.MuiListItemIcon-root {
+      color: $textgray;
+    }
+  }
+  .is-active {
+    position: relative;
+    .sidebar-icon,
+    .sidebar-text {
+      .MuiListItemText-primary,
+      &.MuiListItemIcon-root {
+        color: $lightblue;
+      }
+    }
+    &::before {
+      content: "";
+      position: absolute;
+      width: 0;
+      height: 100%;
+      left: 0;
+      border-radius: 0px 5px 5px 0px;
+      -moz-border-radius: 0px 5px 5px 0px;
+      -webkit-border-radius: 0px 5px 5px 0px;
+      border: 2px solid $lightblue;
+    }
+  }
+  &-open-close {
+    &.MuiSvgIcon-root {
+      color: $lightblue;
+    }
+  }
+  .MuiDivider-root {
+    background-color: $textgray;
+  }
+}

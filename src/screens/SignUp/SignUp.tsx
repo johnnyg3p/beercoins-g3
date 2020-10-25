@@ -4,24 +4,15 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
-import PersonIcon from "@material-ui/icons/Person";
-import LockIcon from "@material-ui/icons/Lock";
-import BusinessIcon from "@material-ui/icons/Business";
+import { PermContactCalendar, Email, Phone, Business, Person, Lock } from "@material-ui/icons";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import PhoneIcon from "@material-ui/icons/Phone";
-import HomeIcon from "@material-ui/icons/Home";
-import PermContactCalendarIcon from "@material-ui/icons/PermContactCalendar";
 import Container from "@material-ui/core/Container";
 import { useHistory } from "react-router-dom";
 import { ThemeProvider } from "@material-ui/core/styles";
 import { useToasts } from "react-toast-notifications";
 import { SignUpService } from "../../services/Auth.service";
 import formatCNPJ from "../../utils/formaters/cnpjMask";
-import {
-  isValidCNPJ,
-  isValidPhone,
-  isValidEmail,
-} from "@brazilian-utils/brazilian-utils";
+import { isValidCNPJ, isValidPhone, isValidEmail } from "@brazilian-utils/brazilian-utils";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import themes from "../../utils/themes";
 import Image from "../../images/logo.png";
@@ -52,36 +43,33 @@ const SignUp = () => {
   const { addToast } = useToasts();
   let history = useHistory();
 
-  const validateInputFields = useCallback(
-    (inputArray: IInputValidationObject[]) => {
-      inputArray.map((inputObjectWithNameAndValue) => {
-        const objectName = Object.keys(inputObjectWithNameAndValue)[0];
-        const objectValue = Object.values(inputObjectWithNameAndValue)[0];
+  const validateInputFields = useCallback((inputArray: IInputValidationObject[]) => {
+    inputArray.map((inputObjectWithNameAndValue) => {
+      const objectName = Object.keys(inputObjectWithNameAndValue)[0];
+      const objectValue = Object.values(inputObjectWithNameAndValue)[0];
 
-        switch (objectName) {
-          case "cnpj":
-            if (!objectValue) setIsCnpjValid(false);
-            break;
-          case "email":
-            if (!objectValue) setEmailInputError(true);
-            break;
-          case "nome":
-            if (!objectValue) setNameInputError(true);
-            break;
-          case "phone":
-            if (!objectValue) setIsPhoneValid(false);
-            break;
-          case "password":
-            if (!objectValue) setPasswordInputError(true);
-            break;
-          case "username":
-            if (!objectValue) setUserInputError(true);
-            break;
-        }
-      });
-    },
-    []
-  );
+      switch (objectName) {
+        case "cnpj":
+          if (!objectValue) setIsCnpjValid(false);
+          break;
+        case "email":
+          if (!objectValue) setEmailInputError(true);
+          break;
+        case "nome":
+          if (!objectValue) setNameInputError(true);
+          break;
+        case "phone":
+          if (!objectValue) setIsPhoneValid(false);
+          break;
+        case "password":
+          if (!objectValue) setPasswordInputError(true);
+          break;
+        case "username":
+          if (!objectValue) setUserInputError(true);
+          break;
+      }
+    });
+  }, []);
 
   const signUpHandler = useCallback(
     async (e: React.FormEvent) => {
@@ -93,14 +81,7 @@ const SignUp = () => {
       const password = passwordRef?.current?.value;
       const username = usernameRef?.current?.value;
 
-      validateInputFields([
-        { cnpj },
-        { email },
-        { nome },
-        { phonenumber },
-        { password },
-        { username },
-      ]);
+      validateInputFields([{ cnpj }, { email }, { nome }, { phonenumber }, { password }, { username }]);
 
       if (cnpj && email && phonenumber && nome && password && username) {
         setLoading(true);
@@ -117,10 +98,7 @@ const SignUp = () => {
             username,
           })
           .then((response) => {
-            addToast(
-              "Cadastro efetuado com sucesso! Você pode fazer o login agora.",
-              { appearance: "success" }
-            );
+            addToast("Cadastro efetuado com sucesso! Você pode fazer o login agora.", { appearance: "success" });
 
             setTimeout(() => {
               history.push("/login");
@@ -172,16 +150,13 @@ const SignUp = () => {
     [handleCheckIfPhoneNumberIsValid]
   );
 
-  const handleCheckIsEmailIsValid = useCallback(
-    (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      const emailInputValue = e.target.value;
+  const handleCheckIsEmailIsValid = useCallback((e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const emailInputValue = e.target.value;
 
-      if (emailInputValue) {
-        setEmailInputError(!isValidEmail(emailInputValue));
-      }
-    },
-    []
-  );
+    if (emailInputValue) {
+      setEmailInputError(!isValidEmail(emailInputValue));
+    }
+  }, []);
 
   return (
     <Container className={classes.content} maxWidth="xs">
@@ -213,7 +188,7 @@ const SignUp = () => {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <BusinessIcon />
+                    <Business />
                   </InputAdornment>
                 ),
               }}
@@ -237,7 +212,7 @@ const SignUp = () => {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <PersonIcon />
+                    <Person />
                   </InputAdornment>
                 ),
               }}
@@ -262,7 +237,7 @@ const SignUp = () => {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <HomeIcon />
+                    <Email />
                   </InputAdornment>
                 ),
               }}
@@ -287,7 +262,7 @@ const SignUp = () => {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <PhoneIcon />
+                    <Phone />
                   </InputAdornment>
                 ),
               }}
@@ -311,7 +286,7 @@ const SignUp = () => {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <LockIcon />
+                    <Lock />
                   </InputAdornment>
                 ),
               }}
@@ -335,7 +310,7 @@ const SignUp = () => {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <PermContactCalendarIcon />
+                    <PermContactCalendar />
                   </InputAdornment>
                 ),
               }}
@@ -356,9 +331,7 @@ const SignUp = () => {
               Register
             </Button>
 
-            {loading && (
-              <CircularProgress size={24} className={classes.buttonProgress} />
-            )}
+            {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
           </div>
           <Grid container className={classes.signInLink}>
             <Grid item>

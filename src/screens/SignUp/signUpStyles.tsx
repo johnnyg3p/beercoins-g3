@@ -74,8 +74,11 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   content: {
     display: "flex",
-    height: "100%",
     alignItems: "center",
+    "@media (min-height: 720px)": {
+      padding: theme.spacing(0),
+      height: "100%",
+    },
   },
 }));
 
