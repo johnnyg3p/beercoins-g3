@@ -11,7 +11,7 @@ import { useHistory } from "react-router-dom";
 import { ThemeProvider } from "@material-ui/core/styles";
 import { useToasts } from "react-toast-notifications";
 import { SignUpService } from "../../services/Auth.service";
-import formatCNPJ from "../../utils/formaters/cnpjMask";
+import { formatCNPJ } from "../../utils/formaters/formaters";
 import { isValidCNPJ, isValidPhone, isValidEmail } from "@brazilian-utils/brazilian-utils";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import themes from "../../utils/themes";

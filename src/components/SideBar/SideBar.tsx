@@ -18,7 +18,7 @@ import { useAuthContext } from "../../context/Auth";
 import { Link, NavLink } from "react-router-dom";
 import "./Sidebar.scss";
 
-const drawerWidth = 280;
+const drawerWidth = 180;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -76,7 +76,7 @@ const useStyles = makeStyles((theme: Theme) =>
       ...theme.mixins.toolbar,
     },
     icon: {
-      minWidth: theme.spacing(5) + 1,
+      minWidth: theme.spacing(5),
     },
   })
 );
@@ -147,7 +147,7 @@ const SideBar = (props: IProps) => {
             if (userType === typeUserProps) {
               return (
                 <ListItem key={id} component={NavLink} exact={true} activeClassName="is-active" to={link} button>
-                  <ListItemIcon className={(classes.icon, "sidebar-icon")}>{icon}</ListItemIcon>
+                  <ListItemIcon className={clsx(classes.icon, "sidebar-icon")}>{icon}</ListItemIcon>
                   <ListItemText className="sidebar-text" primary={text} />
                 </ListItem>
               );
@@ -155,7 +155,7 @@ const SideBar = (props: IProps) => {
             return "";
           })}
           <ListItem component={Link} to="/login" onClick={() => signOut()} button>
-            <ListItemIcon className={(classes.icon, "sidebar-text")}>
+            <ListItemIcon className={clsx(classes.icon, "sidebar-text")}>
               <ExitToAppIcon />
             </ListItemIcon>
             <ListItemText className="sidebar-text">Sair</ListItemText>

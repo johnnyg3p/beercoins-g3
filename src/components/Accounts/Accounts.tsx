@@ -8,10 +8,10 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import SimpleModal from "./modal";
 import AccountsService from "../../services/Accounts/accounts.service";
-import Link from "@material-ui/core/Link";
 import { useToasts } from "react-toast-notifications";
 import TableLoading from "../TableLoading";
 import Button from "@material-ui/core/Button";
+import { StyledTableRow } from "../StyledTableRow/StyledTableRow";
 
 const accountsService = new AccountsService();
 
@@ -21,25 +21,24 @@ const useStyles = makeStyles((theme) => ({
   },
   seeMore: {
     marginTop: theme.spacing(3),
-    maxWidth: '200px'
+    maxWidth: "200px",
   },
   tableHeadItem: {
-    fontWeight: "bold"
-  }
+    fontWeight: "bold",
+  },
 }));
-
-function seeMore(event: HTMLAnchorElement) {
-  alert("Ver mais");
-}
 
 function Accounts() {
   const [accountList, setAccount] = useState<IAccount[]>([]);
   const [loading, setLoading] = React.useState(false);
   const { addToast } = useToasts();
 
-  function seeMore(event: HTMLAnchorElement) {
-    alert("see more");
-  }
+  const seeMore = () => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  };
 
   useEffect(() => {
     accountsService
@@ -56,7 +55,7 @@ function Accounts() {
   }, [addToast]);
 
   const accounts = accountList.map((account, index) => (
-    <TableRow key={account.hash}>
+    <StyledTableRow key={account.hash}>
       <TableCell align="left">{index}</TableCell>
       <TableCell align="left">{account.hash}</TableCell>
       <TableCell align="left">{account.nome}</TableCell>
@@ -65,7 +64,7 @@ function Accounts() {
       <TableCell align="left">
         <SimpleModal account={account} />
       </TableCell>
-    </TableRow>
+    </StyledTableRow>
   ));
 
   const classes = useStyles();
@@ -77,24 +76,31 @@ function Accounts() {
         <Table className={classes.table} aria-label="Accounts table">
           <TableHead>
             <TableRow>
-              <TableCell align="left" className={classes.tableHeadItem}>#</TableCell>
-              <TableCell align="left" className={classes.tableHeadItem}>Número da conta</TableCell>
-              <TableCell align="left" className={classes.tableHeadItem}>Nome</TableCell>
-              <TableCell align="left" className={classes.tableHeadItem}>E-mail</TableCell>
-              <TableCell align="left" className={classes.tableHeadItem}>CNPJ</TableCell>
-              <TableCell align="left" className={classes.tableHeadItem}>Ações</TableCell>
+              <TableCell align="left" className={classes.tableHeadItem}>
+                #
+              </TableCell>
+              <TableCell align="left" className={classes.tableHeadItem}>
+                Número da conta
+              </TableCell>
+              <TableCell align="left" className={classes.tableHeadItem}>
+                Nome
+              </TableCell>
+              <TableCell align="left" className={classes.tableHeadItem}>
+                E-mail
+              </TableCell>
+              <TableCell align="left" className={classes.tableHeadItem}>
+                CNPJ
+              </TableCell>
+              <TableCell align="left" className={classes.tableHeadItem}>
+                Ações
+              </TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>{accountList.length ? accounts : <TableLoading colsPan={6} items={3} />}</TableBody>
+          <TableBody>{!accountList.length || loading ? <TableLoading colsPan={6} items={3} /> : accounts}</TableBody>
         </Table>
       </TableContainer>
       <div className={classes.seeMore}>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => seeMore}
-          disabled={loading}
-        >
+        <Button variant="contained" color="primary" onClick={() => seeMore()} disabled={loading}>
           Ver mais
         </Button>
       </div>

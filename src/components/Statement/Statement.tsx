@@ -11,6 +11,7 @@ import "./Statement.scss";
 import { formatCurrency, formatBankPost } from "../../utils/formaters/formaters";
 import { useToasts } from "react-toast-notifications";
 import TableLoading from "../TableLoading";
+import { StyledTableRow } from "../StyledTableRow/StyledTableRow";
 
 interface IProps {}
 
@@ -24,11 +25,11 @@ const renderTable = (statement: IStatement[] | null) => {
           return 0;
         })
         .map((bankPost, index) => (
-          <TableRow key={index + bankPost.hash}>
+          <StyledTableRow key={index + bankPost.hash}>
             <TableCell align="left">{formatBankPost(bankPost.debitCredit)}</TableCell>
             <TableCell align="center">{bankPost.horarioOperacao}</TableCell>
             <TableCell align="right">{formatCurrency(bankPost.valorOperacao)}</TableCell>
-          </TableRow>
+          </StyledTableRow>
         ));
     } else {
       return (
