@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     content: {
       flexGrow: 1,
-      height: "100vh",
+      minHeight: "100vh",
       backgroundColor: "#f2f8fa",
     },
     contentPadding: {
