@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -8,10 +8,12 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import SimpleModal from "./modal";
 import AccountsService from "../../services/Accounts/accounts.service";
-import Link from "@material-ui/core/Link";
 import { useToasts } from "react-toast-notifications";
 import TableLoading from "../TableLoading";
 import Button from "@material-ui/core/Button";
+import InputAdornment from '@material-ui/core/InputAdornment';
+import TextField from '@material-ui/core/TextField';
+import SearchIcon from '@material-ui/icons/Search';
 
 const accountsService = new AccountsService();
 
@@ -25,7 +27,12 @@ const useStyles = makeStyles((theme) => ({
   },
   tableHeadItem: {
     fontWeight: "bold"
-  }
+  },
+  margin: {
+    margin: theme.spacing(1),
+    width: 300,
+  },
+
 }));
 
 function seeMore(event: HTMLAnchorElement) {
@@ -34,6 +41,7 @@ function seeMore(event: HTMLAnchorElement) {
 
 function Accounts() {
   const [accountList, setAccount] = useState<IAccount[]>([]);
+  const [search, setSearch] = useState<any>('');
   const [loading, setLoading] = React.useState(false);
   const { addToast } = useToasts();
 
@@ -55,7 +63,12 @@ function Accounts() {
       });
   }, [addToast]);
 
-  const accounts = accountList.map((account, index) => (
+
+  const accountFiltered = accountList.filter(account => {
+    return account.nome.toLowerCase().includes( search.toLowerCase())
+  } )
+
+  const accounts = accountFiltered.map((account, index) => (
     <TableRow key={account.hash}>
       <TableCell align="left">{index}</TableCell>
       <TableCell align="left">{account.hash}</TableCell>
@@ -73,6 +86,24 @@ function Accounts() {
   return (
     <React.Fragment>
       <h1>Contas</h1>
+
+      <div>
+        <TextField
+          className={classes.margin}
+          id="input-with-icon-textfield"
+          label="Buscar Contas por nome"
+          variant="outlined"
+          onChange={event => setSearch(event.target.value)}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          }}
+        />
+      </div>
+
       <TableContainer>
         <Table className={classes.table} aria-label="Accounts table">
           <TableHead>
