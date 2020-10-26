@@ -19,15 +19,27 @@ Deploy automático pelo Vercel
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app). 
 
-> <em>It was created for a challenge given by <b>BeerTech Talents</b>. The main objective of this challenge is to create an application where the customer can access a virtual wallet. In this virtual walled, the customer can check his balance, take a statement, and transfer amounts to another account.</em>
+> <em>It was created for a challenge given by <b>BeerTech Talents</b>. The main objective of this challenge is to create an application where the customer can access a virtual wallet. In this virtual wallet, the customer can check his balance, take a statement, and transfer amounts to another account.</em>
 
 
 # Table of Contents
+- [Project Demo](#project-demo)
 - [Available Scripts](#available-scripts)
+  - [yarn](#yarn)
   - [yarn start](#yarn-start)
   - [yarn test](#yarn-test)
   - [yarn build](#yarn-build)
 - [Folder Structure](#folder-structure)
+  - [src](#src)
+    - [assets](#assets)
+    - [components](#components)
+    - [config](#config)
+    - [context](#context)
+    - [interfaces](#interfaces)
+    - [screens](#screens)
+    - [services](#services)
+    - [utils](#utils)
+- [Tech / Frameworks / Libs ](#tech-/-frameworks-/-libs)
 - [Installing a Dependency](#installing-a-dependency)
 - [Importing a Component](#importing-a-component)
 - [Adding a Stylesheet](#adding-a-stylesheet)
@@ -38,9 +50,20 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 <br>
 <br>
 
+# Project Demo
+
+
+<br>
+<br>
+
 # Available Scripts
 
 In the project directory, you can run:
+
+### `yarn`
+
+After clone, you should run `yarn` to install all project dependencies.
+> Pay attention when you `pull` updates. Sometimes, you'll need to run `yarn` again to install some packages that other developers have installed.
 
 ### `yarn start`
 
@@ -66,62 +89,17 @@ Your app is ready to be deployed!
 
 # Folder Structure
 
-After clone, your project should look like this:
+After clone, your project should look something like this:
 
 ```
 📦beercoins-g3
  ┣ 📦src
  ┣  📂assets
  ┃ ┗ 📂scss
- ┃ ┃ ┗ 📜variables.scss
  ┣ 📂components
- ┃ ┣ 📂Accounts
- ┃ ┃ ┣ 📜Accounts.tsx
- ┃ ┃ ┗ 📜modal.tsx
- ┃ ┣ 📂Body
- ┃ ┃ ┣ 📜Body.tsx
- ┃ ┃ ┗ 📜index.tsx
- ┃ ┣ 📂GetThumb
- ┃ ┃ ┣ 📜GetThumb.scss
- ┃ ┃ ┣ 📜GetThumb.tsx
- ┃ ┃ ┗ 📜index.tsx
- ┃ ┣ 📂Payments
- ┃ ┃ ┗ 📜Payments.tsx
- ┃ ┣ 📂PrivateRoute
- ┃ ┃ ┣ 📜PrivateRoute.tsx
- ┃ ┃ ┗ 📜index.tsx
- ┃ ┣ 📂SideBar
- ┃ ┃ ┣ 📜SideBar.tsx
- ┃ ┃ ┣ 📜Sidebar.scss
- ┃ ┃ ┗ 📜index.tsx
- ┃ ┣ 📂Statement
- ┃ ┃ ┣ 📜Statement.scss
- ┃ ┃ ┣ 📜Statement.tsx
- ┃ ┃ ┗ 📜index.tsx
- ┃ ┣ 📂StyledTableRow
- ┃ ┃ ┗ 📜StyledTableRow.tsx
- ┃ ┣ 📂TableLoading
- ┃ ┃ ┣ 📜TableLoading.tsx
- ┃ ┃ ┗ 📜index.tsx
- ┃ ┗ 📂UserInfo
- ┃ ┃ ┣ 📂Balance
- ┃ ┃ ┃ ┣ 📂CurrentBalance
- ┃ ┃ ┃ ┃ ┣ 📜CurrentBalance.scss
- ┃ ┃ ┃ ┃ ┣ 📜CurrentBalance.tsx
- ┃ ┃ ┃ ┃ ┗ 📜index.tsx
- ┃ ┃ ┃ ┣ 📜Balance.scss
- ┃ ┃ ┃ ┣ 📜Balance.tsx
- ┃ ┃ ┃ ┗ 📜index.tsx
- ┃ ┃ ┣ 📂Profile
- ┃ ┃ ┃ ┣ 📜Profile.scss
- ┃ ┃ ┃ ┣ 📜Profile.tsx
- ┃ ┃ ┃ ┗ 📜index.ts
- ┃ ┃ ┣ 📜UserInfo.scss
- ┃ ┃ ┣ 📜UserInfo.tsx
- ┃ ┃ ┗ 📜index.tsx
+ ┃ ┣ 📂RandomComponent
  ┣ 📂config
  ┃ ┗ 📂axios
- ┃ ┃ ┣ 📜httpConfig.ts
  ┃ ┃ ┗ 📜index.tsx
  ┣ 📂constants
  ┃ ┗ 📜index.ts
@@ -130,63 +108,22 @@ After clone, your project should look like this:
  ┃ ┃ ┗ 📜index.tsx
  ┣ 📂images
  ┃ ┣ 📜logo.png
- ┃ ┣ 📜logo.svg
- ┃ ┗ 📜new-logo.png
  ┣ 📂interfaces
- ┃ ┣ 📜IAccount.d.ts
- ┃ ┣ 📜IAuthContextProps.ts
- ┃ ┣ 📜IBankPosting.d.ts
- ┃ ┣ 📜IDeposit.d.ts
- ┃ ┣ 📜IErrorMessages.ts
- ┃ ┣ 📜ISignIn.d.ts
- ┃ ┣ 📜ISignUp.d.ts
- ┃ ┣ 📜IUser.d.ts
- ┃ ┗ 📜OperationType.ts
+ ┃ ┣ 📜IInterfacePatternName.ts
+ ┃ ┣ 📜IInterfaceGlobalPatternName.d.ts
  ┣ 📂screens
- ┃ ┣ 📂Home
- ┃ ┃ ┣ 📜Home.tsx
- ┃ ┃ ┗ 📜index.tsx
- ┃ ┣ 📂NotFound
- ┃ ┃ ┗ 📜NotFound.tsx
- ┃ ┣ 📂Operations
- ┃ ┃ ┣ 📜Operations.tsx
- ┃ ┃ ┗ 📜index.tsx
- ┃ ┣ 📂Payments
- ┃ ┃ ┣ 📜Payments.tsx
- ┃ ┃ ┗ 📜index.tsx
- ┃ ┣ 📂SignIn
- ┃ ┃ ┣ 📂SignInForm
- ┃ ┃ ┃ ┣ 📜SignInForm.tsx
- ┃ ┃ ┃ ┗ 📜index.tsx
- ┃ ┃ ┣ 📜SignIn.tsx
+ ┃ ┣ 📂ScreenName
+ ┃ ┃ ┣ 📜ScreenName.tsx
  ┃ ┃ ┣ 📜index.tsx
- ┃ ┃ ┗ 📜signInStyles.tsx
- ┃ ┗ 📂SignUp
- ┃ ┃ ┣ 📂SignUpForm
- ┃ ┃ ┃ ┣ 📜SignUpForm.tsx
- ┃ ┃ ┃ ┗ 📜index.tsx
- ┃ ┃ ┣ 📜SignUp.tsx
- ┃ ┃ ┣ 📜index.tsx
- ┃ ┃ ┗ 📜signUpStyles.tsx
  ┣ 📂services
- ┃ ┣ 📂Accounts
- ┃ ┃ ┗ 📜accounts.service.ts
- ┃ ┣ 📂User
- ┃ ┃ ┗ 📜User.tsx
- ┃ ┗ 📜Auth.service.tsx
+ ┃ ┣ 📂ServiceName
+ ┃ ┃ ┗ 📂ServiceName.service.ts
  ┣ 📂utils
- ┃ ┣ 📂cookieHandler
- ┃ ┃ ┣ 📜cookieHandler.tsx
+ ┃ ┣ 📂functionName
+ ┃ ┃ ┣ 📜functionName.tsx
  ┃ ┃ ┗ 📜index.tsx
  ┃ ┣ 📂formaters
- ┃ ┃ ┣ 📜cleanStringValue.ts
- ┃ ┃ ┣ 📜cnpjMask.ts
- ┃ ┃ ┣ 📜configure-requests.ts
- ┃ ┃ ┣ 📜formaters.ts
- ┃ ┃ ┗ 📜phoneMask.ts
- ┃ ┗ 📂themes
- ┃ ┃ ┣ 📜index.tsx
- ┃ ┃ ┗ 📜themes.tsx
+ ┃ ┃ ┣ 📜formaterFunctionName.ts
  ┣ 📜App.tsx
  ┣ 📜index.tsx
  ┣ 📜react-app-env.d.ts
@@ -195,9 +132,67 @@ After clone, your project should look like this:
  ┗ 📜setupTests.ts
 ```
 
-For the project to build, **these files must exist with exact filenames**:
+<br>
 
-* `public/index.html` is the page template;
+## src
+
+The `src` folder is where all the content of the application is located.
+The `index.tsx` script is our entry point. It is where our `ReactDOM.render()` is called and render our entire application into `#root` element. If you want to rename the id of this element, you should rename it on `public/index.html`.
+
+## assets
+
+Assets folder can be used to put some resources files that our project need. In this folder you can add files such `img`, `scss styles`, `fonts` and so on.  
+
+## components
+
+As the name itself says, its where we put all our components. The pattern of a `component folder` is to have one filed named `index.tsx` and other with the name of component, like `NameOfComponent.tsx`. The main reason to do this way, is to help us developers to know in what file of a specific component I'm working just looking into the tabs. So, the `index.tsx` file will have a default export from the `NameOfComponent.tsx`, which is where all of component code will be located, like in the example below:
+
+
+```
+export { default } from "./NameOfComponent";
+```
+
+Following this pattern, we can add specific styles for our components adding a file `NameOfComponent.scss` into the components folder. To read more about it you can jump into [Adding a Stylesheet](#adding-a-stylesheet) section.
+
+## config
+
+Is where we put all configs from libs that we use. 
+
+## context
+
+We use [Context API](https://pt-br.reactjs.org/docs/context.html) (Global state manager) as our global state manager. In this folder is where you can add all providers that you need.
+
+## interfaces
+
+We store all of our `TS` interfaces here. You can find 2 kind of files into this folder following the `I` in the start of files pattern. The first kind of file is `.ts`, which is where we use some `export` that won't work as global, like `enum`. The second example is `.d.ts` files, which we don't need to export de interfaces because the `IDE` and `TS` intellisense will find it by default and suggest it for you.
+
+## screens 
+
+Is where we put our `pages` components. If you look into `routes.tsx` files, it is the components that are rendered right after the routes is called.
+
+## services
+
+We add some services that call backend APIs. In the service files, you can create a `class` and add its methods to make calls and return results. 
+
+## utils
+
+In this folder we add some functions that we can use more than once.
+
+# Tech / Frameworks / Libs 
+
+## Built with
+
+- [React](https://pt-br.reactjs.org/)
+- [Create React App](https://github.com/facebookincubator/create-react-app)
+- [Typescript](https://www.typescriptlang.org/)
+- [Context API](https://pt-br.reactjs.org/docs/context.html) (Global state manager)
+- [Material-UI](https://material-ui.com/) (UI Framework)
+- [react-router-dom](https://reactrouter.com/web/guides/quick-start) (Application routes)
+- [react-toast-notifications](https://jossmac.github.io/react-toast-notifications/) (Toast messages)
+- [node-sass](https://github.com/sass/node-sass) (Application styles)
+- [axios](https://github.com/axios/axios) (REST API client)
+- [@brazilian-utils](https://github.com/brazilian-utils/brazilian-utils) (CNPJ, email, phone fields validators)
+
 
 <br>
 
