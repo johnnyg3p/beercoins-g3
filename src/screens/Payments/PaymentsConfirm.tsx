@@ -24,7 +24,7 @@ const PaymentsConfirm = () => {
         appearance: "success",
       });
       setLoading(false);
-      history.push("/payments");
+      history.push("/");
     } catch (error) {
       addToast("Erro ao realizar a solicitação de pagamento.", {
         appearance: "error",
