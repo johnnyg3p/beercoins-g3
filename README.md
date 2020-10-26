@@ -19,7 +19,7 @@ Deploy automático pelo Vercel
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app). 
 
-> <em>It was created for a challenge given by <b>BeerTech Talents</b>. The main objective of this challenge is to create an application where the customer can access a virtual wallet. In this virtual walled, the customer can check his balance, take a statement, and transfer amounts to another account.</em>
+> <em>It was created for a challenge given by <b>BeerTech Talents</b>. The main objective of this challenge is to create an application where the customer can access a virtual wallet. In this virtual wallet, the customer can check his balance, take a statement, and transfer amounts to another account.</em>
 
 
 # Table of Contents
@@ -28,6 +28,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
   - [yarn test](#yarn-test)
   - [yarn build](#yarn-build)
 - [Folder Structure](#folder-structure)
+- [Tech / Frameworks / Libs ](#tech-/-frameworks-/-libs)
 - [Installing a Dependency](#installing-a-dependency)
 - [Importing a Component](#importing-a-component)
 - [Adding a Stylesheet](#adding-a-stylesheet)
@@ -73,55 +74,10 @@ After clone, your project should look like this:
  ┣ 📦src
  ┣  📂assets
  ┃ ┗ 📂scss
- ┃ ┃ ┗ 📜variables.scss
  ┣ 📂components
- ┃ ┣ 📂Accounts
- ┃ ┃ ┣ 📜Accounts.tsx
- ┃ ┃ ┗ 📜modal.tsx
- ┃ ┣ 📂Body
- ┃ ┃ ┣ 📜Body.tsx
- ┃ ┃ ┗ 📜index.tsx
- ┃ ┣ 📂GetThumb
- ┃ ┃ ┣ 📜GetThumb.scss
- ┃ ┃ ┣ 📜GetThumb.tsx
- ┃ ┃ ┗ 📜index.tsx
- ┃ ┣ 📂Payments
- ┃ ┃ ┗ 📜Payments.tsx
- ┃ ┣ 📂PrivateRoute
- ┃ ┃ ┣ 📜PrivateRoute.tsx
- ┃ ┃ ┗ 📜index.tsx
- ┃ ┣ 📂SideBar
- ┃ ┃ ┣ 📜SideBar.tsx
- ┃ ┃ ┣ 📜Sidebar.scss
- ┃ ┃ ┗ 📜index.tsx
- ┃ ┣ 📂Statement
- ┃ ┃ ┣ 📜Statement.scss
- ┃ ┃ ┣ 📜Statement.tsx
- ┃ ┃ ┗ 📜index.tsx
- ┃ ┣ 📂StyledTableRow
- ┃ ┃ ┗ 📜StyledTableRow.tsx
- ┃ ┣ 📂TableLoading
- ┃ ┃ ┣ 📜TableLoading.tsx
- ┃ ┃ ┗ 📜index.tsx
- ┃ ┗ 📂UserInfo
- ┃ ┃ ┣ 📂Balance
- ┃ ┃ ┃ ┣ 📂CurrentBalance
- ┃ ┃ ┃ ┃ ┣ 📜CurrentBalance.scss
- ┃ ┃ ┃ ┃ ┣ 📜CurrentBalance.tsx
- ┃ ┃ ┃ ┃ ┗ 📜index.tsx
- ┃ ┃ ┃ ┣ 📜Balance.scss
- ┃ ┃ ┃ ┣ 📜Balance.tsx
- ┃ ┃ ┃ ┗ 📜index.tsx
- ┃ ┃ ┣ 📂Profile
- ┃ ┃ ┃ ┣ 📜Profile.scss
- ┃ ┃ ┃ ┣ 📜Profile.tsx
- ┃ ┃ ┃ ┗ 📜index.ts
- ┃ ┃ ┣ 📜UserInfo.scss
- ┃ ┃ ┣ 📜UserInfo.tsx
- ┃ ┃ ┗ 📜index.tsx
+ ┃ ┣ 📂RandomComponent
  ┣ 📂config
  ┃ ┗ 📂axios
- ┃ ┃ ┣ 📜httpConfig.ts
  ┃ ┃ ┗ 📜index.tsx
  ┣ 📂constants
  ┃ ┗ 📜index.ts
@@ -130,63 +86,22 @@ After clone, your project should look like this:
  ┃ ┃ ┗ 📜index.tsx
  ┣ 📂images
  ┃ ┣ 📜logo.png
- ┃ ┣ 📜logo.svg
- ┃ ┗ 📜new-logo.png
  ┣ 📂interfaces
- ┃ ┣ 📜IAccount.d.ts
- ┃ ┣ 📜IAuthContextProps.ts
- ┃ ┣ 📜IBankPosting.d.ts
- ┃ ┣ 📜IDeposit.d.ts
- ┃ ┣ 📜IErrorMessages.ts
- ┃ ┣ 📜ISignIn.d.ts
- ┃ ┣ 📜ISignUp.d.ts
- ┃ ┣ 📜IUser.d.ts
- ┃ ┗ 📜OperationType.ts
+ ┃ ┣ 📜IInterfacePatternName.ts
+ ┃ ┣ 📜IInterfaceGlobalPatternName.d.ts
  ┣ 📂screens
- ┃ ┣ 📂Home
- ┃ ┃ ┣ 📜Home.tsx
- ┃ ┃ ┗ 📜index.tsx
- ┃ ┣ 📂NotFound
- ┃ ┃ ┗ 📜NotFound.tsx
- ┃ ┣ 📂Operations
- ┃ ┃ ┣ 📜Operations.tsx
- ┃ ┃ ┗ 📜index.tsx
- ┃ ┣ 📂Payments
- ┃ ┃ ┣ 📜Payments.tsx
- ┃ ┃ ┗ 📜index.tsx
- ┃ ┣ 📂SignIn
- ┃ ┃ ┣ 📂SignInForm
- ┃ ┃ ┃ ┣ 📜SignInForm.tsx
- ┃ ┃ ┃ ┗ 📜index.tsx
- ┃ ┃ ┣ 📜SignIn.tsx
+ ┃ ┣ 📂ScreenName
+ ┃ ┃ ┣ 📜ScreenName.tsx
  ┃ ┃ ┣ 📜index.tsx
- ┃ ┃ ┗ 📜signInStyles.tsx
- ┃ ┗ 📂SignUp
- ┃ ┃ ┣ 📂SignUpForm
- ┃ ┃ ┃ ┣ 📜SignUpForm.tsx
- ┃ ┃ ┃ ┗ 📜index.tsx
- ┃ ┃ ┣ 📜SignUp.tsx
- ┃ ┃ ┣ 📜index.tsx
- ┃ ┃ ┗ 📜signUpStyles.tsx
  ┣ 📂services
- ┃ ┣ 📂Accounts
- ┃ ┃ ┗ 📜accounts.service.ts
- ┃ ┣ 📂User
- ┃ ┃ ┗ 📜User.tsx
- ┃ ┗ 📜Auth.service.tsx
+ ┃ ┣ 📂ServiceName
+ ┃ ┃ ┗ 📂ServiceName.service.ts
  ┣ 📂utils
- ┃ ┣ 📂cookieHandler
- ┃ ┃ ┣ 📜cookieHandler.tsx
+ ┃ ┣ 📂functionName
+ ┃ ┃ ┣ 📜functionName.tsx
  ┃ ┃ ┗ 📜index.tsx
  ┃ ┣ 📂formaters
- ┃ ┃ ┣ 📜cleanStringValue.ts
- ┃ ┃ ┣ 📜cnpjMask.ts
- ┃ ┃ ┣ 📜configure-requests.ts
- ┃ ┃ ┣ 📜formaters.ts
- ┃ ┃ ┗ 📜phoneMask.ts
- ┃ ┗ 📂themes
- ┃ ┃ ┣ 📜index.tsx
- ┃ ┃ ┗ 📜themes.tsx
+ ┃ ┃ ┣ 📜formaterFunctionName.ts
  ┣ 📜App.tsx
  ┣ 📜index.tsx
  ┣ 📜react-app-env.d.ts
@@ -198,6 +113,24 @@ After clone, your project should look like this:
 For the project to build, **these files must exist with exact filenames**:
 
 * `public/index.html` is the page template;
+
+<br>
+
+# Tech / Frameworks / Libs 
+
+## Built with
+
+- [React](https://pt-br.reactjs.org/)
+- [Create React App](https://github.com/facebookincubator/create-react-app)
+- [Typescript](https://www.typescriptlang.org/)
+- [Context API](https://pt-br.reactjs.org/docs/context.html) (Global state manager)
+- [Material-UI](https://material-ui.com/) (UI Framework)
+- [react-router-dom](https://reactrouter.com/web/guides/quick-start) (Application routes)
+- [react-toast-notifications](https://jossmac.github.io/react-toast-notifications/) (Toast messages)
+- [node-sass](https://github.com/sass/node-sass) (Application styles)
+- [axios](https://github.com/axios/axios) (REST API client)
+- [@brazilian-utils](https://github.com/brazilian-utils/brazilian-utils) (CNPJ, email, phone fields validators)
+
 
 <br>
 
