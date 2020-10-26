@@ -73,14 +73,14 @@ const useStyles = makeStyles((theme: Theme) => ({
     animation: `$fadeIn 400ms ${theme.transitions.easing.easeInOut} forwards 700ms`,
   },
   textFieldGeneral: {
-    marginBottom: '15px'
+    marginBottom: "15px",
   },
   content: {
     display: "flex",
     alignItems: "center",
     "@media (min-height: 720px)": {
       padding: theme.spacing(0),
-      height: "100%",
+      minHeight: "100vh",
     },
   },
 }));
