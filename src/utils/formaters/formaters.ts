@@ -1,4 +1,5 @@
 export const formatCurrency = (currency: number): string => {
+  if (!currency) return "0";
   return currency.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 };
 

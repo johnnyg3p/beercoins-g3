@@ -18,6 +18,7 @@ const Balance = () => {
     async function getDataFn() {
       try {
         const resultBalance = await GetBalance({ token: userInfo.accessToken });
+        console.log("resultBalance", resultBalance);
         const { saldo } = resultBalance;
         setBalance(saldo);
       } catch (error) {

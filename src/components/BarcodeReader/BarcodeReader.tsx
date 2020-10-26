@@ -8,7 +8,7 @@ interface IProps {
 }
 
 const BarcodeReader = ({ barcoder }: IProps) => {
-  const { code, bank, amount } = decoder(barcoder);
+  const { bank, amount } = decoder(barcoder);
   const formatedValue = formatBill(barcoder);
 
   return (

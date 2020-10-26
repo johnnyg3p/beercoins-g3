@@ -1,34 +1,38 @@
 import React, { useState } from "react";
 import { Grid, Paper, ThemeProvider, Button, CircularProgress } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import themes from "../../utils/themes";
 import { useLocation } from "react-router";
 import BarcodeReader from "../../components/BarcodeReader";
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-  },
-  container: {
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4),
-  },
-  paper: {
-    padding: theme.spacing(2),
-    display: "flex",
-    overflow: "auto",
-    flexDirection: "column",
-  },
-}));
+import { PostPayment } from "../../services/User/User";
+import { useToasts } from "react-toast-notifications";
+import { paymentStyles } from "./PaymentConfirmStyles";
 
 // Valid barcode
 // 34191.79001 01043.510047 91020.150008 6 84190026000
 const PaymentsConfirm = () => {
-  const classes = useStyles();
+  const { addToast } = useToasts();
+  const classes = paymentStyles();
   const { state } = useLocation<any>();
 
   const [loading, setLoading] = useState(false);
+
+  const getPayment = async () => {
+    setLoading(true);
+    try {
+      const resultPayment = await PostPayment(state);
+      console.log("resultPayment", resultPayment);
+      addToast("Solicitação de pagamento realizada.", {
+        appearance: "success",
+      });
+      setLoading(false);
+    } catch (error) {
+      addToast("Erro ao realizar a solicitação de pagamento.", {
+        appearance: "error",
+      });
+      setLoading(false);
+    }
+  };
 
   return (
     <div>
@@ -41,11 +45,19 @@ const PaymentsConfirm = () => {
                 <BarcodeReader barcoder={state} />
               </Grid>
               <Grid item xs={12}>
-                <div>
-                  <Button type="submit" variant="contained" color="primary" size="large">
+                <div className={classes.wrapper}>
+                  <Button
+                    disabled={loading}
+                    className={classes.submit}
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    size="large"
+                    onClick={getPayment}
+                  >
                     Pagar
                   </Button>
-                  {loading && <CircularProgress size={24} />}
+                  {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
                 </div>
               </Grid>
             </Grid>

@@ -26,8 +26,8 @@ const banks = (bank: string): string => {
 export const decoder = (barcoder: string): IBarcode => {
   const code: string = barcoder;
   let bank: string = barcoder.substring(0, 3);
-  bank = banks(bank);
   let amountEnd: string = barcoder.substring(barcoder.length - 6);
+  bank = banks(bank);
   amountEnd = amountEnd.replace(/(\d{4})(\d)/, "$1.$2");
   const amount: string = formatCurrency(Number(amountEnd));
   return { code, bank, amount };

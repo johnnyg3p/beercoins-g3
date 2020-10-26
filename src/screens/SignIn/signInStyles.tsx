@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   firstInput: {
     opacity: 0,
-    animation: `$fadeIn 400ms ${theme.transitions.easing.easeInOut} forwards 400ms`
+    animation: `$fadeIn 400ms ${theme.transitions.easing.easeInOut} forwards 400ms`,
   },
   secondInput: {
     opacity: 0,

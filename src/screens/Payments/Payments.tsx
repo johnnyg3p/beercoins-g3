@@ -1,5 +1,5 @@
 import React, { useRef, useState, useCallback } from "react";
-import { Grid, Paper, ThemeProvider, TextField, InputAdornment, Button, CircularProgress } from "@material-ui/core";
+import { Grid, Paper, ThemeProvider, TextField, InputAdornment, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { Payment } from "@material-ui/icons";
 import Container from "@material-ui/core/Container";
@@ -31,8 +31,6 @@ const Payments = () => {
   const [paymentInputValid, setPaymentInputValid] = useState(false);
   const [formValid, setFormValid] = useState(false);
   const [paymentValue, setpaymentValue] = useState("");
-
-  const [loading, setLoading] = useState(false);
 
   const handleCheckIfBillisValid = useCallback((billValue: string) => {
     setPaymentInputValid(isValidBill(billValue));
@@ -106,7 +104,6 @@ const Payments = () => {
                   >
                     Próximo
                   </Button>
-                  {loading && <CircularProgress size={24} />}
                 </div>
               </Grid>
             </Grid>
