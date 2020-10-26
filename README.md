@@ -24,6 +24,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 # Table of Contents
 - [Project Demo](#project-demo)
+    - [Login Page](#login-page)
+    - [SignUp Page](#signup-page)
 - [Available Scripts](#available-scripts)
   - [yarn](#yarn)
   - [yarn start](#yarn-start)
@@ -56,7 +58,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 Validate if input fields has value  
 
-<img src="https://github.com/johnnyg3p/beercoins-g3/blob/main/readme-assets/login.gif" width="500px"/>
+<img src="https://github.com/johnnyg3p/beercoins-g3/blob/dev/readme-assets/login.gif?raw=true" width="500px"/>
 
 ## Signup page
 
@@ -67,7 +69,7 @@ Validate if input fields has value
 - Check if email is valid
 
 
-<img src="https://github.com/johnnyg3p/beercoins-g3/blob/main/readme-assets/sign-up.gif" width="500px"/>
+<img src="https://github.com/johnnyg3p/beercoins-g3/blob/dev/readme-assets/sign-up.gif?raw=true" width="500px"/>
 
 <br>
 <br>
