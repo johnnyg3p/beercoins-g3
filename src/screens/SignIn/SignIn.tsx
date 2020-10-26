@@ -13,7 +13,7 @@ const SignIn = () => {
   const classes = useStyles();
 
   return (
-    <Container className={classes.content} component="main" maxWidth="xs">
+    <Container className={classes.content} maxWidth="xs">
       <CssBaseline />
 
       <div className={classes.paper}>

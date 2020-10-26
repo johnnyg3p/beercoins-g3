@@ -1,13 +1,9 @@
 import React from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
-
 import Container from "@material-ui/core/Container";
-
 import Image from "../../images/logo.png";
-
 import useStyles from "./signUpStyles";
-
-import SignUpForm from './SignUpForm'
+import SignUpForm from "./SignUpForm";
 
 const SignUp = () => {
   const classes = useStyles();

@@ -6,7 +6,7 @@ import SignUp from "./screens/SignUp";
 import Home from "./screens/Home";
 import Operations from "./screens/Operations";
 import NotFound from "./screens/NotFound/NotFound";
-import Payments from "./screens/Payments";
+import PaymentsRoutes from "./screens/Payments/Payments.routes";
 
 const Routes = () => (
   <>
@@ -20,7 +20,7 @@ const Routes = () => (
         <Operations />
       </PrivateRoute>
       <PrivateRoute path="/payments" role="ROLE_USER">
-        <Payments />
+        <PaymentsRoutes />
       </PrivateRoute>
       <Route path="*" component={() => <NotFound />} />
     </Switch>

@@ -30,3 +30,12 @@ export default class HttpConfig {
     };
   }
 }
+
+export const headerConfig = (): AxiosRequestConfig => {
+  const userInfo = new HttpConfig();
+  return {
+    headers: {
+      Authorization: `Bearer ${userInfo.getToken()}`,
+    },
+  };
+};

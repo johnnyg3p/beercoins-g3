@@ -1,18 +1,6 @@
-import {
-  isValidCNPJ,
-  isValidEmail,
-  isValidPhone,
-} from "@brazilian-utils/brazilian-utils";
-import {
-  Button,
-  CircularProgress,
-  Grid,
-  InputAdornment,
-  Link,
-  TextField,
-  ThemeProvider,
-} from "@material-ui/core";
-import formatCNPJ from "../../../utils/formaters/cnpjMask";
+import { isValidCNPJ, isValidEmail, isValidPhone } from "@brazilian-utils/brazilian-utils";
+import { Button, CircularProgress, Grid, InputAdornment, Link, TextField, ThemeProvider } from "@material-ui/core";
+import { formatCNPJ } from "../../../utils/formaters/formaters";
 import React, { useCallback, useRef, useState } from "react";
 import cleanStringValue from "../../../utils/formaters/cleanStringValue";
 import themes from "../../../utils/themes";
@@ -21,18 +9,8 @@ import { useToasts } from "react-toast-notifications";
 import { useHistory } from "react-router-dom";
 import { SignUpService } from "../../../services/Auth.service";
 import formatPhoneNumber from "../../../utils/formaters/phoneMask";
-import {
-  Business,
-  Email,
-  Lock,
-  PermContactCalendar,
-  Person,
-  Phone,
-} from "@material-ui/icons";
-import {
-  signUpCnpjErrorMessages,
-  signUpPhoneErrorMessages,
-} from "../../../interfaces/IErrorMessages";
+import { Business, Email, Lock, PermContactCalendar, Person, Phone } from "@material-ui/icons";
+import { signUpCnpjErrorMessages, signUpPhoneErrorMessages } from "../../../interfaces/IErrorMessages";
 
 const signUpService = new SignUpService();
 
@@ -50,54 +28,47 @@ const SignUpForm = () => {
   const [userInputError, setUserInputError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [cnpjValue, setCnpjValue] = useState("");
-  const [cnpjErrorMessage, setCnpjErrorMessage] = useState(
-    signUpCnpjErrorMessages.EMPTY
-  );
+  const [cnpjErrorMessage, setCnpjErrorMessage] = useState(signUpCnpjErrorMessages.EMPTY);
   const [phoneValue, setPhoneValue] = useState("");
-  const [phoneErrorMessage, setPhoneErrorMessage] = useState(
-    signUpPhoneErrorMessages.EMPTY
-  );
+  const [phoneErrorMessage, setPhoneErrorMessage] = useState(signUpPhoneErrorMessages.EMPTY);
   const [isCnpjValid, setIsCnpjValid] = useState(true);
   const [isPhoneValid, setIsPhoneValid] = useState(true);
   const { addToast } = useToasts();
   let history = useHistory();
 
-  const validateInputFields = useCallback(
-    (inputArray: IInputValidationObject[]) => {
-      inputArray.map((inputObjectWithNameAndValue) => {
-        const objectName = Object.keys(inputObjectWithNameAndValue)[0];
-        const objectValue = Object.values(inputObjectWithNameAndValue)[0];
+  const validateInputFields = useCallback((inputArray: IInputValidationObject[]) => {
+    inputArray.map((inputObjectWithNameAndValue) => {
+      const objectName = Object.keys(inputObjectWithNameAndValue)[0];
+      const objectValue = Object.values(inputObjectWithNameAndValue)[0];
 
-        switch (objectName) {
-          case "cnpj":
-            if (!objectValue) {
-              setIsCnpjValid(false);
-              setCnpjErrorMessage(signUpCnpjErrorMessages.EMPTY);
-            }
-            break;
-          case "email":
-            if (!objectValue) setEmailInputError(true);
-            break;
-          case "nome":
-            if (!objectValue) setNameInputError(true);
-            break;
-          case "phonenumber":
-            if (!objectValue) {
-              setIsPhoneValid(false);
-              setPhoneErrorMessage(signUpPhoneErrorMessages.EMPTY);
-            }
-            break;
-          case "password":
-            if (!objectValue) setPasswordInputError(true);
-            break;
-          case "username":
-            if (!objectValue) setUserInputError(true);
-            break;
-        }
-      });
-    },
-    []
-  );
+      switch (objectName) {
+        case "cnpj":
+          if (!objectValue) {
+            setIsCnpjValid(false);
+            setCnpjErrorMessage(signUpCnpjErrorMessages.EMPTY);
+          }
+          break;
+        case "email":
+          if (!objectValue) setEmailInputError(true);
+          break;
+        case "nome":
+          if (!objectValue) setNameInputError(true);
+          break;
+        case "phonenumber":
+          if (!objectValue) {
+            setIsPhoneValid(false);
+            setPhoneErrorMessage(signUpPhoneErrorMessages.EMPTY);
+          }
+          break;
+        case "password":
+          if (!objectValue) setPasswordInputError(true);
+          break;
+        case "username":
+          if (!objectValue) setUserInputError(true);
+          break;
+      }
+    });
+  }, []);
 
   const handleCheckIfCNPJisValid = useCallback((CNPJ: string) => {
     if (!CNPJ) {
@@ -135,8 +106,7 @@ const SignUpForm = () => {
 
     setIsPhoneValid(isValidPhone(phoneNumber));
 
-    !isValidPhone(phoneNumber) &&
-      setPhoneErrorMessage(signUpPhoneErrorMessages.INVALID);
+    !isValidPhone(phoneNumber) && setPhoneErrorMessage(signUpPhoneErrorMessages.INVALID);
 
     return isValidPhone(phoneNumber);
   }, []);
@@ -152,16 +122,13 @@ const SignUpForm = () => {
     [handleCheckIfPhoneNumberIsValid]
   );
 
-  const handleCheckIsEmailIsValid = useCallback(
-    (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      const emailInputValue = e.target.value;
+  const handleCheckIsEmailIsValid = useCallback((e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const emailInputValue = e.target.value;
 
-      if (emailInputValue) {
-        setEmailInputError(!isValidEmail(emailInputValue));
-      }
-    },
-    []
-  );
+    if (emailInputValue) {
+      setEmailInputError(!isValidEmail(emailInputValue));
+    }
+  }, []);
 
   const signUpHandler = useCallback(
     async (e: React.FormEvent) => {
@@ -173,14 +140,7 @@ const SignUpForm = () => {
       const password = passwordRef?.current?.value;
       const username = usernameRef?.current?.value;
 
-      validateInputFields([
-        { cnpj },
-        { email },
-        { nome },
-        { phonenumber },
-        { password },
-        { username },
-      ]);
+      validateInputFields([{ cnpj }, { email }, { nome }, { phonenumber }, { password }, { username }]);
 
       if (
         cnpj &&
@@ -206,10 +166,7 @@ const SignUpForm = () => {
             username,
           })
           .then((response) => {
-            addToast(
-              "Cadastro efetuado com sucesso! Você pode fazer o login agora.",
-              { appearance: "success" }
-            );
+            addToast("Cadastro efetuado com sucesso! Você pode fazer o login agora.", { appearance: "success" });
 
             setTimeout(() => {
               history.push("/login");
@@ -228,13 +185,7 @@ const SignUpForm = () => {
           });
       }
     },
-    [
-      addToast,
-      handleCheckIfCNPJisValid,
-      handleCheckIfPhoneNumberIsValid,
-      history,
-      validateInputFields,
-    ]
+    [addToast, handleCheckIfCNPJisValid, handleCheckIfPhoneNumberIsValid, history, validateInputFields]
   );
 
   return (
@@ -403,9 +354,7 @@ const SignUpForm = () => {
           Cadastrar
         </Button>
 
-        {loading && (
-          <CircularProgress size={24} className={classes.buttonProgress} />
-        )}
+        {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
       </div>
       <Grid container className={classes.signInLink}>
         <Grid item>

@@ -8,10 +8,13 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import SimpleModal from "./modal";
 import AccountsService from "../../services/Accounts/accounts.service";
-import Link from "@material-ui/core/Link";
 import { useToasts } from "react-toast-notifications";
 import TableLoading from "../TableLoading";
 import Button from "@material-ui/core/Button";
+import { StyledTableRow } from "../StyledTableRow/StyledTableRow";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import TextField from "@material-ui/core/TextField";
+import SearchIcon from "@material-ui/icons/Search";
 
 const accountsService = new AccountsService();
 
@@ -21,25 +24,29 @@ const useStyles = makeStyles((theme) => ({
   },
   seeMore: {
     marginTop: theme.spacing(3),
-    maxWidth: '200px'
+    maxWidth: "200px",
   },
   tableHeadItem: {
-    fontWeight: "bold"
-  }
+    fontWeight: "bold",
+  },
+  margin: {
+    margin: theme.spacing(1),
+    width: 300,
+  },
 }));
-
-function seeMore(event: HTMLAnchorElement) {
-  alert("Ver mais");
-}
 
 function Accounts() {
   const [accountList, setAccount] = useState<IAccount[]>([]);
+  const [search, setSearch] = useState<any>("");
   const [loading, setLoading] = React.useState(false);
   const { addToast } = useToasts();
 
-  function seeMore(event: HTMLAnchorElement) {
-    alert("see more");
-  }
+  const seeMore = () => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  };
 
   useEffect(() => {
     accountsService
@@ -55,8 +62,12 @@ function Accounts() {
       });
   }, [addToast]);
 
-  const accounts = accountList.map((account, index) => (
-    <TableRow key={account.hash}>
+  const accountFiltered = accountList.filter((account) => {
+    return account.nome.toLowerCase().includes(search.toLowerCase());
+  });
+
+  const accounts = accountFiltered.map((account, index) => (
+    <StyledTableRow key={account.hash}>
       <TableCell align="left">{index}</TableCell>
       <TableCell align="left">{account.hash}</TableCell>
       <TableCell align="left">{account.nome}</TableCell>
@@ -65,7 +76,7 @@ function Accounts() {
       <TableCell align="left">
         <SimpleModal account={account} />
       </TableCell>
-    </TableRow>
+    </StyledTableRow>
   ));
 
   const classes = useStyles();
@@ -73,28 +84,53 @@ function Accounts() {
   return (
     <React.Fragment>
       <h1>Contas</h1>
+
+      <div>
+        <TextField
+          className={classes.margin}
+          id="input-with-icon-textfield"
+          label="Buscar Contas por nome"
+          variant="outlined"
+          onChange={(event) => setSearch(event.target.value)}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          }}
+        />
+      </div>
+
       <TableContainer>
         <Table className={classes.table} aria-label="Accounts table">
           <TableHead>
             <TableRow>
-              <TableCell align="left" className={classes.tableHeadItem}>#</TableCell>
-              <TableCell align="left" className={classes.tableHeadItem}>Número da conta</TableCell>
-              <TableCell align="left" className={classes.tableHeadItem}>Nome</TableCell>
-              <TableCell align="left" className={classes.tableHeadItem}>E-mail</TableCell>
-              <TableCell align="left" className={classes.tableHeadItem}>CNPJ</TableCell>
-              <TableCell align="left" className={classes.tableHeadItem}>Ações</TableCell>
+              <TableCell align="left" className={classes.tableHeadItem}>
+                #
+              </TableCell>
+              <TableCell align="left" className={classes.tableHeadItem}>
+                Número da conta
+              </TableCell>
+              <TableCell align="left" className={classes.tableHeadItem}>
+                Nome
+              </TableCell>
+              <TableCell align="left" className={classes.tableHeadItem}>
+                E-mail
+              </TableCell>
+              <TableCell align="left" className={classes.tableHeadItem}>
+                CNPJ
+              </TableCell>
+              <TableCell align="left" className={classes.tableHeadItem}>
+                Ações
+              </TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>{accountList.length ? accounts : <TableLoading colsPan={6} items={3} />}</TableBody>
+          <TableBody>{!accountList.length || loading ? <TableLoading colsPan={6} items={3} /> : accounts}</TableBody>
         </Table>
       </TableContainer>
       <div className={classes.seeMore}>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => seeMore}
-          disabled={loading}
-        >
+        <Button variant="contained" color="primary" onClick={() => seeMore()} disabled={loading}>
           Ver mais
         </Button>
       </div>
