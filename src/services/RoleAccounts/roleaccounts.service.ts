@@ -1,6 +1,5 @@
 import axiosRequest from "../../config/axios";
 import { AxiosRequestConfig } from "axios";
-import { IDeposit } from "../../interfaces/IDeposit";
 import HttpConfig from "../../config/axios/httpConfig";
 
 export const header = (): AxiosRequestConfig => {
