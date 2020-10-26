@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     margin: theme.spacing(1),
     padding: theme.spacing(1),
     opacity: 0,
-    animation: `$fadeIn 1300ms ${theme.transitions.easing.easeInOut} forwards`,
+    animation: `$fadeIn 400ms ${theme.transitions.easing.easeInOut} forwards`,
   },
   form: {
     width: "100%", // Fix IE 11 issue.
@@ -39,38 +39,41 @@ const useStyles = makeStyles((theme: Theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
     opacity: 0,
-    animation: `$fadeIn 1000ms ${theme.transitions.easing.easeInOut} forwards 800ms`,
+    animation: `$fadeIn 400ms ${theme.transitions.easing.easeInOut} forwards 800ms`,
   },
   signInLink: {
     opacity: 0,
-    animation: `$fadeIn 1000ms ${theme.transitions.easing.easeInOut} forwards 1100ms`,
+    animation: `$fadeIn 400ms ${theme.transitions.easing.easeInOut} forwards 1100ms`,
   },
   formControl: {
     margin: theme.spacing(3),
   },
   firstInput: {
     opacity: 0,
-    animation: `$fadeIn 1000ms ${theme.transitions.easing.easeInOut} forwards 200ms`,
+    animation: `$fadeIn 400ms ${theme.transitions.easing.easeInOut} forwards 200ms`,
   },
   secondInput: {
     opacity: 0,
-    animation: `$fadeIn 1000ms ${theme.transitions.easing.easeInOut} forwards 300ms`,
+    animation: `$fadeIn 400ms ${theme.transitions.easing.easeInOut} forwards 300ms`,
   },
   thirdInput: {
     opacity: 0,
-    animation: `$fadeIn 1000ms ${theme.transitions.easing.easeInOut} forwards 400ms`,
+    animation: `$fadeIn 400ms ${theme.transitions.easing.easeInOut} forwards 400ms`,
   },
   fourthInput: {
     opacity: 0,
-    animation: `$fadeIn 1000ms ${theme.transitions.easing.easeInOut} forwards 500ms`,
+    animation: `$fadeIn 400ms ${theme.transitions.easing.easeInOut} forwards 500ms`,
   },
   fifthInput: {
     opacity: 0,
-    animation: `$fadeIn 1000ms ${theme.transitions.easing.easeInOut} forwards 600ms`,
+    animation: `$fadeIn 400ms ${theme.transitions.easing.easeInOut} forwards 600ms`,
   },
   sixthInput: {
     opacity: 0,
-    animation: `$fadeIn 1000ms ${theme.transitions.easing.easeInOut} forwards 700ms`,
+    animation: `$fadeIn 400ms ${theme.transitions.easing.easeInOut} forwards 700ms`,
+  },
+  textFieldGeneral: {
+    marginBottom: '15px'
   },
   content: {
     display: "flex",

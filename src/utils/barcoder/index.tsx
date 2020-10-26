@@ -19,9 +19,8 @@ const banks = (bank: string): string => {
     { code: "212", value: "Banco Original" },
     { code: "748", value: "Banco Cooperativo Sicredi" },
   ];
-  let selectedBank = "";
-  list.find((item) => (item.code === bank ? (selectedBank = item.value) : ""));
-  return `${bank} - ${selectedBank}`;
+  let selectedBank = list.find((item) => item.code === bank)?.value;
+  return `${bank} - ${selectedBank || "Banco não encontrado"}`;
 };
 
 export const decoder = (barcoder: string): IBarcode => {

@@ -12,6 +12,9 @@ import { useToasts } from "react-toast-notifications";
 import TableLoading from "../TableLoading";
 import Button from "@material-ui/core/Button";
 import { StyledTableRow } from "../StyledTableRow/StyledTableRow";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import TextField from "@material-ui/core/TextField";
+import SearchIcon from "@material-ui/icons/Search";
 
 const accountsService = new AccountsService();
 
@@ -26,10 +29,15 @@ const useStyles = makeStyles((theme) => ({
   tableHeadItem: {
     fontWeight: "bold",
   },
+  margin: {
+    margin: theme.spacing(1),
+    width: 300,
+  },
 }));
 
 function Accounts() {
   const [accountList, setAccount] = useState<IAccount[]>([]);
+  const [search, setSearch] = useState<any>("");
   const [loading, setLoading] = React.useState(false);
   const { addToast } = useToasts();
 
@@ -54,7 +62,11 @@ function Accounts() {
       });
   }, [addToast]);
 
-  const accounts = accountList.map((account, index) => (
+  const accountFiltered = accountList.filter((account) => {
+    return account.nome.toLowerCase().includes(search.toLowerCase());
+  });
+
+  const accounts = accountFiltered.map((account, index) => (
     <StyledTableRow key={account.hash}>
       <TableCell align="left">{index}</TableCell>
       <TableCell align="left">{account.hash}</TableCell>
@@ -72,6 +84,24 @@ function Accounts() {
   return (
     <React.Fragment>
       <h1>Contas</h1>
+
+      <div>
+        <TextField
+          className={classes.margin}
+          id="input-with-icon-textfield"
+          label="Buscar Contas por nome"
+          variant="outlined"
+          onChange={(event) => setSearch(event.target.value)}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          }}
+        />
+      </div>
+
       <TableContainer>
         <Table className={classes.table} aria-label="Accounts table">
           <TableHead>

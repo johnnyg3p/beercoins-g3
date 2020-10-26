@@ -74,7 +74,7 @@ function Statement(props: IProps) {
         <TableHead>
           <TableRow>
             <TableCell align="left">Transação</TableCell>
-            <TableCell align="center">Tipo</TableCell>
+            <TableCell align="center">Data</TableCell>
             <TableCell align="right">Valor</TableCell>
           </TableRow>
         </TableHead>
