@@ -18,7 +18,7 @@ import { useAuthContext } from "../../context/Auth";
 import { Link, NavLink } from "react-router-dom";
 import "./Sidebar.scss";
 
-const drawerWidth = 180;
+const drawerWidth = 210;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
