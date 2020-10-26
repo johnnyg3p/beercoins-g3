@@ -52,6 +52,22 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 # Project Demo
 
+## Login page
+
+Validate if input fields has value  
+
+<img src="https://github.com/johnnyg3p/beercoins-g3/blob/main/readme-assets/login.gif" width="500px"/>
+
+## Signup page
+
+- Validate if input fields has value 
+- Add masks for CNPJ and Phone fields
+- Check if CNPJ is valid
+- Check if Phone Number is valid
+- Check if email is valid
+
+
+<img src="https://github.com/johnnyg3p/beercoins-g3/blob/main/readme-assets/sign-up.gif" width="500px"/>
 
 <br>
 <br>
