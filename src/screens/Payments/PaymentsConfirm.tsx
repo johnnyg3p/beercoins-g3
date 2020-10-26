@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Grid, Paper, ThemeProvider, Button, CircularProgress } from "@material-ui/core";
 import Container from "@material-ui/core/Container";
 import themes from "../../utils/themes";
-import { useLocation } from "react-router";
+import { useLocation, useHistory } from "react-router";
 import BarcodeReader from "../../components/BarcodeReader";
 import { PostPayment } from "../../services/User/User";
 import { useToasts } from "react-toast-notifications";
@@ -11,21 +11,20 @@ import { paymentStyles } from "./PaymentConfirmStyles";
 // Valid barcode
 // 34191.79001 01043.510047 91020.150008 6 84190026000
 const PaymentsConfirm = () => {
+  let history = useHistory();
   const { addToast } = useToasts();
   const classes = paymentStyles();
   const { state } = useLocation<any>();
-
   const [loading, setLoading] = useState(false);
-
   const getPayment = async () => {
     setLoading(true);
     try {
       const resultPayment = await PostPayment(state);
-      console.log("resultPayment", resultPayment);
       addToast("Solicitação de pagamento realizada.", {
         appearance: "success",
       });
       setLoading(false);
+      history.push("/payments");
     } catch (error) {
       addToast("Erro ao realizar a solicitação de pagamento.", {
         appearance: "error",
