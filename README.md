@@ -12,7 +12,7 @@ Deploy automático pelo Vercel
 -->
 <h1 align="center">
   <br>
-  <img src="https://github.com/johnnyg3p/beercoins-g3/blob/main/src/images/logo.png?raw=true" height="200px"/>
+  <img src="https://github.com/johnnyg3p/beercoins-g3/blob/main/src/assets/images/logo.png?raw=true" height="200px"/>
   <br>
   <br>
 </h1>
